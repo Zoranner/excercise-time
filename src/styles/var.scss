@@ -1,0 +1,16 @@
+page {
+	// 颜色
+	--color-black: #3D3D3D;
+	--color-white: #FFFFFF;
+	--color-dark-gray: #686868;
+	--color-light-gray: #D9D9D9;
+	--color-transparent: #FFFFFF00;
+	--color-green: #21FF53;
+	--color-red: #FF424E;
+	--color-yellow: #FFEA30;
+	--color-blue: #18BAFF;
+	--color-lg-green: linear-gradient(180deg, rgba(0, 174, 213, 0.46) 0%, #39C859 100%);
+	// 阴影
+	--shadow-black: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.36));
+	--shadow-white: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.36));
+}
