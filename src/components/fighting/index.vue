@@ -13,14 +13,31 @@ const leftTimeFontSize = circleRadius * 0.042
 const stateCaptionFontSize = circleRadius * 0.012
 const cycleTitleFontSize = circleRadius * 0.012
 const cycleValueFontSize = circleRadius * 0.014
+
+const currentState = ref(0);
+const backgroundColor = ref([
+	'var(--color-lg-green)',
+	'var(--color-lg-red)',
+	'var(--color-lg-yellow)',
+	'var(--color-lg-blue)',
+])
+const progressColor = ref([
+	'#21FF53',
+	'#FF424E',
+	'#FFEA30',
+	'#18BAFF',
+])
+
+const changeCurrentState = () => {
+	currentState.value = (currentState.value + 1) % 4
+}
 </script>
 
 <template>
 	<div class="fightingPage">
-		<div class="fightingBase flex flex-col items-center">
-			<text class="fightingCaption fixed" :style="{ fontSize: baseConst.titleBarFontSize + 'em', top: titleBarTop + 'px' }">直腿抬高</text>
-			<CircleProgress class="timeProgress fixed" progress="75" :radius="circleRadius">
-				<text class="leftTime" :style="{ fontSize: leftTimeFontSize + 'em' }">00:30</text>
+		<div class="fightingBase flex flex-col items-center" :style="{ background: backgroundColor[currentState] }">
+			<text class="fightingCaption fixed" :style="{ fontSize: baseConst.titleBarFontSize + 'em', top: titleBarTop + 'px' }">锻炼时间</text>
+			<CircleProgress class="timeProgress fixed" progress="75" :radius="circleRadius" :color="progressColor[currentState]" @click="changeCurrentState()">
 				<text class="timeContent" :style="{ fontSize: leftTimeFontSize + 'em' }">00:30</text>
 			</CircleProgress>
 			<text class="stateCaption fixed" :style="{ fontSize: stateCaptionFontSize + 'em' }">锻炼</text>
@@ -48,7 +65,7 @@ const cycleValueFontSize = circleRadius * 0.014
 		width: 100%;
 		height: 100%;
 		color: var(--color-white);
-		background: var(--color-lg-green);
+		// background: var(--color-lg-green);
 		.fightingCaption {
 			transform: translateY(-50%);
 			color: var(--color-white);
