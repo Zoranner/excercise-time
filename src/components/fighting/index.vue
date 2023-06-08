@@ -21,17 +21,18 @@ const cycleValueFontSize = circleRadius * 0.014
 			<text class="fightingCaption fixed" :style="{ fontSize: baseConst.titleBarFontSize + 'em', top: titleBarTop + 'px' }">直腿抬高</text>
 			<CircleProgress class="timeProgress fixed" progress="75" :radius="circleRadius">
 				<text class="leftTime" :style="{ fontSize: leftTimeFontSize + 'em' }">00:30</text>
+				<text class="timeContent" :style="{ fontSize: leftTimeFontSize + 'em' }">00:30</text>
 			</CircleProgress>
 			<text class="stateCaption fixed" :style="{ fontSize: stateCaptionFontSize + 'em' }">锻炼</text>
 			<ControlBar class="controlBar fixed">
 			</ControlBar>
 			<div class="cycleValueArea w-70% fixed flex">
-				<text class="leftCaption" :style="{ fontSize: cycleValueFontSize + 'em' }">1/3</text>
-				<text class="leftCaption" :style="{ fontSize: cycleValueFontSize + 'em' }">1/10</text>
+				<text class="cycleContent" :style="{ fontSize: cycleValueFontSize + 'em' }">1/3</text>
+				<text class="cycleContent" :style="{ fontSize: cycleValueFontSize + 'em' }">1/10</text>
 			</div>
 			<div class="cycleTitleArea w-70% fixed flex">
-				<text class="leftCaption" :style="{ fontSize: cycleTitleFontSize + 'em' }">周期</text>
-				<text class="leftCaption" :style="{ fontSize: cycleTitleFontSize + 'em' }">循环</text>
+				<text class="cycleContent" :style="{ fontSize: cycleTitleFontSize + 'em' }">周期</text>
+				<text class="cycleContent" :style="{ fontSize: cycleTitleFontSize + 'em' }">循环</text>
 			</div>
 		</div>
 	</div>
@@ -54,7 +55,7 @@ const cycleValueFontSize = circleRadius * 0.014
 		}
 		.timeProgress {
 			top: 15%;
-			.leftTime {
+			.timeContent {
 				font-family: 'Local Timer';
 				filter: var(--shadow-white);
 			}
@@ -81,7 +82,7 @@ const cycleValueFontSize = circleRadius * 0.014
 			color: var(--color-white);
 			filter: var(--shadow-white);
 		}
-		.leftCaption {
+		.cycleContent {
 			width: 50%;
 			font-family: 'Local Progress';
 		}

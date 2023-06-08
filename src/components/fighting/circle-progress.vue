@@ -58,7 +58,7 @@ const stop = () => {
 	let color = props.color
 	const colorArr = Object.keys(color).sort((a, b) => parseFloat(a) - parseFloat(b))
 
-	let stopArr: object[] = []
+	let stopArray: object[] = []
 	colorArr.map((item) => {
 		let obj = {
 			key: '',
@@ -66,18 +66,18 @@ const stop = () => {
 		}
 		obj.key = item
 		obj.value = color[item]
-		stopArr.push(obj)
+		stopArray.push(obj)
 	})
-	return stopArr
+	return stopArray
 }
 
 const style = computed(() => {
 	let { strokeWidth } = props
 
-	let stopArr: Array<object> = stop()
+	let stopArray: Array<object> = stop()
 	let stopDom: string[] = []
-	if (stopArr) {
-		stopArr.map((item: Item) => {
+	if (stopArray) {
+		stopArray.map((item: Item) => {
 			let obj = ''
 			obj = `%3Cstop offset='${item.key}' stop-color='${transColor(item.value)}'/%3E`
 			stopDom.push(obj)
