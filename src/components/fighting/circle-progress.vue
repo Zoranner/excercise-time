@@ -137,6 +137,6 @@ watch(
 	top: 50%;
 	transform: translate(-50%, -50%);
 	color: var(--color-white);
-	filter: var(--shadow-white);
+	filter: var(--shadow-drop-white);
 }
 </style>

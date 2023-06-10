@@ -69,7 +69,7 @@ const switchTab = (index: number) => {
 	padding-bottom: constant(safe-area-inset-bottom);
 	padding-bottom: env(safe-area-inset-bottom);
 	background-color: var(--color-black);
-	filter: var(--shadow-black);
+	filter: var(--shadow-drop-black);
 	.tabCircle {
 		left: 50%;
 		bottom: 5px;

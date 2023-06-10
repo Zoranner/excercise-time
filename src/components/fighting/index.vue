@@ -74,14 +74,14 @@ const changeCurrentState = () => {
 			top: 15%;
 			.timeContent {
 				font-family: 'Local Timer';
-				filter: var(--shadow-white);
+				filter: var(--shadow-drop-white);
 			}
 		}
 		.stateCaption {
 			top: 53%;
 			font-weight: bold;
 			color: var(--color-white);
-			filter: var(--shadow-white);
+			filter: var(--shadow-drop-white);
 		}
 		.controlBar {
 			bottom: 32%;
@@ -91,13 +91,13 @@ const changeCurrentState = () => {
 			bottom: 24%;
 			text-align: center;
 			color: var(--color-white);
-			filter: var(--shadow-white);
+			filter: var(--shadow-drop-white);
 		}
 		.cycleTitleArea {
 			bottom: 20%;
 			text-align: center;
 			color: var(--color-white);
-			filter: var(--shadow-white);
+			filter: var(--shadow-drop-white);
 		}
 		.cycleContent {
 			width: 50%;

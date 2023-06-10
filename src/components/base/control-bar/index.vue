@@ -41,12 +41,12 @@ const switchVoiceState = () => {
 	height: 100px;
 	border-radius: 50px;
 	background-color: var(--color-black);
-	filter: var(--shadow-black);
+	filter: var(--shadow-drop-black);
 	.controlIconArea {
 		width: 30%;
 		height: 100%;
-		margin: 0 5%;
-		filter: var(--shadow-white);
+		margin: 0 3%;
+		filter: var(--shadow-drop-white);
 		.controlIcon {
 			width: 65px;
 			height: 65px;

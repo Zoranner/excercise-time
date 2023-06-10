@@ -30,7 +30,7 @@ const titleBarTop = baseConst.statusBarHeight + baseConst.titleBarHeight / 2
 		//background: var(--color-lg-green);
 		.settinsTitleBar {
 			background: var(--color-black);
-			filter: var(--shadow-black);
+			filter: var(--shadow-drop-black);
 			.settinsCaption {
 				//top: 10%;
 				transform: translateY(-50%);

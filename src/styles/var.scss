@@ -14,6 +14,7 @@ page {
 	--color-lg-yellow: linear-gradient(180deg, rgba(255, 122, 0, 0.6) 0%, #EEDD43 100%);
 	--color-lg-blue: linear-gradient(180deg, rgba(67, 36, 255, 0.64) 0%, #46AFDC 100%);
 	// 阴影
-	--shadow-black: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.36));
-	--shadow-white: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.36));
+	--shadow-drop-black: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.36));
+	--shadow-drop-white: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.36));
+	--shadow-drop-heavy-white: drop-shadow(0px 0px 10px rgba(255, 255, 255, 1));
 }
