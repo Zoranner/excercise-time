@@ -15,13 +15,15 @@ const tabBarIndex = ref(globalData.tabBarSelected)
 const tabBarChange = (index: number) => {
 	tabBarIndex.value = index
 }
+
+Taro.setKeepScreenOn({ keepScreenOn: true })
 </script>
 
 <template>
 	<div class="mainPage">
-		<Settings v-if="tabBarIndex === 0" />
-		<Fighting v-if="tabBarIndex === 1" />
-		<Presets v-if="tabBarIndex === 2" />
+		<Settings v-show="tabBarIndex === 0" />
+		<Fighting v-show="tabBarIndex === 1" />
+		<Presets v-show="tabBarIndex === 2" />
 	</div>
 	<TabBar @change="tabBarChange" />
 </template>
