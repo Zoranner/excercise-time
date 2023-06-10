@@ -26,8 +26,8 @@ const webpackChain = (chain) => {
 }
 
 const config = {
-	projectName: 'taro-vue3-template',
-	date: '2022-8-24',
+	projectName: 'excercise-time',
+	date: '2023-6-1',
 	designWidth: 750,
 	deviceRatio: {
 		640: 2.34 / 2,
