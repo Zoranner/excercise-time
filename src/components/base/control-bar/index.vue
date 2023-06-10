@@ -1,22 +1,22 @@
 <script lang="ts" setup>
-// import { globalData } from '@/store/globalStore'
+import { globalData } from '@/store/globalStore'
 
-const isPlay = ref(false)
-const isAudio = ref(false)
-const emits = defineEmits(['reset'])
+// const isPlay = ref(false)
+// const hasSound = ref(false)
+const emitTimerReset = defineEmits(['reset'])
 
 const resetTimerState = () => {
-	Taro.vibrateShort({ type: 'medium' })
-	emits('reset')
+	Taro.vibrateShort({ type: 'light' })
+	emitTimerReset('reset')
 }
 
 const switchTimerState = () => {
-	Taro.vibrateShort({ type: 'medium' })
-	isPlay.value = !isPlay.value
+	Taro.vibrateShort({ type: 'light' })
+	globalData.timerState = !globalData.timerState
 }
-const switchVoiceState = () => {
-	Taro.vibrateShort({ type: 'medium' })
-	isAudio.value = !isAudio.value
+const switchAudioState = () => {
+	Taro.vibrateShort({ type: 'light' })
+	globalData.audioState = !globalData.audioState
 }
 </script>
 
@@ -26,12 +26,12 @@ const switchVoiceState = () => {
 			<image class="controlIcon" src="../../../assets/images/control-bar/icons8-reset-96-w.png" />
 		</view>
 		<view class="controlIconArea flex items-center justify-center" key="reset" @click="switchTimerState()">
-			<image class="controlIcon" v-show="isPlay" src="../../../assets/images/control-bar/icons8-pause-96-w.png" />
-			<image class="controlIcon" v-show="!isPlay" src="../../../assets/images/control-bar/icons8-play-96-w.png" />
+			<image class="controlIcon" v-show="globalData.timerState" src="../../../assets/images/control-bar/icons8-pause-96-w.png" />
+			<image class="controlIcon" v-show="!globalData.timerState" src="../../../assets/images/control-bar/icons8-play-96-w.png" />
 		</view>
-		<view class="controlIconArea flex items-center justify-center" key="reset" @click="switchVoiceState()">
-			<image class="controlIcon" v-show="isAudio" src="../../../assets/images/control-bar/icons8-audio-n-96-w.png" />
-			<image class="controlIcon" v-show="!isAudio" src="../../../assets/images/control-bar/icons8-audio-96-w.png" />
+		<view class="controlIconArea flex items-center justify-center" key="reset" @click="switchAudioState()">
+			<image class="controlIcon" v-show="!globalData.audioState" src="../../../assets/images/control-bar/icons8-audio-n-96-w.png" />
+			<image class="controlIcon" v-show="globalData.audioState" src="../../../assets/images/control-bar/icons8-audio-m-96-w.png" />
 		</view>
 	</view>
 </template>
@@ -52,5 +52,15 @@ const switchVoiceState = () => {
 			height: 65px;
 		}
 	}
+	.controlIconArea:active {
+		filter: var(--shadow-drop-heavy-white);
+		.controlIcon {
+			width: 72px;
+			height: 72px;
+		}
+	}
+}
+.controlBarPanel:active {
+	filter: var(--shadow-drop-black);
 }
 </style>
