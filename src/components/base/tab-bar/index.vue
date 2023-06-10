@@ -22,7 +22,7 @@ const tabList = [
 ]
 
 const switchTab = (index: number) => {
-	Taro.vibrateShort({ type: 'medium' })
+	Taro.vibrateShort({ type: 'light' })
 	globalData.tabBarSelected = index
 	emits('change', index)
 }
@@ -34,8 +34,8 @@ const switchTab = (index: number) => {
 		<view class="w-100% h-100% fixed">
 			<view class="tabViewer flex flex-1">
 				<view
-					class="flex flex-1 flex-col items-center justify-center"
-					:style="{ filter: globalData.tabBarSelected === index ? 'var(--shadow-white)' : '' }"
+					class="tabIcon flex flex-1 flex-col items-center justify-center"
+					:style="{ filter: globalData.tabBarSelected === index ? 'var(--shadow-drop-white)' : '' }"
 					v-for="(item, index) in tabList"
 					:key="item.caption"
 					@click="switchTab(index)">
@@ -84,6 +84,9 @@ const switchTab = (index: number) => {
 	.tabViewer {
 		align-items: flex-end;
 		justify-content: space-around;
+		.tabIcon:active {
+			filter: var(--shadow-drop-white);
+		}
 	}
 }
 </style>
