@@ -12,24 +12,16 @@
 </template>
 
 <style lang="scss">
-.settinsPage {
-	width: 100vw;
-	height: 100vh;
+.settingsPage {
+	height: 100%;
 	background: var(--color-dark-gray);
-	background-size: cover;
-	.settinsBase {
+	.settingsScrollView {
 		width: 100%;
 		height: 100%;
-		color: var(--color-white);
-		//background: var(--color-lg-green);
-		.settinsTitleBar {
-			background: var(--color-black);
-			filter: var(--shadow-drop-black);
-			.settinsCaption {
-				//top: 10%;
-				transform: translateY(-50%);
-				color: var(--color-white);
-			}
+		// background: var(--color-white);
+		.settingsPlaceholder {
+			width: 100%;
+			height: 70px;
 		}
 	}
 }

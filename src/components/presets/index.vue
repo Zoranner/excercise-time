@@ -25,23 +25,15 @@ switchPreset(globalStore.presetSelected)
 
 <style lang="scss">
 .presetsPage {
-	width: 100vw;
-	height: 100vh;
+	height: 100%;
 	background: var(--color-dark-gray);
-	background-size: cover;
-	.presetsBase {
+	.presetsScrollView {
 		width: 100%;
 		height: 100%;
-		color: var(--color-white);
-		//background: var(--color-lg-green);
-		.presetsTitleBar {
-			background: var(--color-black);
-			filter: var(--shadow-drop-black);
-			.presetsCaption {
-				//top: 10%;
-				transform: translateY(-50%);
-				color: var(--color-white);
-			}
+		// background: var(--color-white);
+		.presetsPlaceholder {
+			width: 100%;
+			height: 70px;
 		}
 	}
 }

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { globalConst } from '@/config/globalConst'
 import { globalStore } from '@/store/globalStore'
+import { eventCenter, getCurrentInstance } from '@tarojs/taro'
 import CircleProgress from '@/components/fighting/circle-progress.vue'
 import ControlBar from '@/components/base/control-bar/index.vue'
 
@@ -17,7 +18,6 @@ const currentState = ref(0)
 const currentTimer = ref(8)
 const currentProgress = ref(0)
 const backgroundColor = ref(['var(--color-lg-green)', 'var(--color-lg-red)', 'var(--color-lg-yellow)', 'var(--color-lg-blue)'])
-const progressColor = ref(['#21FF53', '#FF616A', '#FFEA30', '#18BAFF'])
 const stateCaptions = ref(['锻炼', '休息', '组间休息', '冷却时间'])
 const audioContents = ref(['3', '2', '1', '锻炼', '休息', '组间休息', '冷却时间'])
 
@@ -84,6 +84,17 @@ const autoChangeState = () => {
 	}, 50)
 }
 
+onMounted(() => {
+	const router = getCurrentInstance().router
+	if (router === null) {
+		return
+	}
+	eventCenter.on(router.onHide, () => {
+		console.log('onHide')
+		globalConst.timerState = false
+	})
+})
+
 autoChangeState()
 </script>
 
@@ -112,16 +123,10 @@ autoChangeState()
 	width: 100vw;
 	height: 100vh;
 	background: var(--color-dark-gray);
-	background-size: cover;
 	.fightingBase {
 		width: 100%;
 		height: 100%;
 		color: var(--color-white);
-		// background: var(--color-lg-green);
-		.fightingCaption {
-			transform: translateY(-50%);
-			color: var(--color-white);
-		}
 		.timeProgress {
 			top: 15%;
 			.timeContent {
