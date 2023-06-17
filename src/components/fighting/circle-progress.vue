@@ -129,17 +129,16 @@ tempBackStyle.value = backStyle()
 </script>
 
 <template>
-	<div :class="classes" :style="{ height: Number(radius) * 2 + 'px', width: Number(radius) * 2 + 'px' }">
-		<div class="absolute" :style="tempBackStyle"></div>
-		<div class="absolute" :style="tempForeStyle"></div>
-		<div class="absolute" :style="foreStyle()"></div>
-		<div class="absolute" :style="{ height: Number(radius) * 2 + 'px', width: Number(radius) * 2 + 'px' }">
-			<div class="defaultSlot absolute">
+	<view :class="classes" :style="{ height: Number(radius) * 2 + 'px', width: Number(radius) * 2 + 'px' }">
+		<view class="absolute" :style="tempForeStyle"></view>
+		<view class="absolute" :style="foreStyle()"></view>
+		<view class="absolute" :style="{ height: Number(radius) * 2 + 'px', width: Number(radius) * 2 + 'px' }">
+			<view class="defaultSlot absolute">
 				<slot></slot>
-			</div>
+			</view>
 			<text class="defaultCaption absolute" v-if="!slotDefault">{{ progress }}%</text>
-		</div>
-	</div>
+		</view>
+	</view>
 </template>
 
 <style lang="scss">

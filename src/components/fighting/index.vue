@@ -91,29 +91,23 @@ autoChangeState()
 </script>
 
 <template>
-	<div class="fightingPage">
-		<div class="fightingBase flex flex-col items-center" :style="{ background: backgroundColor[currentState] }">
-			<text class="fightingCaption fixed" :style="{ fontSize: baseConst.titleBarFontSize + 'em', top: titleBarTop + 'px' }">锻炼时间</text>
-			<CircleProgress
-				class="timeProgress fixed"
-				:progress="currentProgress"
-				:radius="circleRadius"
-				:color="progressColor[currentState]"
-				@click="changeCurrentState()">
+	<view class="fightingPage">
+		<view class="fightingBase flex flex-col items-center" :style="{ background: backgroundColor[currentState] }">
+			<CircleProgress class="timeProgress fixed" :progress="currentProgress" :radius="circleRadius" @click="changeCurrentState()">
 				<text class="timeContent" :style="{ fontSize: leftTimeFontSize + 'em' }">{{ '00:0' + currentTimer }}</text>
 			</CircleProgress>
 			<text class="stateCaption fixed" :style="{ fontSize: stateCaptionFontSize + 'em' }">{{ stateCaptions[currentState] }}</text>
 			<ControlBar class="controlBar fixed"></ControlBar>
-			<div class="cycleValueArea w-70% fixed flex">
+			<view class="cycleValueArea w-70% fixed flex">
 				<text class="cycleContent" :style="{ fontSize: cycleValueFontSize + 'em' }">1/3</text>
 				<text class="cycleContent" :style="{ fontSize: cycleValueFontSize + 'em' }">1/10</text>
-			</div>
-			<div class="cycleTitleArea w-70% fixed flex">
+			</view>
+			<view class="cycleTitleArea w-70% fixed flex">
 				<text class="cycleContent" :style="{ fontSize: cycleTitleFontSize + 'em' }">周期</text>
 				<text class="cycleContent" :style="{ fontSize: cycleTitleFontSize + 'em' }">循环</text>
-			</div>
-		</div>
-	</div>
+			</view>
+		</view>
+	</view>
 </template>
 
 <style lang="scss">

@@ -20,11 +20,10 @@ Taro.setKeepScreenOn({ keepScreenOn: true })
 </script>
 
 <template>
-	<div class="mainPage">
 		<Settings v-show="tabBarIndex === 0" />
 		<Fighting v-show="tabBarIndex === 1" />
 		<Presets v-show="tabBarIndex === 2" />
-	</div>
+	</view>
 	<TabBar @change="tabBarChange" />
 </template>
 <style lang="scss">

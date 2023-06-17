@@ -8,13 +8,14 @@ const titleBarTop = baseConst.statusBarHeight + baseConst.titleBarHeight / 2
 </script>
 
 <template>
-	<div class="presetsPage">
-		<div class="presetsBase flex flex-col items-center">
-			<div class="presetsTitleBar w-100% flex flex-col items-center" :style="{ height: appHeaderHeight + 'px' }">
-				<text class="presetsCaption fixed" :style="{ fontSize: baseConst.titleBarFontSize + 'em', top: titleBarTop + 'px' }">预设列表</text>
-			</div>
-		</div>
-	</div>
+	<view class="presetsPage">
+		<scroll-view class="presetsScrollView" :scroll-y="true">
+			<view v-for="index in 3" :key="index">
+				<PresetItem :caption="'锻炼时间' + index" :checked="globalStore.presetSelected === index" @click="switchPreset(index)"/>
+			</view>
+			<view class="presetsPlaceholder"></view>
+		</scroll-view>
+	</view>
 </template>
 
 <style lang="scss">

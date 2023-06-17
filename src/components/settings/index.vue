@@ -8,13 +8,14 @@ const titleBarTop = baseConst.statusBarHeight + baseConst.titleBarHeight / 2
 </script>
 
 <template>
-	<div class="settinsPage">
-		<div class="settinsBase flex flex-col items-center">
-			<div class="settinsTitleBar w-100% flex flex-col items-center" :style="{ height: appHeaderHeight + 'px' }">
-				<text class="settinsCaption fixed" :style="{ fontSize: baseConst.titleBarFontSize + 'em', top: titleBarTop + 'px' }">配置列表</text>
-			</div>
-		</div>
-	</div>
+	<view class="settingsPage">
+		<scroll-view class="settingsScrollView" :scroll-y="true">
+			<view v-for="index in 3" :key="index">
+				<view />
+			</view>
+			<view class="settingsPlaceholder"></view>
+		</scroll-view>
+	</view>
 </template>
 
 <style lang="scss">
