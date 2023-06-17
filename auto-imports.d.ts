@@ -11,7 +11,8 @@ declare global {
   const effectScope: typeof import('vue')['effectScope']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
-  const globalData: typeof import('@/store/globalStore')['globalData']
+  const globalConst: typeof import('@/config/globalConst')['globalConst']
+  const globalStore: typeof import('@/store/globalStore')['globalStore']
   const h: typeof import('vue')['h']
   const inject: typeof import('vue')['inject']
   const isProxy: typeof import('vue')['isProxy']
@@ -70,7 +71,8 @@ declare module '@vue/runtime-core' {
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
-    readonly globalData: UnwrapRef<typeof import('@/store/globalStore')['globalData']>
+    readonly globalConst: UnwrapRef<typeof import('@/config/globalConst')['globalConst']>
+    readonly globalStore: UnwrapRef<typeof import('@/store/globalStore')['globalStore']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>

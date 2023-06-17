@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { globalData } from '@/store/globalStore'
+import { globalConst } from '@/config/globalConst'
 
 const emits = defineEmits(['change'])
 
@@ -23,7 +23,7 @@ const tabList = [
 
 const switchTab = (index: number) => {
 	Taro.vibrateShort({ type: 'light' })
-	globalData.tabBarSelected = index
+	globalConst.tabBarSelected = index
 	emits('change', index)
 }
 </script>
@@ -35,22 +35,22 @@ const switchTab = (index: number) => {
 			<view class="tabViewer flex flex-1">
 				<view
 					class="tabIcon flex flex-1 flex-col items-center justify-center"
-					:style="{ filter: globalData.tabBarSelected === index ? 'var(--shadow-drop-white)' : '' }"
+					:style="{ filter: globalConst.tabBarSelected === index ? 'var(--shadow-drop-white)' : '' }"
 					v-for="(item, index) in tabList"
 					:key="item.caption"
 					@click="switchTab(index)">
 					<image
 						:class="index === 1 ? 'h-42px w-42px' : 'h-28px w-28px'"
-						v-show="globalData.tabBarSelected === index"
+						v-show="globalConst.tabBarSelected === index"
 						:src="item.selectedIcon"></image>
 					<image
 						:class="index === 1 ? 'h-42px w-42px' : 'h-28px w-28px'"
-						v-show="globalData.tabBarSelected !== index"
+						v-show="globalConst.tabBarSelected !== index"
 						:src="item.defaultIcon"></image>
 					<view
 						:style="{
-							color: globalData.tabBarSelected === index ? 'var(--color-white)' : 'var(--color-light-gray)',
-							fontWeight: globalData.tabBarSelected === index ? 'bold' : 'normal',
+							color: globalConst.tabBarSelected === index ? 'var(--color-white)' : 'var(--color-light-gray)',
+							fontWeight: globalConst.tabBarSelected === index ? 'bold' : 'normal',
 							fontSize: '16px'
 						}">
 						{{ item.caption }}

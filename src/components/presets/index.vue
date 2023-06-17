@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { baseConst } from '@/config/baseConst'
+import { globalStore } from '@/store/globalStore';
 
 // 计算导航栏高度
 const appHeaderHeight = baseConst.statusBarHeight + baseConst.titleBarHeight

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { globalData } from '@/store/globalStore'
+import { globalConst } from '@/config/globalConst'
 
 // const isPlay = ref(false)
 // const hasSound = ref(false)
@@ -12,11 +12,11 @@ const resetTimerState = () => {
 
 const switchTimerState = () => {
 	Taro.vibrateShort({ type: 'light' })
-	globalData.timerState = !globalData.timerState
+	globalConst.timerState = !globalConst.timerState
 }
 const switchAudioState = () => {
 	Taro.vibrateShort({ type: 'light' })
-	globalData.audioState = !globalData.audioState
+	globalConst.audioState = !globalConst.audioState
 }
 </script>
 
@@ -26,12 +26,12 @@ const switchAudioState = () => {
 			<image class="controlIcon" src="../../../assets/images/control-bar/icons8-reset-96-w.png" />
 		</view>
 		<view class="controlIconArea flex items-center justify-center" key="reset" @click="switchTimerState()">
-			<image class="controlIcon" v-show="globalData.timerState" src="../../../assets/images/control-bar/icons8-pause-96-w.png" />
-			<image class="controlIcon" v-show="!globalData.timerState" src="../../../assets/images/control-bar/icons8-play-96-w.png" />
+			<image class="controlIcon" v-show="globalConst.timerState" src="../../../assets/images/control-bar/icons8-pause-96-w.png" />
+			<image class="controlIcon" v-show="!globalConst.timerState" src="../../../assets/images/control-bar/icons8-play-96-w.png" />
 		</view>
 		<view class="controlIconArea flex items-center justify-center" key="reset" @click="switchAudioState()">
-			<image class="controlIcon" v-show="!globalData.audioState" src="../../../assets/images/control-bar/icons8-audio-n-96-w.png" />
-			<image class="controlIcon" v-show="globalData.audioState" src="../../../assets/images/control-bar/icons8-audio-m-96-w.png" />
+			<image class="controlIcon" v-show="!globalConst.audioState" src="../../../assets/images/control-bar/icons8-audio-n-96-w.png" />
+			<image class="controlIcon" v-show="globalConst.audioState" src="../../../assets/images/control-bar/icons8-audio-m-96-w.png" />
 		</view>
 	</view>
 </template>

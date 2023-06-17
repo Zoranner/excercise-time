@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { baseConst } from '@/config/baseConst'
-import { globalData } from '@/store/globalStore'
+import { globalConst } from '@/config/globalConst'
+import { globalStore } from '@/store/globalStore'
 import CircleProgress from '@/components/fighting/circle-progress.vue'
 import ControlBar from '@/components/base/control-bar/index.vue'
 
@@ -27,14 +27,14 @@ const audioContents = ref(['3', '2', '1', '锻炼', '休息', '组间休息', '�
 const delayTime = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const vibrateLongOnce = async () => {
-	if (globalData.vibrateState !== true) {
+	if (globalStore.vibrateState !== true) {
 		return
 	}
 	Taro.vibrateLong({})
 }
 
 const vibrateShortTwice = async () => {
-	if (globalData.vibrateState !== true) {
+	if (globalStore.vibrateState !== true) {
 		return
 	}
 	Taro.vibrateShort({
@@ -47,7 +47,7 @@ const vibrateShortTwice = async () => {
 }
 
 const playTextAudio = (text: string) => {
-	if (globalData.audioState !== true) {
+	if (globalConst.audioState !== true) {
 		return
 	}
 	if (audioContents.value.indexOf(text) === -1) {
@@ -64,7 +64,7 @@ const changeCurrentState = () => {
 
 const autoChangeState = () => {
 	setInterval(() => {
-		if (globalData.timerState !== true) {
+		if (globalConst.timerState !== true) {
 			return
 		}
 		if (intervalTime % 1000 === 0) {
