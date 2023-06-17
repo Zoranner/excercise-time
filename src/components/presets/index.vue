@@ -1,10 +1,15 @@
 <script lang="ts" setup>
 import { globalStore } from '@/store/globalStore';
 
-// 计算导航栏高度
-const appHeaderHeight = baseConst.statusBarHeight + baseConst.titleBarHeight
-// 计算标题栏位置
-const titleBarTop = baseConst.statusBarHeight + baseConst.titleBarHeight / 2
+const emits = defineEmits(['change'])
+
+const switchPreset = (index: number) => {
+	Taro.vibrateShort({ type: 'heavy' })
+	globalStore.presetSelected = index
+	emits('change', index)
+}
+
+switchPreset(globalStore.presetSelected)
 </script>
 
 <template>

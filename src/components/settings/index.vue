@@ -1,11 +1,4 @@
-<script lang="ts" setup>
-import { baseConst } from '@/config/baseConst'
-
-// 计算导航栏高度
-const appHeaderHeight = baseConst.statusBarHeight + baseConst.titleBarHeight
-// 计算标题栏位置
-const titleBarTop = baseConst.statusBarHeight + baseConst.titleBarHeight / 2
-</script>
+<script lang="ts" setup></script>
 
 <template>
 	<view class="settingsPage">

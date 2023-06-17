@@ -5,11 +5,8 @@ import CircleProgress from '@/components/fighting/circle-progress.vue'
 import ControlBar from '@/components/base/control-bar/index.vue'
 
 // 计算导航栏高度
-const appHeaderHeight = baseConst.statusBarHeight + baseConst.titleBarHeight
-// 计算标题栏位置
-const titleBarTop = baseConst.statusBarHeight + baseConst.titleBarHeight / 2
-
-const circleRadius = (baseConst.screenHeight - appHeaderHeight) * 0.4 * 0.5
+const appHeaderHeight = globalConst.statusBarHeight + globalConst.titleBarHeight
+const circleRadius = (globalConst.screenHeight - appHeaderHeight) * 0.4 * 0.5
 const leftTimeFontSize = circleRadius * 0.042
 const stateCaptionFontSize = circleRadius * 0.012
 const cycleTitleFontSize = circleRadius * 0.012

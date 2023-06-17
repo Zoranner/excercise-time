@@ -1,16 +1,15 @@
 <script lang="ts" setup>
 import TabBar from '@/components/base/tab-bar/index.vue'
+import { globalConst } from '@/config/globalConst'
 import Settings from '@/components/settings/index.vue'
 import Fighting from '@/components/fighting/index.vue'
 import Presets from '@/components/presets/index.vue'
-import { globalData } from '@/store/globalStore'
 
 definePageConfig({
 	navigationStyle: 'custom',
 	disableScroll: true // 禁止页面滚动
 })
 
-const tabBarIndex = ref(globalData.tabBarSelected)
 
 const tabBarChange = (index: number) => {
 	tabBarIndex.value = index
