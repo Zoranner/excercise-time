@@ -4,9 +4,12 @@ export default defineAppConfig({
 		'pages/index/index',
 	],
 	window: {
-		backgroundTextStyle: 'dark',
 		navigationBarBackgroundColor: '#000',
+		navigationBarTextStyle: 'white',
 		navigationBarTitleText: '锻炼时间',
-		navigationBarTextStyle: 'white'
-	}
+		backgroundColor: '#686868',
+		backgroundTextStyle: 'light',
+		backgroundColorTop: '#686868',
+		backgroundColorBottom: '#686868',
+	},
 })
