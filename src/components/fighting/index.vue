@@ -24,14 +24,14 @@ const audioContents = ref(['3', '2', '1', '锻炼', '休息', '组间休息', '�
 const delayTime = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const vibrateLongOnce = async () => {
-	if (globalStore.vibrateState !== true) {
+	if (globalStore.vibrateState.value !== true) {
 		return
 	}
 	Taro.vibrateLong({})
 }
 
 const vibrateShortTwice = async () => {
-	if (globalStore.vibrateState !== true) {
+	if (globalStore.vibrateState.value !== true) {
 		return
 	}
 	Taro.vibrateShort({
@@ -92,6 +92,11 @@ onMounted(() => {
 	eventCenter.on(router.onHide, () => {
 		console.log('onHide')
 		globalConst.timerState = false
+		globalStore.save()
+	})
+	eventCenter.on(router.onShow, () => {
+		console.log('onShow')
+		globalStore.load()
 	})
 })
 
