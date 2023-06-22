@@ -11,7 +11,31 @@ const titleBarHeight = height + (top - statusBarHeight!) * 2
 // 计算标题栏字体大小
 const titleBarFontSize = screenHeight * 0.0015
 
+const envVersion = Taro.getAccountInfoSync().miniProgram.envVersion
+const readableEnvVersion = () => {
+	switch (envVersion) {
+		case 'develop':
+			return '开发版'
+		case 'trial':
+			return '体验版'
+		case 'release':
+			return '正式版'
+		default:
+			return '未知'
+	}
+}
+const appVersion = Taro.getAccountInfoSync().miniProgram.version
+const programVersion = `${readableEnvVersion()} (${appVersion === '' ? '#' : appVersion})`
+
 export const globalConst = reactive({
+	/** 程序版本 */
+	programVersion,
+	/** 程序设计 */
+	programAuthor: '杨新冉',
+	/** 美术设计 */
+	programDesign: '冯智毅, 杨新冉',
+	/** 专业顾问 */
+	programCounselor: '沈钰宁',
 	/** 屏幕高度 */
 	screenHeight,
 	/** 状态栏高度 */
