@@ -20,7 +20,7 @@ const titleBarTop = globalConst.statusBarHeight + globalConst.titleBarHeight / 2
 
 <template>
 	<view class="titleBarPanel z-99999 fixed top-0 left-0 right-0">
-		<view class="titleBarView w-100% flex flex-col items-center" :style="{ height: appHeaderHeight + 'px', background: props.color }">
+		<view class="titleBarView w-100% flex flex-col items-center" :style="{ height: appHeaderHeight + 'px', background: props.color as any }">
 			<text class="titleBarCaption fixed" :style="{ fontSize: globalConst.titleBarFontSize + 'em', top: titleBarTop + 'px' }">
 				{{ props.caption }}
 			</text>
