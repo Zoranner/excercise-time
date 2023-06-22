@@ -116,21 +116,21 @@ watch(
 		<view class="absolute" :style="tempForeStyle"></view>
 		<view class="absolute" :style="foreStyle()"></view>
 		<view class="absolute" :style="{ height: Number(radius) * 2 + 'px', width: Number(radius) * 2 + 'px' }">
-			<view class="defaultSlot absolute">
+			<view class="circleProgressSlot absolute">
 				<slot></slot>
 			</view>
-			<text class="defaultCaption absolute" v-if="!slotDefault">{{ progress }}%</text>
+			<text class="circleProgressCaption absolute" v-if="!slotDefault">{{ progress }}%</text>
 		</view>
 	</view>
 </template>
 
 <style lang="scss">
-.defaultSlot {
+.circleProgressSlot {
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
 }
-.defaultCaption {
+.circleProgressCaption {
 	font-size: 4em;
 	left: 50%;
 	top: 50%;
