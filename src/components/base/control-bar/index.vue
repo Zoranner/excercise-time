@@ -23,15 +23,15 @@ const switchAudioState = () => {
 <template>
 	<view class="controlBarPanel w-70% fixed flex items-center justify-center">
 		<view class="controlIconArea flex items-center justify-center" key="reset" @click="resetTimerState()">
-			<image class="controlIcon" src="../../../assets/images/control-bar/icons8-reset-96-w.png" />
+			<image class="controlIcon" src="@/assets/images/control-bar/icons8-reset-96-w.png" />
 		</view>
 		<view class="controlIconArea flex items-center justify-center" key="reset" @click="switchTimerState()">
-			<image class="controlIcon" v-show="globalConst.timerState" src="../../../assets/images/control-bar/icons8-pause-96-w.png" />
-			<image class="controlIcon" v-show="!globalConst.timerState" src="../../../assets/images/control-bar/icons8-play-96-w.png" />
+			<image class="controlIcon" v-show="globalConst.timerState" src="@/assets/images/control-bar/icons8-pause-96-w.png" />
+			<image class="controlIcon" v-show="!globalConst.timerState" src="@/assets/images/control-bar/icons8-play-96-w.png" />
 		</view>
 		<view class="controlIconArea flex items-center justify-center" key="reset" @click="switchAudioState()">
-			<image class="controlIcon" v-show="!globalConst.audioState" src="../../../assets/images/control-bar/icons8-audio-n-96-w.png" />
-			<image class="controlIcon" v-show="globalConst.audioState" src="../../../assets/images/control-bar/icons8-audio-m-96-w.png" />
+			<image class="controlIcon" v-show="!globalConst.audioState" src="@/assets/images/control-bar/icons8-audio-n-96-w.png" />
+			<image class="controlIcon" v-show="globalConst.audioState" src="@/assets/images/control-bar/icons8-audio-m-96-w.png" />
 		</view>
 	</view>
 </template>
