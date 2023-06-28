@@ -3,6 +3,8 @@ import { Preset, PresetsDict } from '@/services/presets/preset'
 class GlobalStore {
 	/** 是否第一次打开程序 */
 	firstTime: boolean = true
+	/** 音频状态 */
+	audioState: Ref<boolean> = ref(true)
 	/** 震动状态 */
 	vibrateState: Ref<boolean> = ref(true)
 	/** 预设字典 */
@@ -16,6 +18,7 @@ class GlobalStore {
 
 	load(): void {
 		this.firstTime = this.toBoolean(Taro.getStorageSync('firstTime'))
+		this.audioState.value = this.toBoolean(Taro.getStorageSync('audioState'))
 		this.vibrateState.value = this.toBoolean(Taro.getStorageSync('vibrateState'))
 		this.presetsDict = this.toPresetsDict(Taro.getStorageSync('presetsDict'))
 		this.presetSelect.value = Taro.getStorageSync('presetSelect')
@@ -61,6 +64,7 @@ class GlobalStore {
 
 	save(): void {
 		Taro.setStorageSync('firstTime', this.firstTime)
+		Taro.setStorageSync('audioState', this.audioState.value)
 		Taro.setStorageSync('vibrateState', this.vibrateState.value)
 		Taro.setStorageSync('presetsDict', JSON.stringify(this.presetsDict))
 		Taro.setStorageSync('presetSelect', this.presetSelect.value)

@@ -46,8 +46,6 @@ export const globalConst = reactive({
 	titleBarFontSize,
 	/** 计时器状态 */
 	timerState: false,
-	/** 音效状态 */
-	audioState: true,
 	/** 标签栏选中的Index */
 	tabBarSelected: 1,
 })
