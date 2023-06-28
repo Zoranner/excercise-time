@@ -9,7 +9,6 @@ const props = defineProps({
 		default: '值'
 	},
 })
-
 const slotDefault = !!useSlots().default
 </script>
 
@@ -36,6 +35,7 @@ const slotDefault = !!useSlots().default
 	border-radius: 30px;
 	color: var(--color-white);
 	background: var(--color-trans-black);
+	filter: var(--shadow-drop-black);
 
 	.settingItemCaption {
 		//width: calc(100% - 45px);
