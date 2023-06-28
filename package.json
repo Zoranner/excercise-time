@@ -9,8 +9,9 @@
 		"css": "sass"
 	},
 	"scripts": {
+		"build": "taro build --type weapp --env production",
 		"build:weapp": "taro build --type weapp --env production",
-		"dev": "npm run build:weapp --watch",
+		"dev": "taro build --type weapp --watch",
 		"dev:min": "taro build --type weapp --watch --env production"
 	},
 	"browserslist": [
@@ -38,6 +39,7 @@
 		"@tarojs/taro": "3.6.6",
 		"@tarojs/taro-h5": "3.6.6",
 		"dayjs": "^1.11.8",
+		"nanoid": "^4.0.2",
 		"prettier-plugin-tailwindcss": "^0.2.8",
 		"taro-ui-vue3": "1.0.0-alpha.21",
 		"unocss-preset-extra": "^0.5.2",
