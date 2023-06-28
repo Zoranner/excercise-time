@@ -124,6 +124,16 @@ autoChangeState()
 </template>
 
 <style lang="scss">
+@font-face {
+    font-family: 'Local Timer';
+    src: url('../../assets/fonts/Khand-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Local Progress';
+    src: url('../../assets/fonts/JosefinSans-Regular.ttf');
+}
+
 .fightingPage {
 	width: 100vw;
 	height: 100vh;
