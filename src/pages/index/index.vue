@@ -46,10 +46,11 @@ switchTitleBar(globalConst.tabBarSelected)
 
 <template>
 	<TitleBar :caption="titleCaption" :color="titleBarColor" />
-	<view :class="tabBarIndex === 1 ? 'mainContainer' : 'viceContainer'" :style="{ '--appHeaderHeight': appHeaderHeight + 'px' }">
-		<Settings v-show="tabBarIndex === 0" />
-		<Fighting v-show="tabBarIndex === 1" />
-		<Presets v-show="tabBarIndex === 2" />
+	<view :class="tabBarIndex === 1 ? 'mainContainer' : 'viceContainer'"
+		:style="{ '--appHeaderHeight': appHeaderHeight + 'px' }">
+		<Settings class="pageContentItem" v-if="tabBarIndex === 0" />
+		<Fighting class="pageContentItem" v-show="tabBarIndex === 1" />
+		<Presets class="pageContentItem" v-if="tabBarIndex === 2" />
 	</view>
 	<TabBar @change="tabBarChange" />
 </template>
@@ -62,7 +63,12 @@ switchTitleBar(globalConst.tabBarSelected)
 .mainContainer {
 	height: 100vh;
 	background: var(--color-dark-gray);
+
+	.pageContentItem {
+		transform: all 1s ease-in-out;
+	}
 }
+
 .viceContainer {
 	height: calc(100vh - var(--appHeaderHeight) - 140px);
 	height: calc(100vh - var(--appHeaderHeight) - constant(safe-area-inset-bottom) - 140px);
@@ -72,6 +78,11 @@ switchTitleBar(globalConst.tabBarSelected)
 	padding-bottom: 200px;
 	padding-bottom: calc(constant(safe-area-inset-bottom) + 200px);
 	padding-bottom: calc(env(safe-area-inset-bottom) + 200px);
+
+	.pageContentItem {
+		transform: all 1s ease-in-out;
+	}
 }
+
 // }
 </style>
