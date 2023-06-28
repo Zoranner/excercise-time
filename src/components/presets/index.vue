@@ -1,31 +1,34 @@
 <script lang="ts" setup>
-import { globalStore } from '@/store/globalStore';
 import PresetItem from './preset-item.vue'
 
 const emits = defineEmits(['change'])
 
-const switchPreset = (index: number) => {
-	Taro.vibrateShort({ type: 'heavy' })
-	globalStore.presetSelected.value = index
-	emits('change', index)
+const presetSelected = (id: string) => {
+	return globalStore.presetSelect.value === id
 }
 
-const itemEditClicked = (index: number) => {
-	console.log('itemClickEdit', index)
+const switchPreset = (id: string) => {
+	Taro.vibrateShort({ type: 'heavy' })
+	globalStore.presetSelect.value = id
+	emits('change', id)
+}
+
+const itemEditClicked = (id: string) => {
+	console.log('itemClickEdit', id)
 	Taro.navigateTo({
 		url: '/pages/presets/editor/index'
 	})
 }
 
-switchPreset(globalStore.presetSelected.value)
+switchPreset(globalStore.presetSelect.value)
 </script>
 
 <template>
 	<view class="presetsPage">
 		<scroll-view class="presetsScrollView" :scroll-y="true">
-			<view v-for="index in 9" :key="index">
-				<PresetItem :caption="'锻炼时间' + index" :checked="globalStore.presetSelected === index"
-					@click:edit="itemEditClicked(index)" />
+			<view v-for="(id, index) in globalStore.presetsDict.keys()" :key="index">
+				<PresetItem :preset="globalStore.presetsDict.get(id)" :checked="presetSelected(id)"
+					@click:select="switchPreset(id)" @click:edit="itemEditClicked(id)" />
 			</view>
 			<view class="presetsPlaceholder"></view>
 		</scroll-view>
