@@ -16,7 +16,7 @@ const switchTimerState = () => {
 }
 const switchAudioState = () => {
 	Taro.vibrateShort({ type: 'light' })
-	globalConst.audioState = !globalConst.audioState
+	globalStore.audioState.value = !globalStore.audioState.value
 }
 </script>
 
@@ -30,8 +30,8 @@ const switchAudioState = () => {
 			<image class="controlIcon" v-show="!globalConst.timerState" src="@/assets/images/control-bar/icons8-play-96-w.png" />
 		</view>
 		<view class="controlIconArea flex items-center justify-center" key="reset" @click="switchAudioState()">
-			<image class="controlIcon" v-show="!globalConst.audioState" src="@/assets/images/control-bar/icons8-audio-n-96-w.png" />
-			<image class="controlIcon" v-show="globalConst.audioState" src="@/assets/images/control-bar/icons8-audio-m-96-w.png" />
+			<image class="controlIcon" v-show="!globalStore.audioState" src="@/assets/images/control-bar/icons8-audio-n-96-w.png" />
+			<image class="controlIcon" v-show="globalStore.audioState" src="@/assets/images/control-bar/icons8-audio-m-96-w.png" />
 		</view>
 	</view>
 </template>

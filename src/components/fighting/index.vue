@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { globalConst } from '@/config/globalConst'
-import { globalStore } from '@/store/globalStore'
 import { eventCenter, getCurrentInstance } from '@tarojs/taro'
 import CircleProgress from '@/components/fighting/circle-progress.vue'
 import ControlBar from '@/components/base/control-bar/index.vue'
@@ -44,7 +42,7 @@ const vibrateShortTwice = async () => {
 }
 
 const playTextAudio = (text: string) => {
-	if (globalConst.audioState !== true) {
+	if (globalStore.audioState.value !== true) {
 		return
 	}
 	if (audioContents.value.indexOf(text) === -1) {

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { globalStore } from '@/store/globalStore'
 import SettingItem from './setting-item.vue';
 import CheckBox from '@/components/base/check-box/index.vue'
 import AboutCard from '@/components/about/index.vue'
