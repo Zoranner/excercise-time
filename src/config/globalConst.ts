@@ -1,5 +1,5 @@
 // 获取系统信息
-const { statusBarHeight, screenHeight } = Taro.getSystemInfoSync()
+const { statusBarHeight, screenWidth, screenHeight } = Taro.getSystemInfoSync()
 // 获取胶囊信息
 const { height, top } = Taro.getMenuButtonBoundingClientRect()
 // 计算标题栏高度
@@ -36,6 +36,8 @@ export const globalConst = reactive({
 	programDesign: '冯智毅, 杨新冉',
 	/** 专业顾问 */
 	programCounselor: '沈钰宁',
+	/** 屏幕宽度 */
+	screenWidth,
 	/** 屏幕高度 */
 	screenHeight,
 	/** 状态栏高度 */
