@@ -11,8 +11,8 @@ class GlobalConfig {
 		audioState: true,
 		/** 震动状态 */
 		vibrateState: true,
-		/** 选中预设的Index */
-		presetSelect: ''
+		// /** 选中预设的Index */
+		// presetSelect: ''
 	})
 
 	/** 是否第一次打开程序 */
@@ -41,15 +41,16 @@ class GlobalConfig {
 	titleBarFontSize: number
 
 	/** 预设字典 */
-	localPresetsDict: PresetsDict
+	private localPresetsDict: PresetsDict
 	/** 预设播放器 */
-	localPresetPlayer: PresetPlayer
+	private localPresetPlayer: PresetPlayer
+	/** 选中预设的Index */
+	private localPresetSelect: string
 
 	/** 获取预设字典 */
 	get presetsDict(): PresetsDict {
 		return this.localPresetsDict
 	}
-
 	/** 设置预设字典 */
 	private set presetsDict(presetsDict: PresetsDict) {
 		this.localPresetsDict = presetsDict
@@ -57,41 +58,62 @@ class GlobalConfig {
 
 	/** 获取预设播放器 */
 	get presetPlayer(): PresetPlayer {
+		if (this.localPresetPlayer === undefined) {
+			this.localPresetPlayer = new PresetPlayer()
+		}
 		return this.localPresetPlayer
 	}
-
 	/** 设置预设播放器 */
 	private set presetPlayer(presetPlayer: PresetPlayer) {
 		this.localPresetPlayer = presetPlayer
 	}
 
+	/** 获取选中预设的Index */
+	get presetSelect(): string {
+		return this.localPresetSelect
+	}
+	/** 设置选中预设的Index */
+	set presetSelect(id: string) {
+		this.localPresetSelect = id
+		let preset = this.presetsDict.get(id)
+		this.presetPlayer.load(preset)
+	}
+
 	constructor() {
+		this.initialize()
+		this.getSystemInfo()
 		this.getProgramVersion()
 		this.setAboutInfo()
-		this.getSystemInfo()
 		this.loadStorage()
 	}
-	
+
+	/** 初始化部分变量 */
+	initialize(): void {
+		this.presetPlayer = new PresetPlayer()
+		// this.presetPlayer.load(new Preset(''))
+		// this.presetPlayer.play()
+	}
+
 	/** 加载本地存储 */
 	loadStorage(): void {
-		this.firstTime = typeConvert.toBoolean(Taro.getStorageSync('firstTime'))
-		this.presetsDict = this.toPresetsDict(Taro.getStorageSync('presetsDict'))
 		this.ref.audioState = typeConvert.toBoolean(Taro.getStorageSync('audioState'))
 		this.ref.vibrateState = typeConvert.toBoolean(Taro.getStorageSync('vibrateState'))
-		this.ref.presetSelect = Taro.getStorageSync('presetSelect')
+		this.firstTime = typeConvert.toBoolean(Taro.getStorageSync('firstTime'))
+		this.presetsDict = this.toPresetsDict(Taro.getStorageSync('presetsDict'))
+		this.presetSelect = Taro.getStorageSync('presetSelect')
 
 		if (this.firstTime) {
 			if (this.presetsDict.length() === 0) {
 				for (let i = 1; i <= 9; i++) {
 					this.presetsDict.add(new Preset(`锻炼时间${i}`))
 				}
-				this.ref.presetSelect = this.presetsDict.keys()[0]
+				this.presetSelect = this.presetsDict.keys()[0]
 				this.firstTime = false
 			}
 		}
 		else {
-			if (!this.presetsDict.contains(this.ref.presetSelect)) {
-				this.ref.presetSelect = this.presetsDict.keys()[0]
+			if (!this.presetsDict.contains(this.presetSelect)) {
+				this.presetSelect = this.presetsDict.keys()[0]
 			}
 		}
 	}
@@ -151,7 +173,7 @@ class GlobalConfig {
 
 	/** 获取当前预设 */
 	getCurrentPreset(): Preset {
-		let preset = this.presetsDict.get(this.ref.presetSelect)
+		let preset = this.presetsDict.get(this.presetSelect)
 		if (preset === undefined) {
 			preset = new Preset('锻炼时间')
 		}
@@ -160,11 +182,11 @@ class GlobalConfig {
 
 	/** 保存本地存储 */
 	saveStorage(): void {
-		Taro.setStorageSync('firstTime', this.firstTime)
-		Taro.setStorageSync('presetsDict', JSON.stringify(this.presetsDict))
 		Taro.setStorageSync('audioState', this.ref.audioState)
 		Taro.setStorageSync('vibrateState', this.ref.vibrateState)
-		Taro.setStorageSync('presetSelect', this.ref.presetSelect)
+		Taro.setStorageSync('firstTime', this.firstTime)
+		Taro.setStorageSync('presetsDict', JSON.stringify(this.presetsDict))
+		Taro.setStorageSync('presetSelect', this.presetSelect)
 	}
 }
 

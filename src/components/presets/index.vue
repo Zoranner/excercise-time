@@ -1,16 +1,25 @@
 <script lang="ts" setup>
+import { PresetPlayerStatus } from '@/services/presets/presetPlayer'
 import PresetItem from './preset-item.vue'
+import ToastLayer from '@/components/base/toast-layer/index.vue'
 
-const emits = defineEmits(['change'])
+//const emits = defineEmits(['change'])
 
-const presetSelected = (id: string) => {
-	return globalConfig.ref.presetSelect === id
-}
+const selectPresetId = ref('')
+const toastLayer = ref()
 
 const switchPreset = (id: string) => {
+	if (globalConfig.presetSelect === id) {
+		return
+	}
+	if (globalConfig.presetPlayer.status !== PresetPlayerStatus.Stopped) {
+		toastLayer.value.showInfomation('请停止计时器后再切换预设')
+		return
+	}
 	Taro.vibrateShort({ type: 'heavy' })
-	globalConfig.ref.presetSelect = id
-	emits('change', id)
+	selectPresetId.value = id
+	globalConfig.presetSelect = id
+	//emits('change', preset)
 }
 
 const itemEditClicked = (id: string) => {
@@ -20,18 +29,19 @@ const itemEditClicked = (id: string) => {
 	})
 }
 
-switchPreset(globalConfig.ref.presetSelect)
+selectPresetId.value = globalConfig.presetSelect
 </script>
 
 <template>
 	<view class="presetsPage">
 		<scroll-view class="presetsScrollView" :scroll-y="true">
 			<view v-for="(id, index) in globalConfig.presetsDict.keys()" :key="index">
-				<PresetItem :preset="globalConfig.presetsDict.get(id)" :checked="presetSelected(id)"
+				<PresetItem :preset="globalConfig.presetsDict.get(id)" :checked="selectPresetId === id"
 					@click:select="switchPreset(id)" @click:edit="itemEditClicked(id)" />
 			</view>
 			<view class="presetsPlaceholder"></view>
 		</scroll-view>
+		<ToastLayer ref="toastLayer" />
 	</view>
 </template>
 

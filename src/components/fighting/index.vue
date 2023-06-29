@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { eventCenter, getCurrentInstance } from '@tarojs/taro'
 import CircleProgress from '@/components/fighting/circle-progress.vue'
 import ControlBar from '@/components/base/control-bar/index.vue'
 
@@ -16,7 +15,6 @@ const backgroundColor = ref(['var(--color-lg-green)', 'var(--color-lg-red)', 'va
 const stateCaptions = ref(['锻炼', '休息', '组间休息', '冷却时间'])
 const audioContents = ref(['3', '2', '1', '锻炼', '休息', '组间休息', '冷却时间'])
 
-let intervalTime = 8000
 const delayTime = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const vibrateLongOnce = async () => {
@@ -46,66 +44,26 @@ const playTextAudio = (text: string) => {
 	if (audioContents.value.indexOf(text) === -1) {
 		return
 	}
-	const innerAudioContext = Taro.createInnerAudioContext()
+	let innerAudioContext = Taro.createInnerAudioContext()
 	innerAudioContext.autoplay = true
 	innerAudioContext.src = `assets/audios/${text}.wav`
 }
 
-const changeCurrentState = () => {
-	currentState.value = (currentState.value + 1) % 4
-}
-
-const autoChangeState = () => {
-	setInterval(() => {
-		if (globalConfig.ref.timerState !== 1) {
-			return
-		}
-		if (intervalTime % 1000 === 0) {
-			currentTimer.value = intervalTime / 1000
-			playTextAudio(currentTimer.value.toString())
-			if (currentTimer.value < 1) {
-				currentTimer.value = currentTimer.value + 8
-				currentState.value = (currentState.value + 1) % 4
-				if (currentState.value === 0) {
-					vibrateLongOnce()
-				} else {
-					vibrateShortTwice()
-				}
-				playTextAudio(stateCaptions.value[currentState.value])
-				intervalTime = 8000
-			}
-		}
-		currentProgress.value = ((8000 - intervalTime) / 8000) * 100
-		intervalTime -= 50
-	}, 50)
-}
-
-onMounted(() => {
-	const router = getCurrentInstance().router
-	if (router === null) {
-		return
-	}
-	eventCenter.on(router.onHide, () => {
-		globalConfig.ref.timerState = 2
-		globalConfig.saveStorage()
-	})
-	eventCenter.on(router.onShow, () => {
-		globalConfig.loadStorage()
-	})
-})
-
-autoChangeState()
+// autoChangeState()
+// globalConfig.presetPlayer.load(globalConfig.getCurrentPreset())
 </script>
 
 <template>
 	<view class="fightingPage">
 		<view class="fightingBase flex flex-col items-center" :style="{ background: backgroundColor[currentState] }">
-			<CircleProgress class="timeProgress fixed" :progress="currentProgress" :radius="circleRadius"
-				@click="changeCurrentState()">
-				<text class="timeContent" :style="{ fontSize: leftTimeFontSize + 'em' }">{{ '00:0' + currentTimer }}</text>
+			<CircleProgress class="timeProgress fixed" :progress="currentProgress" :radius="circleRadius">
+				<text class="timeContent" :style="{ fontSize: leftTimeFontSize + 'em' }">
+					{{ '00:0' + currentTimer }}
+				</text>
 			</CircleProgress>
-			<text class="stateCaption fixed" :style="{ fontSize: stateCaptionFontSize + 'em' }">{{
-				stateCaptions[currentState] }}</text>
+			<text class="stateCaption fixed" :style="{ fontSize: stateCaptionFontSize + 'em' }">
+				{{ stateCaptions[currentState] }}
+			</text>
 			<ControlBar class="controlBar fixed"></ControlBar>
 			<view class="cycleValueArea w-70% fixed flex" :style="{ '--cycleValueFontSize': cycleValueFontSize + 'em' }">
 				<text class="w-50%">1/3</text>

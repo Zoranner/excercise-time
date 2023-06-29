@@ -51,7 +51,6 @@ const editAreaClicked = () => {
 	emits('click:edit')
 }
 const selectAreaClicked = () => {
-	console.log('selectAreaClicked')
 	emits('click:select')
 }
 </script>

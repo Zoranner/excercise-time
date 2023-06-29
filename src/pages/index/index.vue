@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { eventCenter, getCurrentInstance } from '@tarojs/taro'
 import TitleBar from '@/components/base/title-bar/index.vue'
 import Settings from '@/components/settings/index.vue'
 import Fighting from '@/components/fighting/index.vue'
@@ -46,8 +47,20 @@ const tabBarChange = (index: number) => {
 	switchTitleBar(index)
 }
 
-Taro.setKeepScreenOn({ keepScreenOn: true })
-switchTitleBar(globalConfig.ref.tabBarSelected)
+onMounted(() => {
+	let router = getCurrentInstance().router
+	if (router !== null) {
+		eventCenter.on(router.onHide, () => {
+			globalConfig.ref.timerState = 2
+			globalConfig.saveStorage()
+		})
+		eventCenter.on(router.onShow, () => {
+			globalConfig.loadStorage()
+		})
+	}
+	Taro.setKeepScreenOn({ keepScreenOn: true })
+	switchTitleBar(globalConfig.ref.tabBarSelected)
+})
 </script>
 
 <template>
