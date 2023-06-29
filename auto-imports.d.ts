@@ -14,7 +14,7 @@ declare global {
   const effectScope: typeof import('vue')['effectScope']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
-  const globalConst: typeof import('@/config/globalConst')['globalConst']
+  const globalConfig: typeof import('@/config/globalConfig')['globalConfig']
   const globalStore: typeof import('@/store/globalStore')['globalStore']
   const h: typeof import('vue')['h']
   const inject: typeof import('vue')['inject']
@@ -42,7 +42,6 @@ declare global {
   const readonly: typeof import('vue')['readonly']
   const ref: typeof import('vue')['ref']
   const resolveComponent: typeof import('vue')['resolveComponent']
-  const resolveDirective: typeof import('vue')['resolveDirective']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
@@ -52,6 +51,7 @@ declare global {
   const toRefs: typeof import('vue')['toRefs']
   const toValue: typeof import('vue')['toValue']
   const triggerRef: typeof import('vue')['triggerRef']
+  const typeConvert: typeof import('@/utils/typeConvert')['typeConvert']
   const unref: typeof import('vue')['unref']
   const useAttrs: typeof import('vue')['useAttrs']
   const useCssModule: typeof import('vue')['useCssModule']
@@ -81,7 +81,7 @@ declare module 'vue' {
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
-    readonly globalConst: UnwrapRef<typeof import('@/config/globalConst')['globalConst']>
+    readonly globalConfig: UnwrapRef<typeof import('@/config/globalConfig')['globalConfig']>
     readonly globalStore: UnwrapRef<typeof import('@/store/globalStore')['globalStore']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
@@ -118,6 +118,7 @@ declare module 'vue' {
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
     readonly toValue: UnwrapRef<typeof import('vue')['toValue']>
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
+    readonly typeConvert: UnwrapRef<typeof import('@/utils/typeConvert')['typeConvert']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
@@ -141,7 +142,7 @@ declare module '@vue/runtime-core' {
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
-    readonly globalConst: UnwrapRef<typeof import('@/config/globalConst')['globalConst']>
+    readonly globalConfig: UnwrapRef<typeof import('@/config/globalConfig')['globalConfig']>
     readonly globalStore: UnwrapRef<typeof import('@/store/globalStore')['globalStore']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
@@ -178,6 +179,7 @@ declare module '@vue/runtime-core' {
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
     readonly toValue: UnwrapRef<typeof import('vue')['toValue']>
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
+    readonly typeConvert: UnwrapRef<typeof import('@/utils/typeConvert')['typeConvert']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
