@@ -92,18 +92,17 @@ class GlobalConfig {
 		let currentPresetId = Taro.getStorageSync('currentPresetId')
 
 		if (this.firstTime) {
-			if (this.presetsDict.length() === 0) {
-				this.presetsDict.add(new Preset(`锻炼时间1`, 5, 5, 5, 5, 3, 30, 30))
-				this.presetsDict.add(new Preset(`锻炼时间2`, 5, 5, 5, 10, 3, 30, 30))
-				this.presetsDict.add(new Preset(`锻炼时间3`, 5, 8, 5, 5, 3, 30, 30))
-				this.presetsDict.add(new Preset(`锻炼时间4`, 5, 8, 5, 10, 3, 30, 30))
-				this.presetsDict.add(new Preset(`锻炼时间5`, 5, 10, 5, 5, 3, 30, 30))
-				this.presetsDict.add(new Preset(`锻炼时间6`, 5, 10, 5, 10, 3, 30, 30))
-				this.presetsDict.add(new Preset(`锻炼时间7`, 5, 15, 5, 10, 3, 30, 30))
-				this.presetsDict.add(new Preset(`锻炼时间8`, 5, 20, 5, 10, 3, 30, 30))
-				currentPresetId = this.presetsDict.keys()[0]
-				this.firstTime = false
-			}
+			this.presetsDict.clear()
+			this.presetsDict.add(new Preset(`锻炼时间1`, 5, 5, 5, 5, 3, 30, 30))
+			this.presetsDict.add(new Preset(`锻炼时间2`, 5, 5, 5, 10, 3, 30, 30))
+			this.presetsDict.add(new Preset(`锻炼时间3`, 5, 8, 5, 5, 3, 30, 30))
+			this.presetsDict.add(new Preset(`锻炼时间4`, 5, 8, 5, 10, 3, 30, 30))
+			this.presetsDict.add(new Preset(`锻炼时间5`, 5, 10, 5, 5, 3, 30, 30))
+			this.presetsDict.add(new Preset(`锻炼时间6`, 5, 10, 5, 10, 3, 30, 30))
+			this.presetsDict.add(new Preset(`锻炼时间7`, 5, 15, 5, 10, 3, 30, 30))
+			this.presetsDict.add(new Preset(`锻炼时间8`, 5, 20, 5, 10, 3, 30, 30))
+			currentPresetId = this.presetsDict.keys()[0]
+			this.firstTime = false
 		}
 		else {
 			if (!this.presetsDict.contains(currentPresetId)) {
