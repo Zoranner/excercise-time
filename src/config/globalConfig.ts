@@ -1,3 +1,5 @@
+import { PresetPlayer } from "@/services/presets/presetPlayer"
+
 class GlobalConfig {
 	/** 程序版本 */
 	programVersion: string
@@ -7,6 +9,7 @@ class GlobalConfig {
 	programDesign: string
 	/** 专业顾问 */
 	programCounselor: string
+
 	/** 屏幕宽度 */
 	screenWidth: number
 	/** 屏幕高度 */
@@ -20,6 +23,9 @@ class GlobalConfig {
 	/** 标题栏文字大小 */
 	titleBarFontSize: number
 
+	/** 预设播放器 */
+	presetPlayer: PresetPlayer
+
 
 	ref = reactive({
 		/** 计时器状态 */
@@ -32,7 +38,6 @@ class GlobalConfig {
 		this.getProgramVersion()
 		this.setAboutInfo()
 		this.getSystemInfo()
-		console.log('globalConfig', this)
 	}
 
 	/** 获取程序版本 */
