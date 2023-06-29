@@ -74,6 +74,9 @@ class PresetPlayer {
     }
 
     jump(): void {
+        if (this.status !== PresetPlayerStatus.Playing) {
+            return
+        }
         this.jumpCycleMark = true
     }
 
@@ -107,6 +110,9 @@ class PresetPlayer {
     }
 
     private async updateTimer(type: PresetTimerType, seconds: number): Promise<void> {
+        if (this.status === PresetPlayerStatus.Stopped) {
+            return
+        }
         let milliseconds = seconds * 1000
         let leftMilliseconds = milliseconds
         this.timerTypeUpdatedEvent.emit(type)
@@ -115,11 +121,13 @@ class PresetPlayer {
                 if (this.status === PresetPlayerStatus.Stopped) {
                     clearInterval(this.intervalId)
                     resolve()
+                    return
                 }
                 if (this.jumpCycleMark) {
                     this.jumpCycleMark = false
                     clearInterval(this.intervalId)
                     resolve()
+                    return
                 }
                 if (this.status === PresetPlayerStatus.Paused) {
                     return
@@ -131,6 +139,7 @@ class PresetPlayer {
                 if (leftMilliseconds <= 0) {
                     clearInterval(this.intervalId)
                     resolve()
+                    return
                 }
                 this.timerProgressUpdatedEvent.emit(leftMilliseconds / milliseconds)
             }, this.INTERVAL)

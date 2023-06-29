@@ -13,16 +13,23 @@ const cycleValueFontSize = circleRadius * 0.014
 let currentPreset = globalConfig.presetPlayer.preset
 const currentTimer = ref('00:00')
 const currentProgress = ref(0)
-const backgroundColor = ref('var(--color-lg-green)')
+const backgroundColor = ref('var(--color-lg-yellow)')
 const timerTypeCaption = ref('准备')
 const cycleProgress = ref('##/##')
 const loopProgress = ref('##/##')
 
 const backgroundColors = ['var(--color-lg-yellow)', 'var(--color-lg-green)', 'var(--color-lg-red)', 'var(--color-lg-yellow)', 'var(--color-lg-blue)']
 const stateCaptions = ['准备', '锻炼', '休息', '组间休息', '冷却时间']
-const audioContents = ['3', '2', '1', '准备', '锻炼', '休息', '组间休息', '冷却时间']
+const audioContents = ['3', '2', '1', '准备', '锻炼', '休息', '组间休息', '冷却时间', '锻炼结束']
 
 const delayTime = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+const initCircleProgress = async () => {
+	for (let i = 10; i > 0; i--) {
+		await delayTime(30)
+		currentProgress.value = i / 10
+	}
+}
 
 const vibrateLongOnce = async () => {
 	if (globalConfig.ref.vibrateState !== true) {
@@ -59,8 +66,8 @@ const playTextAudio = (text: string) => {
 const initPageElements = () => {
 	currentPreset = globalConfig.presetPlayer.preset
 	currentTimer.value = typeConvert.toHumanTime(currentPreset.prepareTime)
-	currentProgress.value = 0
-	backgroundColor.value = 'var(--color-lg-green)'
+	initCircleProgress()
+	backgroundColor.value = 'var(--color-lg-yellow)'
 	timerTypeCaption.value = '准备'
 	if (currentPreset !== null) {
 		cycleProgress.value = `${currentPreset.cycle}/${currentPreset.cycle}`
@@ -79,6 +86,46 @@ onMounted(() => {
 			globalConfig.presetPlayer.pause()
 		})
 	}
+
+	initPageElements()
+
+	globalConfig.presetPlayer.statusUpdatedEvent.on((status) => {
+		switch (status) {
+			case PresetPlayerStatus.Stopped:
+				playTextAudio('锻炼结束')
+				initPageElements()
+				break
+			case PresetPlayerStatus.Paused:
+			case PresetPlayerStatus.Playing:
+				break
+		}
+	})
+	globalConfig.presetPlayer.timerTypeUpdatedEvent.on((type) => {
+		backgroundColor.value = backgroundColors[type]
+		timerTypeCaption.value = stateCaptions[type]
+		playTextAudio(stateCaptions[type])
+		if (type === PresetTimerType.Exercise) {
+			vibrateLongOnce()
+		}
+		else {
+			vibrateShortTwice()
+		}
+	})
+	globalConfig.presetPlayer.timerTimeUpdatedEvent.on((seconds) => {
+		currentTimer.value = typeConvert.toHumanTime(seconds)
+		if (seconds <= 3) {
+			playTextAudio(seconds.toString())
+		}
+	})
+	globalConfig.presetPlayer.timerProgressUpdatedEvent.on((progress) => {
+		currentProgress.value = (1 - progress) * 100
+	})
+	globalConfig.presetPlayer.leftCycleUpdatedEvent.on((leftCycle) => {
+		cycleProgress.value = `${leftCycle}/${currentPreset.cycle}`
+	})
+	globalConfig.presetPlayer.leftLoopUpdatedEvent.on((leftLoop) => {
+		loopProgress.value = `${leftLoop}/${currentPreset.loop}`
+	})
 })
 
 onUnmounted(() => {
@@ -87,44 +134,12 @@ onUnmounted(() => {
 		eventCenter.off(router.onHide)
 	}
 	globalConfig.presetPlayer.stop()
-})
-
-initPageElements()
-globalConfig.presetPlayer.statusUpdatedEvent.on((status) => {
-	switch (status) {
-		case PresetPlayerStatus.Stopped:
-			initPageElements()
-			break
-		case PresetPlayerStatus.Paused:
-		case PresetPlayerStatus.Playing:
-			break
-	}
-})
-globalConfig.presetPlayer.timerTypeUpdatedEvent.on((type) => {
-	backgroundColor.value = backgroundColors[type]
-	timerTypeCaption.value = stateCaptions[type]
-	playTextAudio(stateCaptions[type])
-	if (type === PresetTimerType.Exercise) {
-		vibrateLongOnce()
-	}
-	else {
-		vibrateShortTwice()
-	}
-})
-globalConfig.presetPlayer.timerTimeUpdatedEvent.on((seconds) => {
-	currentTimer.value = typeConvert.toHumanTime(seconds)
-	if (seconds <= 3) {
-		playTextAudio(seconds.toString())
-	}
-})
-globalConfig.presetPlayer.timerProgressUpdatedEvent.on((progress) => {
-	currentProgress.value = (1 - progress) * 100
-})
-globalConfig.presetPlayer.leftCycleUpdatedEvent.on((leftCycle) => {
-	cycleProgress.value = `${leftCycle}/${currentPreset.cycle}`
-})
-globalConfig.presetPlayer.leftLoopUpdatedEvent.on((leftLoop) => {
-	loopProgress.value = `${leftLoop}/${currentPreset.loop}`
+	globalConfig.presetPlayer.statusUpdatedEvent.off()
+	globalConfig.presetPlayer.timerTypeUpdatedEvent.off()
+	globalConfig.presetPlayer.timerTimeUpdatedEvent.off()
+	globalConfig.presetPlayer.timerProgressUpdatedEvent.off()
+	globalConfig.presetPlayer.leftCycleUpdatedEvent.off()
+	globalConfig.presetPlayer.leftLoopUpdatedEvent.off()
 })
 </script>
 

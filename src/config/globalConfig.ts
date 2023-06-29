@@ -161,19 +161,6 @@ class GlobalConfig {
 		}
 	}
 
-	// /** 获取当前预设 */
-	// getCurrentPreset(): Preset {
-	// 	if (this.presetPlayer.preset === null ||
-	// 		this.presetPlayer.preset === undefined) {
-	// 		this.setCurrentPreset(this.presetsDict.keys()[0])
-	// 	}
-	// 	return this.presetPlayer.preset
-	// }
-
-	// setCurrentPreset(id: string): void {
-	// 	this.presetPlayer.load(this.presetsDict.get(id))
-	// }
-
 	/** 保存本地存储 */
 	saveStorage(): void {
 		Taro.setStorageSync('audioState', this.ref.audioState)
