@@ -14,8 +14,8 @@ interface Particle {
 
 const emits = defineEmits(['stoped'])
 
-const width = globalConst.screenWidth
-const height = globalConst.screenHeight
+const width = globalConfig.screenWidth
+const height = globalConfig.screenHeight
 const colors = [
     "#f44336",
     "#e91e63",
