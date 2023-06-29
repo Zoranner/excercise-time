@@ -5,6 +5,7 @@ const emitTimerReset = defineEmits(['reset'])
 
 const resetTimerState = () => {
 	Taro.vibrateShort({ type: 'light' })
+	globalConfig.ref.timerState = 0
 	emitTimerReset('reset')
 }
 
@@ -12,9 +13,9 @@ const switchTimerState = () => {
 	Taro.vibrateShort({ type: 'light' })
 	globalConfig.ref.timerState = globalConfig.ref.timerState !== 1 ? 1 : 2
 }
-const switchAudioState = () => {
+
+const forwardNextCycle = () => {
 	Taro.vibrateShort({ type: 'light' })
-	globalStore.audioState.value = !globalStore.audioState.value
 }
 </script>
 
