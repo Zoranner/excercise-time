@@ -106,6 +106,9 @@ class PresetPlayer {
                 }
                 await this.updateTimer(PresetTimerType.CycleRest, this.preset.cycleRestTime)
             }
+            if (loop === 1) {
+                continue
+            }
             await this.updateTimer(PresetTimerType.LoopRest, this.preset.loopRestTime)
         }
         await this.updateTimer(PresetTimerType.Cooling, this.preset.coolingTime)
