@@ -42,30 +42,31 @@ class PresetPlayer {
         this.preset = preset
     }
 
-    play(): void {
-        if (this.status === PresetPlayerStatus.Running) {
-            return
-        }
-        if (this.status === PresetPlayerStatus.Paused) {
+    play(): PresetPlayerStatus {
+        if (this.status !== PresetPlayerStatus.Running) {
+            if (this.status === PresetPlayerStatus.Stopped) {
+                this.updatePlayer()
+            }
             this.status = PresetPlayerStatus.Running
-            return
+            console.log('play')
         }
-        this.updatePlayer()
-        this.status = PresetPlayerStatus.Running
+        return this.status
     }
 
-    pause(): void {
-        if (this.status === PresetPlayerStatus.Paused) {
-            return
+    pause(): PresetPlayerStatus {
+        if (this.status !== PresetPlayerStatus.Paused) {
+            this.status = PresetPlayerStatus.Paused
+            console.log('pause')
         }
-        this.status = PresetPlayerStatus.Paused
+        return this.status
     }
 
-    stop(): void {
-        if (this.status === PresetPlayerStatus.Stopped) {
-            return
+    stop(): PresetPlayerStatus {
+        if (this.status !== PresetPlayerStatus.Stopped) {
+            this.status = PresetPlayerStatus.Stopped
+            console.log('stop')
         }
-        this.status = PresetPlayerStatus.Stopped
+        return this.status
     }
 
     private async updatePlayer(): Promise<void> {
