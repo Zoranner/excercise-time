@@ -3,49 +3,49 @@ import { Preset, PresetsDict } from '@/services/presets/preset'
 class GlobalStore {
 	/** 是否第一次打开程序 */
 	firstTime: boolean = true
-	/** 音频状态 */
-	audioState: Ref<boolean> = ref(true)
-	/** 震动状态 */
-	vibrateState: Ref<boolean> = ref(true)
 	/** 预设字典 */
 	presetsDict: PresetsDict = new PresetsDict()
-	/** 选中预设的Index */
-	presetSelect: Ref<string> = ref('')
+	// /** 音频状态 */
+	// audioState: Ref<boolean> = ref(true)
+	// /** 震动状态 */
+	// vibrateState: Ref<boolean> = ref(true)
+	// /** 选中预设的Index */
+	// presetSelect: Ref<string> = ref('')
+
+	ref = reactive({
+		/** 音频状态 */
+		audioState: true,
+		/** 震动状态 */
+		vibrateState: true,
+		/** 选中预设的Index */
+		presetSelect: ''
+	})
 
 	constructor() {
 		this.load()
 	}
 
 	load(): void {
-		this.firstTime = this.toBoolean(Taro.getStorageSync('firstTime'))
-		this.audioState.value = this.toBoolean(Taro.getStorageSync('audioState'))
-		this.vibrateState.value = this.toBoolean(Taro.getStorageSync('vibrateState'))
+		this.firstTime = typeConvert.toBoolean(Taro.getStorageSync('firstTime'))
+		this.ref.audioState = typeConvert.toBoolean(Taro.getStorageSync('audioState'))
+		this.ref.vibrateState = typeConvert.toBoolean(Taro.getStorageSync('vibrateState'))
 		this.presetsDict = this.toPresetsDict(Taro.getStorageSync('presetsDict'))
-		this.presetSelect.value = Taro.getStorageSync('presetSelect')
+		this.ref.presetSelect = Taro.getStorageSync('presetSelect')
 
 		if (this.firstTime) {
 			if (this.presetsDict.length() === 0) {
 				for (let i = 1; i <= 9; i++) {
 					this.presetsDict.add(new Preset(`锻炼时间${i}`))
 				}
-				this.presetSelect.value = this.presetsDict.keys()[0]
+				this.ref.presetSelect = this.presetsDict.keys()[0]
 				this.firstTime = false
 			}
 		}
 		else {
-			if (!this.presetsDict.contains(this.presetSelect.value)) {
-				this.presetSelect.value = this.presetsDict.keys()[0]
+			if (!this.presetsDict.contains(this.ref.presetSelect)) {
+				this.ref.presetSelect = this.presetsDict.keys()[0]
 			}
 		}
-	}
-
-	toBoolean(str: string): boolean {
-		return !(/false/i).test(str)
-	}
-
-	toNumber(str: string): number {
-		let result = parseInt(str)
-		return isNaN(result) ? -1 : result
 	}
 
 	toPresetsDict(str: string): PresetsDict {
@@ -58,16 +58,20 @@ class GlobalStore {
 		}
 	}
 
-	nullOrEmpty(str: string): boolean {
-		return str === null || str === undefined || str === ''
+	getCurrentPreset(): Preset {
+		let preset = this.presetsDict.get(this.ref.presetSelect)
+		if (preset === undefined) {
+			preset = new Preset('锻炼时间')
+		}
+		return preset
 	}
 
 	save(): void {
 		Taro.setStorageSync('firstTime', this.firstTime)
-		Taro.setStorageSync('audioState', this.audioState.value)
-		Taro.setStorageSync('vibrateState', this.vibrateState.value)
+		Taro.setStorageSync('audioState', this.ref.audioState)
+		Taro.setStorageSync('vibrateState', this.ref.vibrateState)
 		Taro.setStorageSync('presetsDict', JSON.stringify(this.presetsDict))
-		Taro.setStorageSync('presetSelect', this.presetSelect.value)
+		Taro.setStorageSync('presetSelect', this.ref.presetSelect)
 	}
 }
 
