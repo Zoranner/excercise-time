@@ -43,6 +43,7 @@ class PresetPlayer {
     timerProgressUpdatedEvent = new TypedEvent<number>()
     leftCycleUpdatedEvent = new TypedEvent<number>()
     leftLoopUpdatedEvent = new TypedEvent<number>()
+    exerciseFinishedEvent = new TypedEvent<boolean>()
 
     constructor() { }
 
@@ -55,12 +56,16 @@ class PresetPlayer {
     }
 
     play(): PresetPlayerStatus {
-        if (this.status !== PresetPlayerStatus.Playing) {
-            if (this.status === PresetPlayerStatus.Stopped) {
+        switch (this.status) {
+            case PresetPlayerStatus.Playing:
+                break
+            case PresetPlayerStatus.Paused:
+                this.status = PresetPlayerStatus.Playing
+                break
+            case PresetPlayerStatus.Stopped:
+                this.status = PresetPlayerStatus.Playing
                 this.updatePlayer()
-            }
-            this.status = PresetPlayerStatus.Playing
-            console.log('play')
+                break
         }
         return this.status
     }
@@ -68,7 +73,6 @@ class PresetPlayer {
     pause(): PresetPlayerStatus {
         if (this.status !== PresetPlayerStatus.Paused) {
             this.status = PresetPlayerStatus.Paused
-            console.log('pause')
         }
         return this.status
     }
@@ -83,7 +87,6 @@ class PresetPlayer {
     stop(): PresetPlayerStatus {
         if (this.status !== PresetPlayerStatus.Stopped) {
             this.status = PresetPlayerStatus.Stopped
-            console.log('stop')
         }
         return this.status
     }
@@ -107,6 +110,7 @@ class PresetPlayer {
         }
         await this.updateTimer(PresetTimerType.Cooling, this.preset.coolingTime)
         this.status = PresetPlayerStatus.Stopped
+        this.exerciseFinishedEvent.emit(true)
     }
 
     private async updateTimer(type: PresetTimerType, seconds: number): Promise<void> {

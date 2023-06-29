@@ -92,7 +92,6 @@ onMounted(() => {
 	globalConfig.presetPlayer.statusUpdatedEvent.on((status) => {
 		switch (status) {
 			case PresetPlayerStatus.Stopped:
-				playTextAudio('锻炼结束')
 				initPageElements()
 				break
 			case PresetPlayerStatus.Paused:
@@ -126,6 +125,10 @@ onMounted(() => {
 	globalConfig.presetPlayer.leftLoopUpdatedEvent.on((leftLoop) => {
 		loopProgress.value = `${leftLoop}/${currentPreset.loop}`
 	})
+	globalConfig.presetPlayer.exerciseFinishedEvent.on(() => {
+		playTextAudio('锻炼结束')
+		vibrateShortTwice()
+	})
 })
 
 onUnmounted(() => {
@@ -140,6 +143,7 @@ onUnmounted(() => {
 	globalConfig.presetPlayer.timerProgressUpdatedEvent.off()
 	globalConfig.presetPlayer.leftCycleUpdatedEvent.off()
 	globalConfig.presetPlayer.leftLoopUpdatedEvent.off()
+	globalConfig.presetPlayer.exerciseFinishedEvent.off()
 })
 </script>
 
