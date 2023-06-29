@@ -5,19 +5,19 @@ const emits = defineEmits(['change'])
 
 const tabList = [
 	{
-		caption: '设置',
-		defaultIcon: require('@/assets/images/tab-bar/icons8-gear-96-lg.png'),
-		selectedIcon: require('@/assets/images/tab-bar/icons8-gear-96-w.png'),
+		caption: '高级',
+		defaultIcon: require('@/assets/images/tab-bar/user_settings-lg.svg'),
+		selectedIcon: require('@/assets/images/tab-bar/user_settings.svg'),
 	},
 	{
 		caption: '开始',
-		defaultIcon: require('@/assets/images/tab-bar/icons8-fist-96-lg.png'),
-		selectedIcon: require('@/assets/images/tab-bar/icons8-fist-96-w.png'),
+		defaultIcon: require('@/assets/images/tab-bar/fist-lg.svg'),
+		selectedIcon: require('@/assets/images/tab-bar/fist.svg'),
 	},
 	{
 		caption: '预设',
-		defaultIcon: require('@/assets/images/tab-bar/icons8-content-96-lg.png'),
-		selectedIcon: require('@/assets/images/tab-bar/icons8-content-96-w.png'),
+		defaultIcon: require('@/assets/images/tab-bar/playlist-lg.svg'),
+		selectedIcon: require('@/assets/images/tab-bar/playlist.svg'),
 	}
 ]
 

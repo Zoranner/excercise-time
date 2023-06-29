@@ -71,7 +71,7 @@ const selectAreaClicked = () => {
 			<view class="presetItemContent">{{ presetContent }}</view>
 		</view>
 		<view class="presetEditArea" @click="editAreaClicked()">
-			<image class="presetEditButton" src="@/assets/images/presets-item/icons8-edit-row-96-f.png"></image>
+			<image class="presetEditButton" src="@/assets/images/presets-item/tune.svg"></image>
 		</view>
 	</view>
 </template>
@@ -157,8 +157,8 @@ const selectAreaClicked = () => {
 
 		.presetEditButton {
 			position: relative;
-			width: 50px;
-			height: 50px;
+			width: 60px;
+			height: 60px;
 			left: 50%;
 			top: 50%;
 			transform: translate(-50%, -50%);
@@ -169,8 +169,8 @@ const selectAreaClicked = () => {
 		filter: var(--shadow-drop-heavy-white);
 
 		.presetEditButton {
-			width: 55px;
-			height: 55px;
+			width: 65px;
+			height: 65px;
 		}
 	}
 

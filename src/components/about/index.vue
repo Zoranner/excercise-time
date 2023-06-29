@@ -4,7 +4,7 @@
 <template>
 	<view class="aboutComponent">
 		<view class="aboutLogo">
-			<image class="aboutLogoImage" src="@/assets/images/logo.png"></image>
+			<image class="aboutLogoImage" src="@/assets/images/fist.svg"></image>
 		</view>
 		<view class="aboutTitle">间歇锻炼计时器</view>
 		<!-- <view class="aboutInformation">当前版本：{{ globalConst.programVersion }}</view>
@@ -31,10 +31,14 @@
 		border-radius: 50%;
 		margin: 20px auto;
 		overflow: hidden;
+		background: var(--color-lg-green);
 
 		.aboutLogoImage {
-			width: calc(100% + 2px);
-			height: calc(100% + 2px);
+			position: relative;
+			width: 65%;
+			height: 65%;
+			top: 50%;
+			transform: translateY(-50%);
 		}
 	}
 
