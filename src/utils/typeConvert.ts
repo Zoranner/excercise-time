@@ -9,7 +9,7 @@ class TypeConvert {
     }
 
     toHumanTime(seconds: number): string {
-        var minutes = Math.min(Math.round(seconds / 60) % 60, 99);
+        var minutes = Math.min(Math.floor(seconds / 60), 99);
         var seconds = seconds % 60;
         return `${this.prefixInteger(minutes, 2)}:${this.prefixInteger(seconds, 2)}`
     }
