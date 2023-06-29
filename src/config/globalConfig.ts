@@ -2,6 +2,19 @@ import { PresetPlayer } from '@/services/presets/presetPlayer'
 import { Preset, PresetsDict } from '@/services/presets/preset'
 
 class GlobalConfig {
+	ref = reactive({
+		/** 计时器状态 */
+		timerState: 0,
+		/** 标签栏选中的Index */
+		tabBarSelected: 2,
+		/** 音频状态 */
+		audioState: true,
+		/** 震动状态 */
+		vibrateState: true,
+		/** 选中预设的Index */
+		presetSelect: ''
+	})
+
 	/** 是否第一次打开程序 */
 	firstTime: boolean = true
 
@@ -28,22 +41,29 @@ class GlobalConfig {
 	titleBarFontSize: number
 
 	/** 预设字典 */
-	presetsDict: PresetsDict
+	localPresetsDict: PresetsDict
 	/** 预设播放器 */
-	presetPlayer: PresetPlayer
+	localPresetPlayer: PresetPlayer
 
-	ref = reactive({
-		/** 计时器状态 */
-		timerState: 0,
-		/** 标签栏选中的Index */
-		tabBarSelected: 2,
-		/** 音频状态 */
-		audioState: true,
-		/** 震动状态 */
-		vibrateState: true,
-		/** 选中预设的Index */
-		presetSelect: ''
-	})
+	/** 获取预设字典 */
+	get presetsDict(): PresetsDict {
+		return this.localPresetsDict
+	}
+
+	/** 设置预设字典 */
+	private set presetsDict(presetsDict: PresetsDict) {
+		this.localPresetsDict = presetsDict
+	}
+
+	/** 获取预设播放器 */
+	get presetPlayer(): PresetPlayer {
+		return this.localPresetPlayer
+	}
+
+	/** 设置预设播放器 */
+	private set presetPlayer(presetPlayer: PresetPlayer) {
+		this.localPresetPlayer = presetPlayer
+	}
 
 	constructor() {
 		this.getProgramVersion()

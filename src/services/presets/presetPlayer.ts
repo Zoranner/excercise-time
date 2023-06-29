@@ -29,7 +29,14 @@ class PresetPlayer {
         this.preset = preset
     }
 
-    start(): void {
+    load(preset: Preset): void {
+        if(this.status !== PresetPlayerStatus.Stopped) {
+            return
+        }
+        this.preset = preset
+    }
+
+    play(): void {
         if (this.status === PresetPlayerStatus.Running) {
             return
         }
