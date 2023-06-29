@@ -9,10 +9,10 @@ class Preset {
 	prepareTime: number
 	/** 锻炼时间 */
 	exerciseTime: number
-	/** 周期 */
-	cycle: number
 	/** 休息时间 */
 	cycleRestTime: number
+	/** 周期 */
+	cycle: number
 	/** 循环 */
 	loop: number
 	/** 组间休息时间 */
@@ -24,8 +24,8 @@ class Preset {
 		caption: string = '锻炼时间',
 		prepareTime: number = 5,
 		exerciseTime: number = 10,
-		cycle: number = 10,
 		cycleRestTime: number = 5,
+		cycle: number = 10,
 		loop: number = 3,
 		loopRestTime: number = 30,
 		coolingTime: number = 30
@@ -34,8 +34,8 @@ class Preset {
 		this.caption = caption
 		this.prepareTime = prepareTime
 		this.exerciseTime = exerciseTime
-		this.cycle = cycle
 		this.cycleRestTime = cycleRestTime
+		this.cycle = cycle
 		this.loop = loop
 		this.loopRestTime = loopRestTime
 		this.coolingTime = coolingTime

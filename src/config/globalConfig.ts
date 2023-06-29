@@ -93,9 +93,14 @@ class GlobalConfig {
 
 		if (this.firstTime) {
 			if (this.presetsDict.length() === 0) {
-				for (let i = 1; i <= 9; i++) {
-					this.presetsDict.add(new Preset(`锻炼时间${i}`))
-				}
+				this.presetsDict.add(new Preset(`锻炼时间1`, 5, 5, 5, 5, 3, 30, 30))
+				this.presetsDict.add(new Preset(`锻炼时间2`, 5, 5, 5, 10, 3, 30, 30))
+				this.presetsDict.add(new Preset(`锻炼时间3`, 5, 8, 5, 5, 3, 30, 30))
+				this.presetsDict.add(new Preset(`锻炼时间4`, 5, 8, 5, 10, 3, 30, 30))
+				this.presetsDict.add(new Preset(`锻炼时间5`, 5, 10, 5, 5, 3, 30, 30))
+				this.presetsDict.add(new Preset(`锻炼时间6`, 5, 10, 5, 10, 3, 30, 30))
+				this.presetsDict.add(new Preset(`锻炼时间7`, 5, 15, 5, 10, 3, 30, 30))
+				this.presetsDict.add(new Preset(`锻炼时间8`, 5, 20, 5, 10, 3, 30, 30))
 				currentPresetId = this.presetsDict.keys()[0]
 				this.firstTime = false
 			}
