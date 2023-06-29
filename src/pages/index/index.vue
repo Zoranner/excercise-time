@@ -38,7 +38,7 @@ const titleBarAction = () => {
 	}
 	switch (globalConfig.ref.tabBarSelected) {
 		case 2:
-			Taro.navigateTo({ url: '/pages/presets/editor/index' })
+			// Taro.navigateTo({ url: '/pages/presets/editor/index' })
 			break
 	}
 }

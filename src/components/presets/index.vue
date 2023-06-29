@@ -22,11 +22,11 @@ const switchPreset = (id: string) => {
 	//emits('change', preset)
 }
 
-const itemEditClicked = (id: string) => {
-	console.log('itemClickEdit', id)
-	Taro.navigateTo({
-		url: '/pages/presets/editor/index'
-	})
+const itemEditClicked = (_id: string) => {
+	toastLayer.value.showInfomation('正在开发中...')
+	// Taro.navigateTo({
+	// 	url: `/pages/presets/editor/index?id=${id}`,
+	// })
 }
 
 selectPresetId.value = globalConfig.presetPlayer.preset.id
