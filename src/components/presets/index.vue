@@ -4,12 +4,12 @@ import PresetItem from './preset-item.vue'
 const emits = defineEmits(['change'])
 
 const presetSelected = (id: string) => {
-	return globalStore.presetSelect.value === id
+	return globalStore.ref.presetSelect === id
 }
 
 const switchPreset = (id: string) => {
 	Taro.vibrateShort({ type: 'heavy' })
-	globalStore.presetSelect.value = id
+	globalStore.ref.presetSelect = id
 	emits('change', id)
 }
 
@@ -20,7 +20,7 @@ const itemEditClicked = (id: string) => {
 	})
 }
 
-switchPreset(globalStore.presetSelect.value)
+switchPreset(globalStore.ref.presetSelect)
 </script>
 
 <template>

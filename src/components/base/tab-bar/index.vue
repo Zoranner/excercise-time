@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { globalConst } from '@/config/globalConst'
-
 const emits = defineEmits(['change'])
 
 const tabList = [
@@ -23,7 +21,7 @@ const tabList = [
 
 const switchTab = (index: number) => {
 	Taro.vibrateShort({ type: 'light' })
-	globalConst.tabBarSelected = index
+	globalConfig.ref.tabBarSelected = index
 	emits('change', index)
 }
 </script>

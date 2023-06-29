@@ -7,10 +7,10 @@
 			<image class="aboutLogoImage" src="@/assets/images/fist.svg"></image>
 		</view>
 		<view class="aboutTitle">间歇锻炼计时器</view>
-		<!-- <view class="aboutInformation">当前版本：{{ globalConst.programVersion }}</view>
-		<view class="aboutInformation">程序设计：{{ globalConst.programAuthor }}</view>
-		<view class="aboutInformation">美术设计：{{ globalConst.programDesign }}</view>
-		<view class="aboutInformation">专业顾问：{{ globalConst.programCounselor }}</view> -->
+		<!-- <view class="aboutInformation">当前版本：{{ globalConfig.programVersion }}</view>
+		<view class="aboutInformation">程序设计：{{ globalConfig.programAuthor }}</view>
+		<view class="aboutInformation">美术设计：{{ globalConfig.programDesign }}</view>
+		<view class="aboutInformation">专业顾问：{{ globalConfig.programCounselor }}</view> -->
 	</view>
 </template>
 

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { globalConst } from '@/config/globalConst'
 import TitleBar from '@/components/base/title-bar/index.vue'
 import Settings from '@/components/settings/index.vue'
 import Fighting from '@/components/fighting/index.vue'
@@ -16,7 +15,6 @@ const appHeaderHeight = globalConst.statusBarHeight + globalConst.titleBarHeight
 
 const titleCaption = ref('锻炼时间')
 const titleBarColor = ref('var(--color-transparent)')
-const tabBarIndex = ref(globalConst.tabBarSelected)
 
 const switchTitleBar = (index: number) => {
 	switch (index) {
@@ -36,21 +34,22 @@ const switchTitleBar = (index: number) => {
 }
 
 const tabBarChange = (index: number) => {
-	tabBarIndex.value = index
 	switchTitleBar(index)
 }
 
 Taro.setKeepScreenOn({ keepScreenOn: true })
-switchTitleBar(globalConst.tabBarSelected)
+switchTitleBar(globalConfig.ref.tabBarSelected)
 </script>
 
 <template>
-	<TitleBar :caption="titleCaption" :color="titleBarColor" />
-	<view :class="tabBarIndex === 1 ? 'mainContainer' : 'viceContainer'"
-		:style="{ '--appHeaderHeight': appHeaderHeight + 'px' }">
-		<Settings class="pageContentItem" v-if="tabBarIndex === 0" />
-		<Fighting class="pageContentItem" v-show="tabBarIndex === 1" />
-		<Presets class="pageContentItem" v-if="tabBarIndex === 2" />
+	<TitleBar :caption="titleCaption" :color="titleBarColor" :action="titleBarAction">
+		<image src="@/assets/images/title-bar/alarm_add.svg" v-if="globalConfig.ref.tabBarSelected === 2"></image>
+	</TitleBar>
+	<view :class="globalConfig.ref.tabBarSelected === 1 ? 'mainContainer' : 'viceContainer'"
+		:style="{ '--appHeaderHeight': globalConfig.appHeaderHeight + 'px' }">
+		<Settings class="pageContentItem" v-if="globalConfig.ref.tabBarSelected === 0" />
+		<Fighting class="pageContentItem" v-show="globalConfig.ref.tabBarSelected === 1" />
+		<Presets class="pageContentItem" v-if="globalConfig.ref.tabBarSelected === 2" />
 	</view>
 	<TabBar @change="tabBarChange" />
 </template>

@@ -10,7 +10,7 @@ const surpriseActive = ref(false)
 const surprisePanel = ref();
 
 const vibrateStateChecked = (checked: boolean) => {
-	globalStore.vibrateState.value = checked
+	globalStore.ref.vibrateState = checked
 }
 
 const aboutCardClicked = () => {

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { globalConst } from '@/config/globalConst'
-
 const props = defineProps({
 	caption: {
 		type: String,

@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { globalConst } from '@/config/globalConst'
-
 // const isPlay = ref(false)
 // const hasSound = ref(false)
 const emitTimerReset = defineEmits(['reset'])
@@ -12,7 +10,7 @@ const resetTimerState = () => {
 
 const switchTimerState = () => {
 	Taro.vibrateShort({ type: 'light' })
-	globalConst.timerState = !globalConst.timerState
+	globalConfig.ref.timerState = globalConfig.ref.timerState !== 1 ? 1 : 2
 }
 const switchAudioState = () => {
 	Taro.vibrateShort({ type: 'light' })
