@@ -82,7 +82,9 @@ class PresetsDict {
 	}
 
 	clear(): void {
-		this.dict = {}
+		while (this.length() > 0) {
+			this.remove(this.keys()[0])
+		}
 	}
 }
 
