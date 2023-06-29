@@ -5,7 +5,7 @@ const showInfomation = (message: string) => {
     messageRef.value = message
     setTimeout(() => {
         messageRef.value = ''
-    }, 1500)
+    }, 2000)
 }
 
 defineExpose({
@@ -32,6 +32,7 @@ defineExpose({
     .toastBoxBack {
         padding: 35px;
         font-size: 1.35em;
+        text-align: center;
         border-radius: 25px;
         color: var(--color-white);
         background: var(--color-black);
