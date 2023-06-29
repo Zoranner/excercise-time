@@ -20,14 +20,14 @@ let intervalTime = 8000
 const delayTime = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const vibrateLongOnce = async () => {
-	if (globalStore.ref.vibrateState !== true) {
+	if (globalConfig.ref.vibrateState !== true) {
 		return
 	}
 	Taro.vibrateLong()
 }
 
 const vibrateShortTwice = async () => {
-	if (globalStore.ref.vibrateState !== true) {
+	if (globalConfig.ref.vibrateState !== true) {
 		return
 	}
 	Taro.vibrateShort({
@@ -40,7 +40,7 @@ const vibrateShortTwice = async () => {
 }
 
 const playTextAudio = (text: string) => {
-	if (globalStore.ref.audioState !== true) {
+	if (globalConfig.ref.audioState !== true) {
 		return
 	}
 	if (audioContents.value.indexOf(text) === -1) {
@@ -87,10 +87,10 @@ onMounted(() => {
 	}
 	eventCenter.on(router.onHide, () => {
 		globalConfig.ref.timerState = 2
-		globalStore.save()
+		globalConfig.saveStorage()
 	})
 	eventCenter.on(router.onShow, () => {
-		globalStore.load()
+		globalConfig.loadStorage()
 	})
 })
 

@@ -1,6 +1,10 @@
-import { PresetPlayer } from "@/services/presets/presetPlayer"
+import { PresetPlayer } from '@/services/presets/presetPlayer'
+import { Preset, PresetsDict } from '@/services/presets/preset'
 
 class GlobalConfig {
+	/** 是否第一次打开程序 */
+	firstTime: boolean = true
+
 	/** 程序版本 */
 	programVersion: string
 	/** 程序设计 */
@@ -23,21 +27,53 @@ class GlobalConfig {
 	/** 标题栏文字大小 */
 	titleBarFontSize: number
 
+	/** 预设字典 */
+	presetsDict: PresetsDict
 	/** 预设播放器 */
 	presetPlayer: PresetPlayer
-
 
 	ref = reactive({
 		/** 计时器状态 */
 		timerState: 0,
 		/** 标签栏选中的Index */
-		tabBarSelected: 2
+		tabBarSelected: 2,
+		/** 音频状态 */
+		audioState: true,
+		/** 震动状态 */
+		vibrateState: true,
+		/** 选中预设的Index */
+		presetSelect: ''
 	})
 
 	constructor() {
 		this.getProgramVersion()
 		this.setAboutInfo()
 		this.getSystemInfo()
+		this.loadStorage()
+	}
+	
+	/** 加载本地存储 */
+	loadStorage(): void {
+		this.firstTime = typeConvert.toBoolean(Taro.getStorageSync('firstTime'))
+		this.presetsDict = this.toPresetsDict(Taro.getStorageSync('presetsDict'))
+		this.ref.audioState = typeConvert.toBoolean(Taro.getStorageSync('audioState'))
+		this.ref.vibrateState = typeConvert.toBoolean(Taro.getStorageSync('vibrateState'))
+		this.ref.presetSelect = Taro.getStorageSync('presetSelect')
+
+		if (this.firstTime) {
+			if (this.presetsDict.length() === 0) {
+				for (let i = 1; i <= 9; i++) {
+					this.presetsDict.add(new Preset(`锻炼时间${i}`))
+				}
+				this.ref.presetSelect = this.presetsDict.keys()[0]
+				this.firstTime = false
+			}
+		}
+		else {
+			if (!this.presetsDict.contains(this.ref.presetSelect)) {
+				this.ref.presetSelect = this.presetsDict.keys()[0]
+			}
+		}
 	}
 
 	/** 获取程序版本 */
@@ -80,6 +116,35 @@ class GlobalConfig {
 		this.titleBarHeight = height + (top - statusBarHeight!) * 2
 		this.appHeaderHeight = this.statusBarHeight + this.titleBarHeight
 		this.titleBarFontSize = screenHeight * 0.0015
+	}
+
+	/** 字符串转预设字典 */
+	toPresetsDict(str: string): PresetsDict {
+		try {
+			let result = JSON.parse(str)
+			return result === null || result === undefined ? new PresetsDict() : Object.assign(new PresetsDict(), result)
+		}
+		catch (e) {
+			return new PresetsDict()
+		}
+	}
+
+	/** 获取当前预设 */
+	getCurrentPreset(): Preset {
+		let preset = this.presetsDict.get(this.ref.presetSelect)
+		if (preset === undefined) {
+			preset = new Preset('锻炼时间')
+		}
+		return preset
+	}
+
+	/** 保存本地存储 */
+	saveStorage(): void {
+		Taro.setStorageSync('firstTime', this.firstTime)
+		Taro.setStorageSync('presetsDict', JSON.stringify(this.presetsDict))
+		Taro.setStorageSync('audioState', this.ref.audioState)
+		Taro.setStorageSync('vibrateState', this.ref.vibrateState)
+		Taro.setStorageSync('presetSelect', this.ref.presetSelect)
 	}
 }
 

@@ -4,12 +4,12 @@ import PresetItem from './preset-item.vue'
 const emits = defineEmits(['change'])
 
 const presetSelected = (id: string) => {
-	return globalStore.ref.presetSelect === id
+	return globalConfig.ref.presetSelect === id
 }
 
 const switchPreset = (id: string) => {
 	Taro.vibrateShort({ type: 'heavy' })
-	globalStore.ref.presetSelect = id
+	globalConfig.ref.presetSelect = id
 	emits('change', id)
 }
 
@@ -20,14 +20,14 @@ const itemEditClicked = (id: string) => {
 	})
 }
 
-switchPreset(globalStore.ref.presetSelect)
+switchPreset(globalConfig.ref.presetSelect)
 </script>
 
 <template>
 	<view class="presetsPage">
 		<scroll-view class="presetsScrollView" :scroll-y="true">
-			<view v-for="(id, index) in globalStore.presetsDict.keys()" :key="index">
-				<PresetItem :preset="globalStore.presetsDict.get(id)" :checked="presetSelected(id)"
+			<view v-for="(id, index) in globalConfig.presetsDict.keys()" :key="index">
+				<PresetItem :preset="globalConfig.presetsDict.get(id)" :checked="presetSelected(id)"
 					@click:select="switchPreset(id)" @click:edit="itemEditClicked(id)" />
 			</view>
 			<view class="presetsPlaceholder"></view>

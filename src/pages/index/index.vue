@@ -20,7 +20,7 @@ const switchTitleBar = (index: number) => {
 			titleBarColor.value = 'var(--color-black)'
 			break
 		case 1:
-			let currentPreset = globalStore.getCurrentPreset()
+			let currentPreset = globalConfig.getCurrentPreset()
 			titleCaption.value = currentPreset.caption
 			titleBarColor.value = 'var(--color-transparent)'
 			break

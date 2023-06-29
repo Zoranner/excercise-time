@@ -21,10 +21,9 @@ const webpackChain = (chain) => {
 			imports: [
 				'vue',
 				{
-					'@/store/globalStore': ['globalStore'],
 					'@/config/globalConfig': ['globalConfig'],
 					'@/utils/typeConvert': ['typeConvert'],
-					'@tarojs/taro': ['showToast', ['default', 'Taro']]
+					'@tarojs/taro': [['default', 'Taro']]
 				}
 			],
 			dts: 'auto-imports.d.ts',

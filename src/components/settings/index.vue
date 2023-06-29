@@ -12,11 +12,11 @@ const surpriseLayer = ref()
 const toastLayer = ref()
 
 const audioStateChecked = (checked: boolean) => {
-	globalStore.ref.audioState = checked
+	globalConfig.ref.audioState = checked
 }
 
 const vibrateStateChecked = (checked: boolean) => {
-	globalStore.ref.vibrateState = checked
+	globalConfig.ref.vibrateState = checked
 }
 
 const copyGithubUrl = () => {
@@ -58,10 +58,10 @@ const surpriseStoped = () => {
 		<scroll-view class="settingsScrollView" :scroll-y="true">
 			<GroupItem caption="辅助" />
 			<SettingItem caption="语音辅助">
-				<CheckBox :checked="globalStore.ref.audioState" @update:checked="audioStateChecked" />
+				<CheckBox :checked="globalConfig.ref.audioState" @update:checked="audioStateChecked" />
 			</SettingItem>
 			<SettingItem caption="震动辅助">
-				<CheckBox :checked="globalStore.ref.vibrateState" @update:checked="vibrateStateChecked" />
+				<CheckBox :checked="globalConfig.ref.vibrateState" @update:checked="vibrateStateChecked" />
 			</SettingItem>
 			<GroupItem caption="贡献" />
 			<SettingItem caption="开源地址">
