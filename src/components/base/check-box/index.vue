@@ -22,7 +22,6 @@ const updateState = (checked: Boolean) => {
 
 const switchState = () => {
 	checked.value = !checked.value
-	console.log('switchState: ', checked.value)
 	updateState(checked.value)
 	Taro.vibrateShort({ type: 'light' })
 	emits('update:checked', checked.value)

@@ -10,9 +10,6 @@ definePageConfig({
 	disableScroll: true // 禁止页面滚动
 })
 
-// 计算导航栏高度
-const appHeaderHeight = globalConst.statusBarHeight + globalConst.titleBarHeight
-
 const titleCaption = ref('锻炼时间')
 const titleBarColor = ref('var(--color-transparent)')
 
@@ -23,12 +20,24 @@ const switchTitleBar = (index: number) => {
 			titleBarColor.value = 'var(--color-black)'
 			break
 		case 1:
-			titleCaption.value = '锻炼时间'
+			let currentPreset = globalStore.getCurrentPreset()
+			titleCaption.value = currentPreset.caption
 			titleBarColor.value = 'var(--color-transparent)'
 			break
 		case 2:
 			titleCaption.value = '预设列表'
 			titleBarColor.value = 'var(--color-black)'
+			break
+	}
+}
+
+const titleBarAction = () => {
+	if (globalConfig.ref.tabBarSelected !== 2) {
+		return
+	}
+	switch (globalConfig.ref.tabBarSelected) {
+		case 2:
+			Taro.navigateTo({ url: '/pages/presets/editor/index' })
 			break
 	}
 }

@@ -9,6 +9,7 @@ const props = defineProps({
 		default: '值'
 	},
 })
+
 const slotDefault = !!useSlots().default
 </script>
 
@@ -74,8 +75,4 @@ const slotDefault = !!useSlots().default
 		filter: var(--shadow-drop-heavy-white);
 	}
 }
-
-// .settingItemPanel:active {
-// 	background: var(--activeBackground);
-// }
 </style>

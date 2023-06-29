@@ -7,19 +7,27 @@ const props = defineProps({
 	color: {
 		type: [String, Object],
 		default: 'var(--color-transparent)'
+	},
+	action: {
+		type: Function,
+		default: () => {
+			console.log('titleBar action')
+		}
 	}
 })
 
-// 计算导航栏高度
-const appHeaderHeight = globalConst.statusBarHeight + globalConst.titleBarHeight
-// 计算标题栏位置
-const titleBarTop = globalConst.statusBarHeight + globalConst.titleBarHeight / 2
+const slotDefault = !!useSlots().default
 </script>
 
 <template>
-	<view class="titleBarPanel z-99999 fixed top-0 left-0 right-0">
-		<view class="titleBarView w-100% flex flex-col items-center" :style="{ height: appHeaderHeight + 'px', background: props.color as any }">
-			<text class="titleBarCaption fixed" :style="{ fontSize: globalConst.titleBarFontSize + 'em', top: titleBarTop + 'px' }">
+	<view class="titleBarPanel z-99999 fixed top-0 left-0 right-0"
+		:style="{ '--appHeaderHeight': globalConfig.appHeaderHeight + 'px', '--titleBarColor': props.color as any }">
+		<view class="titleBarView w-100% flex flex-col items-center"
+			:style="{ '--titleBarHeight': globalConfig.titleBarHeight + 'px', '--statusBarHeight': globalConfig.statusBarHeight + 'px' }">
+			<view class="titleBarCorner fixed flex items-center" v-if="slotDefault" @click="props.action">
+				<slot class="titleBarCornerImage"></slot>
+			</view>
+			<text class="titleBarCaption fixed" :style="{ fontSize: globalConfig.titleBarFontSize + 'em' }">
 				{{ props.caption }}
 			</text>
 		</view>
@@ -29,10 +37,30 @@ const titleBarTop = globalConst.statusBarHeight + globalConst.titleBarHeight / 2
 <style lang="scss">
 .titleBarPanel {
 	width: 100%;
+	height: var(--appHeaderHeight);
+	background: var(--titleBarColor);
+	filter: var(--shadow-drop-black);
+
 	.titleBarView {
-		filter: var(--shadow-drop-black);
+		position: relative;
+		height: var(--titleBarHeight);
+		top: var(--statusBarHeight);
+
+		.titleBarCorner {
+			width: calc(var(--titleBarHeight) - 30px);
+			height: calc(var(--titleBarHeight) - 30px);
+			left: 15px;
+			padding: 15px;
+			filter: var(--shadow-drop-white);
+		}
+
+		.titleBarCorner:active {
+			filter: var(--shadow-drop-heavy-white);
+		}
+
 		.titleBarCaption {
-			//top: 10%;
+			position: absolute;
+			top: 50%;
 			transform: translateY(-50%);
 			color: var(--color-white);
 		}

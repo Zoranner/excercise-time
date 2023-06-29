@@ -7,14 +7,16 @@ definePageConfig({
 	disableScroll: true // 禁止页面滚动
 })
 
-// 计算导航栏高度
-const appHeaderHeight = globalConst.statusBarHeight + globalConst.titleBarHeight
-
+let navigationBack = () => {
+	Taro.navigateBack()
+}
 </script>
 
 <template>
-	<TitleBar caption="编辑预设" color="var(--color-black)" />
-	<view class="timerContainer" :style="{ '--appHeaderHeight': appHeaderHeight + 'px' }">
+	<TitleBar caption="编辑预设" color="var(--color-black)" :action="navigationBack">
+		<image src="@/assets/images/title-bar/back.svg"></image>
+	</TitleBar>
+	<view class="timerContainer" :style="{ '--appHeaderHeight': globalConfig.appHeaderHeight + 'px' }">
 		<PresetEditor />
 	</view>
 </template>

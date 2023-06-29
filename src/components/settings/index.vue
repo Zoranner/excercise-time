@@ -3,14 +3,35 @@ import GroupItem from './group-item.vue';
 import SettingItem from './setting-item.vue';
 import CheckBox from '@/components/base/check-box/index.vue'
 import AboutCard from '@/components/about/index.vue'
-import SurpriseCanvas from '@/components/surprise/index.vue'
+import SurpriseLayer from '@/components/base/surprise/index.vue'
+import ToastLayer from '@/components/base/toast-layer/index.vue'
 
 let aboutTouchTime = 0;
 const surpriseActive = ref(false)
-const surprisePanel = ref();
+const surpriseLayer = ref()
+const toastLayer = ref()
+
+const audioStateChecked = (checked: boolean) => {
+	globalStore.ref.audioState = checked
+}
 
 const vibrateStateChecked = (checked: boolean) => {
 	globalStore.ref.vibrateState = checked
+}
+
+const copyGithubUrl = () => {
+	Taro.setClipboardData({
+		data: 'data',
+		success: () => {
+			Taro.showToast({
+				title: '链接已复制',
+				icon: 'none',
+				duration: 10
+			});
+			Taro.hideToast();
+			toastLayer.value.showInfomation('链接已复制')
+		}
+	})
 }
 
 const aboutCardClicked = () => {
@@ -19,7 +40,7 @@ const aboutCardClicked = () => {
 	} else {
 		if (((new Date().getTime()) - aboutTouchTime) < 800) {
 			surpriseActive.value = true
-			surprisePanel.value.surpriseClicked()
+			surpriseLayer.value.surpriseClicked()
 			aboutTouchTime = 0;
 		} else {
 			aboutTouchTime = new Date().getTime();
@@ -35,23 +56,28 @@ const surpriseStoped = () => {
 <template>
 	<view class="settingsPage">
 		<scroll-view class="settingsScrollView" :scroll-y="true">
-			<GroupItem caption="辅助"/>
+			<GroupItem caption="辅助" />
 			<SettingItem caption="语音辅助">
-				<CheckBox class="settingCheckBox" :checked="globalStore.audioState" @update:checked="vibrateStateChecked" />
+				<CheckBox :checked="globalStore.ref.audioState" @update:checked="audioStateChecked" />
 			</SettingItem>
 			<SettingItem caption="震动辅助">
-				<CheckBox class="settingCheckBox" :checked="globalStore.vibrateState"
-					@update:checked="vibrateStateChecked" />
+				<CheckBox :checked="globalStore.ref.vibrateState" @update:checked="vibrateStateChecked" />
 			</SettingItem>
-			<GroupItem caption="关于"/>
-			<SettingItem caption="当前版本" :value="globalConst.programVersion" />
-			<SettingItem caption="开发人员" :value="globalConst.programAuthor" />
-			<SettingItem caption="美术设计" :value="globalConst.programDesign" />
-			<SettingItem caption="专业顾问" :value="globalConst.programCounselor" />
+			<GroupItem caption="贡献" />
+			<SettingItem caption="开源地址">
+				<view class="settingCopyAble" @click="copyGithubUrl">Github</view>
+			</SettingItem>
+			<SettingItem caption="开源协议" value="GPL-3.0" />
+			<GroupItem caption="关于" />
+			<SettingItem caption="当前版本" :value="globalConfig.programVersion" />
+			<SettingItem caption="开发人员" :value="globalConfig.programAuthor" />
+			<SettingItem caption="美术设计" :value="globalConfig.programDesign" />
+			<SettingItem caption="专业顾问" :value="globalConfig.programCounselor" />
 			<AboutCard @click="aboutCardClicked" />
 			<view class="settingsPlaceholder"></view>
 		</scroll-view>
-		<SurpriseCanvas class="surprisePanel" ref="surprisePanel" v-show="surpriseActive" @stoped="surpriseStoped" />
+		<SurpriseLayer class="surpriseLayer" ref="surpriseLayer" v-show="surpriseActive" @stoped="surpriseStoped" />
+		<ToastLayer ref="toastLayer" />
 	</view>
 </template>
 
@@ -64,14 +90,24 @@ const surpriseStoped = () => {
 		width: 100%;
 		height: 100%;
 
-		// background: var(--color-white);
+		.settingCopyAble {
+			position: absolute;
+			height: auto;
+			text-align: right;
+			right: 0;
+			top: 50%;
+			font-size: 1.1em;
+			text-decoration: underline;
+			transform: translate(0%, -50%);
+		}
+
 		.settingsPlaceholder {
 			width: 100%;
 			height: 70px;
 		}
 	}
 
-	.surprisePanel {
+	.surpriseLayer {
 		position: absolute;
 		top: 0;
 		left: 0;
