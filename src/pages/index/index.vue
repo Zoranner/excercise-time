@@ -21,7 +21,7 @@ const switchTitleBar = (index: number) => {
 			titleBarColor.value = 'var(--color-black)'
 			break
 		case 1:
-			let currentPreset = globalConfig.getCurrentPreset()
+			let currentPreset = globalConfig.presetPlayer.preset
 			titleCaption.value = currentPreset.caption
 			titleBarColor.value = 'var(--color-transparent)'
 			break
@@ -51,7 +51,6 @@ onMounted(() => {
 	let router = getCurrentInstance().router
 	if (router !== null) {
 		eventCenter.on(router.onHide, () => {
-			globalConfig.ref.timerState = 2
 			globalConfig.saveStorage()
 		})
 		eventCenter.on(router.onShow, () => {
@@ -60,6 +59,14 @@ onMounted(() => {
 	}
 	Taro.setKeepScreenOn({ keepScreenOn: true })
 	switchTitleBar(globalConfig.ref.tabBarSelected)
+})
+
+onUnmounted(() => {
+	let router = getCurrentInstance().router
+	if (router !== null) {
+		eventCenter.off(router.onHide)
+		eventCenter.off(router.onShow)
+	}
 })
 </script>
 

@@ -9,7 +9,7 @@ const selectPresetId = ref('')
 const toastLayer = ref()
 
 const switchPreset = (id: string) => {
-	if (globalConfig.presetSelect === id) {
+	if (globalConfig.presetPlayer.preset.id === id) {
 		return
 	}
 	if (globalConfig.presetPlayer.status !== PresetPlayerStatus.Stopped) {
@@ -18,7 +18,7 @@ const switchPreset = (id: string) => {
 	}
 	Taro.vibrateShort({ type: 'heavy' })
 	selectPresetId.value = id
-	globalConfig.presetSelect = id
+	globalConfig.presetPlayer.load(globalConfig.presetsDict.get(id))
 	//emits('change', preset)
 }
 
@@ -29,7 +29,7 @@ const itemEditClicked = (id: string) => {
 	})
 }
 
-selectPresetId.value = globalConfig.presetSelect
+selectPresetId.value = globalConfig.presetPlayer.preset.id
 </script>
 
 <template>

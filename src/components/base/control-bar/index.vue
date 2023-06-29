@@ -11,7 +11,7 @@ const resetPlayerState = () => {
 const switchPlayerState = () => {
 	Taro.vibrateShort({ type: 'light' })
 	switch (globalConfig.presetPlayer.status) {
-		case PresetPlayerStatus.Running:
+		case PresetPlayerStatus.Playing:
 			playerStatus.value = globalConfig.presetPlayer.pause()
 			break
 		case PresetPlayerStatus.Paused:
@@ -23,7 +23,12 @@ const switchPlayerState = () => {
 
 const forwardNextCycle = () => {
 	Taro.vibrateShort({ type: 'light' })
+	globalConfig.presetPlayer.jump()
 }
+
+globalConfig.presetPlayer.statusUpdatedEvent.on((status) => {
+	playerStatus.value = status
+})
 </script>
 
 <template>
@@ -32,9 +37,9 @@ const forwardNextCycle = () => {
 			<image class="controlIcon" src="@/assets/images/control-bar/undo_alt.svg" />
 		</view>
 		<view class="controlIconArea flex items-center justify-center" key="reset" @click="switchPlayerState()">
-			<image class="controlIcon" v-show="playerStatus === PresetPlayerStatus.Running"
+			<image class="controlIcon" v-show="playerStatus === PresetPlayerStatus.Playing"
 				src="@/assets/images/control-bar/pause_button.svg" />
-			<image class="controlIcon" v-show="playerStatus !== PresetPlayerStatus.Running"
+			<image class="controlIcon" v-show="playerStatus !== PresetPlayerStatus.Playing"
 				src="@/assets/images/control-bar/circled_play.svg" />
 		</view>
 		<view class="controlIconArea flex items-center justify-center" key="reset" @click="forwardNextCycle()">
@@ -74,4 +79,5 @@ const forwardNextCycle = () => {
 
 .controlBarPanel:active {
 	filter: var(--shadow-drop-black);
-}</style>
+}
+</style>

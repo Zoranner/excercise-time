@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { eventCenter, getCurrentInstance } from '@tarojs/taro'
+import { PresetPlayerStatus, PresetTimerType } from '@/services/presets/presetPlayer'
 import CircleProgress from '@/components/fighting/circle-progress.vue'
 import ControlBar from '@/components/base/control-bar/index.vue'
 
@@ -8,12 +10,17 @@ const stateCaptionFontSize = circleRadius * 0.012
 const cycleTitleFontSize = circleRadius * 0.012
 const cycleValueFontSize = circleRadius * 0.014
 
-const currentState = ref(0)
-const currentTimer = ref(8)
+let currentPreset = globalConfig.presetPlayer.preset
+const currentTimer = ref('00:00')
 const currentProgress = ref(0)
-const backgroundColor = ref(['var(--color-lg-green)', 'var(--color-lg-red)', 'var(--color-lg-yellow)', 'var(--color-lg-blue)'])
-const stateCaptions = ref(['锻炼', '休息', '组间休息', '冷却时间'])
-const audioContents = ref(['3', '2', '1', '锻炼', '休息', '组间休息', '冷却时间'])
+const backgroundColor = ref('var(--color-lg-green)')
+const timerTypeCaption = ref('准备')
+const cycleProgress = ref('##/##')
+const loopProgress = ref('##/##')
+
+const backgroundColors = ['var(--color-lg-yellow)', 'var(--color-lg-green)', 'var(--color-lg-red)', 'var(--color-lg-yellow)', 'var(--color-lg-blue)']
+const stateCaptions = ['准备', '锻炼', '休息', '组间休息', '冷却时间']
+const audioContents = ['3', '2', '1', '准备', '锻炼', '休息', '组间休息', '冷却时间']
 
 const delayTime = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -41,7 +48,7 @@ const playTextAudio = (text: string) => {
 	if (globalConfig.ref.audioState !== true) {
 		return
 	}
-	if (audioContents.value.indexOf(text) === -1) {
+	if (audioContents.indexOf(text) === -1) {
 		return
 	}
 	let innerAudioContext = Taro.createInnerAudioContext()
@@ -49,25 +56,93 @@ const playTextAudio = (text: string) => {
 	innerAudioContext.src = `assets/audios/${text}.wav`
 }
 
-// autoChangeState()
-// globalConfig.presetPlayer.load(globalConfig.getCurrentPreset())
+const initPageElements = () => {
+	currentPreset = globalConfig.presetPlayer.preset
+	currentTimer.value = typeConvert.toHumanTime(currentPreset.prepareTime)
+	currentProgress.value = 0
+	backgroundColor.value = 'var(--color-lg-green)'
+	timerTypeCaption.value = '准备'
+	if (currentPreset !== null) {
+		cycleProgress.value = `${currentPreset.cycle}/${currentPreset.cycle}`
+		loopProgress.value = `${currentPreset.loop}/${currentPreset.loop}`
+	}
+	else {
+		cycleProgress.value = '##/##'
+		loopProgress.value = '##/##'
+	}
+}
+
+onMounted(() => {
+	let router = getCurrentInstance().router
+	if (router !== null) {
+		eventCenter.on(router.onHide, () => {
+			globalConfig.presetPlayer.pause()
+		})
+	}
+})
+
+onUnmounted(() => {
+	let router = getCurrentInstance().router
+	if (router !== null) {
+		eventCenter.off(router.onHide)
+	}
+	globalConfig.presetPlayer.stop()
+})
+
+initPageElements()
+globalConfig.presetPlayer.statusUpdatedEvent.on((status) => {
+	switch (status) {
+		case PresetPlayerStatus.Stopped:
+			initPageElements()
+			break
+		case PresetPlayerStatus.Paused:
+		case PresetPlayerStatus.Playing:
+			break
+	}
+})
+globalConfig.presetPlayer.timerTypeUpdatedEvent.on((type) => {
+	backgroundColor.value = backgroundColors[type]
+	timerTypeCaption.value = stateCaptions[type]
+	playTextAudio(stateCaptions[type])
+	if (type === PresetTimerType.Exercise) {
+		vibrateLongOnce()
+	}
+	else {
+		vibrateShortTwice()
+	}
+})
+globalConfig.presetPlayer.timerTimeUpdatedEvent.on((seconds) => {
+	currentTimer.value = typeConvert.toHumanTime(seconds)
+	if (seconds <= 3) {
+		playTextAudio(seconds.toString())
+	}
+})
+globalConfig.presetPlayer.timerProgressUpdatedEvent.on((progress) => {
+	currentProgress.value = (1 - progress) * 100
+})
+globalConfig.presetPlayer.leftCycleUpdatedEvent.on((leftCycle) => {
+	cycleProgress.value = `${leftCycle}/${currentPreset.cycle}`
+})
+globalConfig.presetPlayer.leftLoopUpdatedEvent.on((leftLoop) => {
+	loopProgress.value = `${leftLoop}/${currentPreset.loop}`
+})
 </script>
 
 <template>
 	<view class="fightingPage">
-		<view class="fightingBase flex flex-col items-center" :style="{ background: backgroundColor[currentState] }">
+		<view class="fightingBase flex flex-col items-center" :style="{ background: backgroundColor }">
 			<CircleProgress class="timeProgress fixed" :progress="currentProgress" :radius="circleRadius">
 				<text class="timeContent" :style="{ fontSize: leftTimeFontSize + 'em' }">
-					{{ '00:0' + currentTimer }}
+					{{ currentTimer }}
 				</text>
 			</CircleProgress>
 			<text class="stateCaption fixed" :style="{ fontSize: stateCaptionFontSize + 'em' }">
-				{{ stateCaptions[currentState] }}
+				{{ timerTypeCaption }}
 			</text>
 			<ControlBar class="controlBar fixed"></ControlBar>
 			<view class="cycleValueArea w-70% fixed flex" :style="{ '--cycleValueFontSize': cycleValueFontSize + 'em' }">
-				<text class="w-50%">1/3</text>
-				<text class="w-50%">1/10</text>
+				<text class="w-50%">{{ cycleProgress }}</text>
+				<text class="w-50%">{{ loopProgress }}</text>
 			</view>
 			<view class="cycleTitleArea w-70% fixed flex" :style="{ '--cycleTitleFontSize': cycleTitleFontSize + 'em' }">
 				<text class="w-50%">周期</text>
