@@ -40,7 +40,7 @@ const vibrateShortTwice = async () => {
 	if (Glbc.ref.vibrateState !== true) {
 		return
 	}
-	Vibrate.shortTwice('heavy', 200)
+	Vibrate.shortTwice('heavy', 250)
 }
 
 const playTextAudio = (text: string) => {
