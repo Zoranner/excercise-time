@@ -6,6 +6,7 @@ import Fighting from '@/components/fighting/index.vue'
 import Presets from '@/components/presets/index.vue'
 import TabBar from '@/components/base/tab-bar/index.vue'
 import ToastLayer from '@/components/global/toast-layer/index.vue'
+import ModalLayer from '@/components/global/modal-layer/index.vue'
 
 definePageConfig({
 	navigationStyle: 'custom',
@@ -13,6 +14,7 @@ definePageConfig({
 })
 
 const toastLayer = ref()
+const modalLayer = ref()
 const titleCaption = ref('锻炼时间')
 const titleBarColor = ref('var(--color-transparent)')
 
@@ -40,6 +42,7 @@ const titleBarAction = () => {
 	}
 	switch (Config.ref.tabBarSelected) {
 		case 2:
+			Dialog.showToast('正在开发中...')
 			// Taro.navigateTo({ url: '/pages/presets/editor/index' })
 			break
 	}
@@ -56,12 +59,13 @@ onMounted(() => {
 			Config.saveStorage()
 		})
 		eventCenter.on(router.onShow, () => {
-			Config.loadStorage()
+			// Config.loadStorage()
+			Taro.setKeepScreenOn({ keepScreenOn: true })
 		})
 	}
-	Taro.setKeepScreenOn({ keepScreenOn: true })
 	switchTitleBar(Config.ref.tabBarSelected)
-    Dialog.setToast(toastLayer.value)
+	Dialog.setToast(toastLayer)
+	Dialog.setModal(modalLayer)
 })
 
 onUnmounted(() => {
@@ -84,7 +88,8 @@ onUnmounted(() => {
 		<Presets class="pageContentItem" v-if="Config.ref.tabBarSelected === 2" />
 	</view>
 	<TabBar @change="tabBarChange" />
-		<ToastLayer ref="toastLayer" />
+	<ToastLayer ref="toastLayer" />
+	<ModalLayer ref="modalLayer" />
 </template>
 
 <style lang="scss">

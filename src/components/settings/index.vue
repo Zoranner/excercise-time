@@ -35,7 +35,13 @@ const copyGithubUrl = () => {
 }
 
 const resetPresetsData = () => {
-	Config.resetPresetsData()
+	Vibrate.short('light')
+	Dialog.showModal('所有数据将被重置为默认状态，该操作不可恢复。', (result) => {
+		if (result) {
+			Config.resetPresetsData()
+			Dialog.showToast('数据已重置')
+		}
+	})
 }
 
 const aboutCardClicked = () => {
