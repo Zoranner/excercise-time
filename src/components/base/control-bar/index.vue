@@ -5,28 +5,28 @@ const playerStatus = ref(PresetPlayerStatus.Stopped)
 
 const resetPlayerState = () => {
 	Taro.vibrateShort({ type: 'light' })
-	playerStatus.value = globalConfig.presetPlayer.stop()
+	playerStatus.value = Glbc.presetPlayer.stop()
 }
 
 const switchPlayerState = () => {
 	Taro.vibrateShort({ type: 'light' })
-	switch (globalConfig.presetPlayer.status) {
+	switch (Glbc.presetPlayer.status) {
 		case PresetPlayerStatus.Playing:
-			playerStatus.value = globalConfig.presetPlayer.pause()
+			playerStatus.value = Glbc.presetPlayer.pause()
 			break
 		case PresetPlayerStatus.Paused:
 		case PresetPlayerStatus.Stopped:
-			playerStatus.value = globalConfig.presetPlayer.play()
+			playerStatus.value = Glbc.presetPlayer.play()
 			break
 	}
 }
 
 const forwardNextCycle = () => {
 	Taro.vibrateShort({ type: 'light' })
-	globalConfig.presetPlayer.jump()
+	Glbc.presetPlayer.jump()
 }
 
-globalConfig.presetPlayer.statusUpdatedEvent.on((status) => {
+Glbc.presetPlayer.statusUpdatedEvent.on((status) => {
 	playerStatus.value = status
 })
 </script>

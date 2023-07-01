@@ -21,8 +21,8 @@ const webpackChain = (chain) => {
 			imports: [
 				'vue',
 				{
-					'@/config/globalConfig': ['globalConfig'],
-					'@/utils/typeConvert': ['typeConvert'],
+					'@/config/globalConfig': ['Glbc'],
+					'@/utils/typeConvert': ['toBoolean', 'toNumber', 'toHumanTime'],
 					'@tarojs/taro': [['default', 'Taro']]
 				}
 			],

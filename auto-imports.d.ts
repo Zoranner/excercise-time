@@ -5,7 +5,11 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
+  const GlbCfg: typeof import('@/config/globalConfig')['GlbCfg']
+  const Glbc: typeof import('@/config/globalConfig')['Glbc']
+  const GlobalConfig: typeof import('@/config/globalConfig')['GlobalConfig']
   const Taro: typeof import('@tarojs/taro')['default']
+  const TypeConvert: typeof import('@/utils/typeConvert')['TypeConvert']
   const computed: typeof import('vue')['computed']
   const createApp: typeof import('vue')['createApp']
   const customRef: typeof import('vue')['customRef']
@@ -45,6 +49,9 @@ declare global {
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
   const showToast: typeof import('@tarojs/taro')['showToast']
+  const toBoolean: typeof import('@/utils/typeConvert')['toBoolean']
+  const toHumanTime: typeof import('@/utils/typeConvert')['toHumanTime']
+  const toNumber: typeof import('@/utils/typeConvert')['toNumber']
   const toRaw: typeof import('vue')['toRaw']
   const toRef: typeof import('vue')['toRef']
   const toRefs: typeof import('vue')['toRefs']
@@ -71,6 +78,7 @@ import { UnwrapRef } from 'vue'
 declare module 'vue' {
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly Glbc: UnwrapRef<typeof import('@/config/globalConfig')['Glbc']>
     readonly Taro: UnwrapRef<typeof import('@tarojs/taro')['default']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
@@ -80,7 +88,6 @@ declare module 'vue' {
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
-    readonly globalConfig: UnwrapRef<typeof import('@/config/globalConfig')['globalConfig']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
@@ -110,12 +117,14 @@ declare module 'vue' {
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
+    readonly toBoolean: UnwrapRef<typeof import('@/utils/typeConvert')['toBoolean']>
+    readonly toHumanTime: UnwrapRef<typeof import('@/utils/typeConvert')['toHumanTime']>
+    readonly toNumber: UnwrapRef<typeof import('@/utils/typeConvert')['toNumber']>
     readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
     readonly toValue: UnwrapRef<typeof import('vue')['toValue']>
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
-    readonly typeConvert: UnwrapRef<typeof import('@/utils/typeConvert')['typeConvert']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
@@ -130,6 +139,7 @@ declare module 'vue' {
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly Glbc: UnwrapRef<typeof import('@/config/globalConfig')['Glbc']>
     readonly Taro: UnwrapRef<typeof import('@tarojs/taro')['default']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
@@ -139,7 +149,6 @@ declare module '@vue/runtime-core' {
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
-    readonly globalConfig: UnwrapRef<typeof import('@/config/globalConfig')['globalConfig']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
@@ -169,12 +178,14 @@ declare module '@vue/runtime-core' {
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
+    readonly toBoolean: UnwrapRef<typeof import('@/utils/typeConvert')['toBoolean']>
+    readonly toHumanTime: UnwrapRef<typeof import('@/utils/typeConvert')['toHumanTime']>
+    readonly toNumber: UnwrapRef<typeof import('@/utils/typeConvert')['toNumber']>
     readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
     readonly toValue: UnwrapRef<typeof import('vue')['toValue']>
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
-    readonly typeConvert: UnwrapRef<typeof import('@/utils/typeConvert')['typeConvert']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>

@@ -32,7 +32,7 @@ const presetCaption = computed(() => {
 
 const presetContent = computed(() => {
 	if (props.preset) {
-		return `锻炼 ${typeConvert.toHumanTime(props.preset.exerciseTime)} 休息 ${typeConvert.toHumanTime(props.preset.cycleRestTime)}`
+		return `锻炼 ${toHumanTime(props.preset.exerciseTime)} 休息 ${toHumanTime(props.preset.cycleRestTime)}`
 	} else {
 		return '错误'
 	}

@@ -4,13 +4,13 @@ import { PresetPlayerStatus, PresetTimerType } from '@/services/presets/presetPl
 import CircleProgress from '@/components/fighting/circle-progress.vue'
 import ControlBar from '@/components/base/control-bar/index.vue'
 
-const circleRadius = (globalConfig.screenHeight - globalConfig.appHeaderHeight) * 0.4 * 0.5
+const circleRadius = (Glbc.screenHeight - Glbc.appHeaderHeight) * 0.4 * 0.5
 const leftTimeFontSize = circleRadius * 0.042
 const stateCaptionFontSize = circleRadius * 0.012
 const cycleTitleFontSize = circleRadius * 0.012
 const cycleValueFontSize = circleRadius * 0.014
 
-let currentPreset = globalConfig.presetPlayer.preset
+let currentPreset = Glbc.presetPlayer.preset
 const currentTimer = ref('00:00')
 const currentProgress = ref(0)
 const backgroundColor = ref('var(--color-lg-yellow)')
@@ -32,14 +32,14 @@ const initCircleProgress = async () => {
 }
 
 const vibrateLongOnce = async () => {
-	if (globalConfig.ref.vibrateState !== true) {
+	if (Glbc.ref.vibrateState !== true) {
 		return
 	}
 	Taro.vibrateLong()
 }
 
 const vibrateShortTwice = async () => {
-	if (globalConfig.ref.vibrateState !== true) {
+	if (Glbc.ref.vibrateState !== true) {
 		return
 	}
 	Taro.vibrateShort({
@@ -52,7 +52,7 @@ const vibrateShortTwice = async () => {
 }
 
 const playTextAudio = (text: string) => {
-	if (globalConfig.ref.audioState !== true) {
+	if (Glbc.ref.audioState !== true) {
 		return
 	}
 	if (audioContents.indexOf(text) === -1) {
@@ -64,8 +64,8 @@ const playTextAudio = (text: string) => {
 }
 
 const initPageElements = () => {
-	currentPreset = globalConfig.presetPlayer.preset
-	currentTimer.value = typeConvert.toHumanTime(currentPreset.prepareTime)
+	currentPreset = Glbc.presetPlayer.preset
+	currentTimer.value = toHumanTime(currentPreset.prepareTime)
 	initCircleProgress()
 	backgroundColor.value = 'var(--color-lg-yellow)'
 	timerTypeCaption.value = '准备'
@@ -83,13 +83,13 @@ onMounted(() => {
 	let router = getCurrentInstance().router
 	if (router !== null) {
 		eventCenter.on(router.onHide, () => {
-			globalConfig.presetPlayer.pause()
+			Glbc.presetPlayer.pause()
 		})
 	}
 
 	initPageElements()
 
-	globalConfig.presetPlayer.statusUpdatedEvent.on((status) => {
+	Glbc.presetPlayer.statusUpdatedEvent.on((status) => {
 		switch (status) {
 			case PresetPlayerStatus.Stopped:
 				initPageElements()
@@ -99,7 +99,7 @@ onMounted(() => {
 				break
 		}
 	})
-	globalConfig.presetPlayer.timerTypeUpdatedEvent.on((type) => {
+	Glbc.presetPlayer.timerTypeUpdatedEvent.on((type) => {
 		backgroundColor.value = backgroundColors[type]
 		timerTypeCaption.value = stateCaptions[type]
 		playTextAudio(stateCaptions[type])
@@ -110,22 +110,22 @@ onMounted(() => {
 			vibrateShortTwice()
 		}
 	})
-	globalConfig.presetPlayer.timerTimeUpdatedEvent.on((seconds) => {
-		currentTimer.value = typeConvert.toHumanTime(seconds)
+	Glbc.presetPlayer.timerTimeUpdatedEvent.on((seconds) => {
+		currentTimer.value = toHumanTime(seconds)
 		if (seconds <= 3) {
 			playTextAudio(seconds.toString())
 		}
 	})
-	globalConfig.presetPlayer.timerProgressUpdatedEvent.on((progress) => {
+	Glbc.presetPlayer.timerProgressUpdatedEvent.on((progress) => {
 		currentProgress.value = (1 - progress) * 100
 	})
-	globalConfig.presetPlayer.leftCycleUpdatedEvent.on((leftCycle) => {
+	Glbc.presetPlayer.leftCycleUpdatedEvent.on((leftCycle) => {
 		cycleProgress.value = `${leftCycle}/${currentPreset.cycle}`
 	})
-	globalConfig.presetPlayer.leftLoopUpdatedEvent.on((leftLoop) => {
+	Glbc.presetPlayer.leftLoopUpdatedEvent.on((leftLoop) => {
 		loopProgress.value = `${leftLoop}/${currentPreset.loop}`
 	})
-	globalConfig.presetPlayer.exerciseFinishedEvent.on(() => {
+	Glbc.presetPlayer.exerciseFinishedEvent.on(() => {
 		playTextAudio('锻炼结束')
 		vibrateShortTwice()
 	})
@@ -136,14 +136,14 @@ onUnmounted(() => {
 	if (router !== null) {
 		eventCenter.off(router.onHide)
 	}
-	globalConfig.presetPlayer.stop()
-	globalConfig.presetPlayer.statusUpdatedEvent.off()
-	globalConfig.presetPlayer.timerTypeUpdatedEvent.off()
-	globalConfig.presetPlayer.timerTimeUpdatedEvent.off()
-	globalConfig.presetPlayer.timerProgressUpdatedEvent.off()
-	globalConfig.presetPlayer.leftCycleUpdatedEvent.off()
-	globalConfig.presetPlayer.leftLoopUpdatedEvent.off()
-	globalConfig.presetPlayer.exerciseFinishedEvent.off()
+	Glbc.presetPlayer.stop()
+	Glbc.presetPlayer.statusUpdatedEvent.off()
+	Glbc.presetPlayer.timerTypeUpdatedEvent.off()
+	Glbc.presetPlayer.timerTimeUpdatedEvent.off()
+	Glbc.presetPlayer.timerProgressUpdatedEvent.off()
+	Glbc.presetPlayer.leftCycleUpdatedEvent.off()
+	Glbc.presetPlayer.leftLoopUpdatedEvent.off()
+	Glbc.presetPlayer.exerciseFinishedEvent.off()
 })
 </script>
 

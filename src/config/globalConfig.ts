@@ -2,9 +2,18 @@ import { PresetPlayer } from '@/services/presets/presetPlayer'
 import { Preset, PresetsDict } from '@/services/presets/preset'
 
 class GlobalConfig {
+	private static instance: GlobalConfig 
+
+	static Instance(): GlobalConfig {
+		if (!GlobalConfig.instance) {
+			GlobalConfig.instance = new GlobalConfig()
+		}
+		return GlobalConfig.instance
+	}
+
 	ref = reactive({
 		/** 标签栏选中的Index */
-		tabBarSelected: 1,
+		tabBarSelected: 0,
 		/** 音频状态 */
 		audioState: true,
 		/** 震动状态 */
@@ -39,6 +48,9 @@ class GlobalConfig {
 	/** 预设字典 */
 	private localPresetsDict: PresetsDict
 	get presetsDict(): PresetsDict {
+		if (this.localPresetsDict === undefined) {
+			this.localPresetsDict = new PresetsDict()
+		}
 		return this.localPresetsDict
 	}
 	private set presetsDict(presetsDict: PresetsDict) {
@@ -69,7 +81,7 @@ class GlobalConfig {
 		this.presetPlayer.load(preset)
 	}
 
-	constructor() {
+	private constructor() {
 		this.initialize()
 		this.getSystemInfo()
 		this.getProgramVersion()
@@ -86,7 +98,7 @@ class GlobalConfig {
 
 	/** 加载本地存储 */
 	loadStorage(): void {
-		this.firstTimeRun = typeConvert.toBoolean(Taro.getStorageSync('firstTimeRun'))
+		this.firstTimeRun = toBoolean(Taro.getStorageSync('firstTimeRun'))
 
 		if (this.firstTimeRun) {
 			this.ref.audioState = true
@@ -95,8 +107,8 @@ class GlobalConfig {
 			this.firstTimeRun = false
 		}
 		else {
-			this.ref.audioState = typeConvert.toBoolean(Taro.getStorageSync('audioState'))
-			this.ref.vibrateState = typeConvert.toBoolean(Taro.getStorageSync('vibrateState'))
+			this.ref.audioState = toBoolean(Taro.getStorageSync('audioState'))
+			this.ref.vibrateState = toBoolean(Taro.getStorageSync('vibrateState'))
 			this.presetsDict = this.toPresetsDict(Taro.getStorageSync('presetsDict'))
 			if (this.presetsDict.version === undefined || this.presetsDict.version < 1) {
 				this.resetPresetsData()
@@ -188,4 +200,4 @@ class GlobalConfig {
 	}
 }
 
-export const globalConfig = new GlobalConfig()
+export const Glbc = GlobalConfig.Instance()

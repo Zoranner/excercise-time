@@ -21,13 +21,13 @@ const slotDefault = !!useSlots().default
 
 <template>
 	<view class="titleBarPanel z-99999 fixed top-0 left-0 right-0"
-		:style="{ '--appHeaderHeight': globalConfig.appHeaderHeight + 'px', '--titleBarColor': props.color as any }">
+		:style="{ '--appHeaderHeight': Glbc.appHeaderHeight + 'px', '--titleBarColor': props.color as any }">
 		<view class="titleBarView w-100% flex flex-col items-center"
-			:style="{ '--titleBarHeight': globalConfig.titleBarHeight + 'px', '--statusBarHeight': globalConfig.statusBarHeight + 'px' }">
+			:style="{ '--titleBarHeight': Glbc.titleBarHeight + 'px', '--statusBarHeight': Glbc.statusBarHeight + 'px' }">
 			<view class="titleBarCorner fixed flex items-center" v-if="slotDefault" @click="props.action">
 				<slot class="titleBarCornerImage"></slot>
 			</view>
-			<text class="titleBarCaption fixed" :style="{ fontSize: globalConfig.titleBarFontSize + 'em' }">
+			<text class="titleBarCaption fixed" :style="{ fontSize: Glbc.titleBarFontSize + 'em' }">
 				{{ props.caption }}
 			</text>
 		</view>

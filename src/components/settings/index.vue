@@ -12,11 +12,11 @@ const surpriseLayer = ref()
 const toastLayer = ref()
 
 const audioStateChecked = (checked: boolean) => {
-	globalConfig.ref.audioState = checked
+	Glbc.ref.audioState = checked
 }
 
 const vibrateStateChecked = (checked: boolean) => {
-	globalConfig.ref.vibrateState = checked
+	Glbc.ref.vibrateState = checked
 }
 
 const copyGithubUrl = () => {
@@ -58,10 +58,10 @@ const surpriseStoped = () => {
 		<scroll-view class="settingsScrollView" :scroll-y="true">
 			<GroupItem caption="辅助" />
 			<SettingItem caption="语音辅助">
-				<CheckBox :checked="globalConfig.ref.audioState" @update:checked="audioStateChecked" />
+				<CheckBox :checked="Glbc.ref.audioState" @update:checked="audioStateChecked" />
 			</SettingItem>
 			<SettingItem caption="震动辅助">
-				<CheckBox :checked="globalConfig.ref.vibrateState" @update:checked="vibrateStateChecked" />
+				<CheckBox :checked="Glbc.ref.vibrateState" @update:checked="vibrateStateChecked" />
 			</SettingItem>
 			<GroupItem caption="贡献" />
 			<SettingItem caption="开源地址">
@@ -69,10 +69,10 @@ const surpriseStoped = () => {
 			</SettingItem>
 			<SettingItem caption="开源协议" value="GPL-3.0" />
 			<GroupItem caption="关于" />
-			<SettingItem caption="当前版本" :value="globalConfig.programVersion" />
-			<SettingItem caption="开发人员" :value="globalConfig.programAuthor" />
-			<SettingItem caption="美术设计" :value="globalConfig.programDesign" />
-			<SettingItem caption="专业顾问" :value="globalConfig.programCounselor" />
+			<SettingItem caption="当前版本" :value="Glbc.programVersion" />
+			<SettingItem caption="开发人员" :value="Glbc.programAuthor" />
+			<SettingItem caption="美术设计" :value="Glbc.programDesign" />
+			<SettingItem caption="专业顾问" :value="Glbc.programCounselor" />
 			<AboutCard @click="aboutCardClicked" />
 			<view class="settingsPlaceholder"></view>
 		</scroll-view>

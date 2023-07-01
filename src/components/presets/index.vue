@@ -9,16 +9,16 @@ const selectPresetId = ref('')
 const toastLayer = ref()
 
 const switchPreset = (id: string) => {
-	if (globalConfig.presetPlayer.preset.id === id) {
+	if (Glbc.presetPlayer.preset.id === id) {
 		return
 	}
-	if (globalConfig.presetPlayer.status !== PresetPlayerStatus.Stopped) {
+	if (Glbc.presetPlayer.status !== PresetPlayerStatus.Stopped) {
 		toastLayer.value.showInfomation('请停止计时器后再切换预设')
 		return
 	}
 	Taro.vibrateShort({ type: 'heavy' })
 	selectPresetId.value = id
-	globalConfig.presetPlayer.load(globalConfig.presetsDict.get(id))
+	Glbc.presetPlayer.load(Glbc.presetsDict.get(id))
 	//emits('change', preset)
 }
 
@@ -29,14 +29,14 @@ const itemEditClicked = (_id: string) => {
 	// })
 }
 
-selectPresetId.value = globalConfig.presetPlayer.preset.id
+selectPresetId.value = Glbc.presetPlayer.preset.id
 </script>
 
 <template>
 	<view class="presetsPage">
 		<scroll-view class="presetsScrollView" :scroll-y="true">
-			<view v-for="(id, index) in globalConfig.presetsDict.keys()" :key="index">
-				<PresetItem :preset="globalConfig.presetsDict.get(id)" :checked="selectPresetId === id"
+			<view v-for="(id, index) in Glbc.presetsDict.keys()" :key="index">
+				<PresetItem :preset="Glbc.presetsDict.get(id)" :checked="selectPresetId === id"
 					@click:select="switchPreset(id)" @click:edit="itemEditClicked(id)" />
 			</view>
 			<view class="presetsPlaceholder"></view>

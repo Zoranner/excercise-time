@@ -21,7 +21,7 @@ const switchTitleBar = (index: number) => {
 			titleBarColor.value = 'var(--color-black)'
 			break
 		case 1:
-			let currentPreset = globalConfig.presetPlayer.preset
+			let currentPreset = Glbc.presetPlayer.preset
 			titleCaption.value = currentPreset.caption
 			titleBarColor.value = 'var(--color-transparent)'
 			break
@@ -33,10 +33,10 @@ const switchTitleBar = (index: number) => {
 }
 
 const titleBarAction = () => {
-	if (globalConfig.ref.tabBarSelected !== 2) {
+	if (Glbc.ref.tabBarSelected !== 2) {
 		return
 	}
-	switch (globalConfig.ref.tabBarSelected) {
+	switch (Glbc.ref.tabBarSelected) {
 		case 2:
 			// Taro.navigateTo({ url: '/pages/presets/editor/index' })
 			break
@@ -51,14 +51,14 @@ onMounted(() => {
 	let router = getCurrentInstance().router
 	if (router !== null) {
 		eventCenter.on(router.onHide, () => {
-			globalConfig.saveStorage()
+			Glbc.saveStorage()
 		})
 		eventCenter.on(router.onShow, () => {
-			globalConfig.loadStorage()
+			Glbc.loadStorage()
 		})
 	}
 	Taro.setKeepScreenOn({ keepScreenOn: true })
-	switchTitleBar(globalConfig.ref.tabBarSelected)
+	switchTitleBar(Glbc.ref.tabBarSelected)
 })
 
 onUnmounted(() => {
@@ -72,13 +72,13 @@ onUnmounted(() => {
 
 <template>
 	<TitleBar :caption="titleCaption" :color="titleBarColor" :action="titleBarAction">
-		<image src="@/assets/images/title-bar/alarm_add.svg" v-if="globalConfig.ref.tabBarSelected === 2"></image>
+		<image src="@/assets/images/title-bar/alarm_add.svg" v-if="Glbc.ref.tabBarSelected === 2"></image>
 	</TitleBar>
-	<view :class="globalConfig.ref.tabBarSelected === 1 ? 'mainContainer' : 'viceContainer'"
-		:style="{ '--appHeaderHeight': globalConfig.appHeaderHeight + 'px' }">
-		<Settings class="pageContentItem" v-if="globalConfig.ref.tabBarSelected === 0" />
-		<Fighting class="pageContentItem" v-show="globalConfig.ref.tabBarSelected === 1" />
-		<Presets class="pageContentItem" v-if="globalConfig.ref.tabBarSelected === 2" />
+	<view :class="Glbc.ref.tabBarSelected === 1 ? 'mainContainer' : 'viceContainer'"
+		:style="{ '--appHeaderHeight': Glbc.appHeaderHeight + 'px' }">
+		<Settings class="pageContentItem" v-if="Glbc.ref.tabBarSelected === 0" />
+		<Fighting class="pageContentItem" v-show="Glbc.ref.tabBarSelected === 1" />
+		<Presets class="pageContentItem" v-if="Glbc.ref.tabBarSelected === 2" />
 	</view>
 	<TabBar @change="tabBarChange" />
 </template>
