@@ -26,11 +26,11 @@ class GlobalDialog {
 		this.modalLayer = component
 	}
 
-	showModal(message: string) {
+	showModal(message: string, callback: (result: boolean) => void) {
 		if (!this.modalLayer) {
 			return
 		}
-		this.modalLayer.value.show(message)
+		this.modalLayer.value.show(message, callback)
 	}
 }
 
