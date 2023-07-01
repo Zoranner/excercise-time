@@ -12,7 +12,7 @@ class GlobalConfig {
 	})
 
 	/** 是否第一次打开程序 */
-	firstTime: boolean = true
+	firstTimeRun: boolean = true
 
 	/** 程序版本 */
 	programVersion: string
@@ -57,16 +57,17 @@ class GlobalConfig {
 		this.localPresetPlayer = presetPlayer
 	}
 
-	// /** 选中预设的Index */
-	// private localPresetSelect: string
-	// get presetSelect(): string {
-	// 	return this.localPresetSelect
-	// }
-	// set presetSelect(id: string) {
-	// 	this.localPresetSelect = id
-	// 	let preset = this.presetsDict.get(id)
-	// 	this.presetPlayer.load(preset)
-	// }
+	/** 选中预设的Index */
+	private get currentPresetId(): string {
+		return this.presetPlayer.preset.id
+	}
+	private set currentPresetId(id: string) {
+		let preset = this.presetsDict.get(id)
+		if (preset === undefined) {
+			return
+		}
+		this.presetPlayer.load(preset)
+	}
 
 	constructor() {
 		this.initialize()
@@ -85,31 +86,42 @@ class GlobalConfig {
 
 	/** 加载本地存储 */
 	loadStorage(): void {
-		this.ref.audioState = typeConvert.toBoolean(Taro.getStorageSync('audioState'))
-		this.ref.vibrateState = typeConvert.toBoolean(Taro.getStorageSync('vibrateState'))
-		this.firstTime = typeConvert.toBoolean(Taro.getStorageSync('firstTime'))
-		this.presetsDict = this.toPresetsDict(Taro.getStorageSync('presetsDict'))
-		let currentPresetId = Taro.getStorageSync('currentPresetId')
+		this.firstTimeRun = typeConvert.toBoolean(Taro.getStorageSync('firstTimeRun'))
 
-		if (this.firstTime) {
-			this.presetsDict.clear()
-			this.presetsDict.add(new Preset(`锻炼时间1`, 5, 5, 5, 5, 3, 30, 30))
-			this.presetsDict.add(new Preset(`锻炼时间2`, 5, 5, 5, 10, 3, 30, 30))
-			this.presetsDict.add(new Preset(`锻炼时间3`, 5, 8, 5, 5, 3, 30, 30))
-			this.presetsDict.add(new Preset(`锻炼时间4`, 5, 8, 5, 10, 3, 30, 30))
-			this.presetsDict.add(new Preset(`锻炼时间5`, 5, 10, 5, 5, 3, 30, 30))
-			this.presetsDict.add(new Preset(`锻炼时间6`, 5, 10, 5, 10, 3, 30, 30))
-			this.presetsDict.add(new Preset(`锻炼时间7`, 5, 15, 5, 10, 3, 30, 30))
-			this.presetsDict.add(new Preset(`锻炼时间8`, 5, 20, 5, 10, 3, 30, 30))
-			currentPresetId = this.presetsDict.keys()[0]
-			this.firstTime = false
+		if (this.firstTimeRun) {
+			this.ref.audioState = true
+			this.ref.vibrateState = true
+			this.resetPresetsData();
+			this.firstTimeRun = false
 		}
 		else {
-			if (!this.presetsDict.contains(currentPresetId)) {
-				currentPresetId = this.presetsDict.keys()[0]
+			this.ref.audioState = typeConvert.toBoolean(Taro.getStorageSync('audioState'))
+			this.ref.vibrateState = typeConvert.toBoolean(Taro.getStorageSync('vibrateState'))
+			this.presetsDict = this.toPresetsDict(Taro.getStorageSync('presetsDict'))
+			if (this.presetsDict.version === undefined || this.presetsDict.version < 1) {
+				this.resetPresetsData()
+			}
+			else {
+				this.currentPresetId = Taro.getStorageSync('currentPresetId')
+				if (!this.presetsDict.contains(this.currentPresetId)) {
+					this.currentPresetId = this.presetsDict.keys()[0]
+				}
 			}
 		}
-		this.presetPlayer.load(this.presetsDict.get(currentPresetId))
+	}
+
+	/** 重置数据 */
+	resetPresetsData(): void {
+		this.presetsDict.clear()
+		this.presetsDict.add(new Preset(`锻炼时间1`, 5, 8, 10, 5, 3, 30, 30))
+		this.presetsDict.add(new Preset(`锻炼时间2`, 5, 8, 10, 10, 3, 30, 30))
+		this.presetsDict.add(new Preset(`锻炼时间3`, 5, 8, 5, 5, 3, 30, 30))
+		this.presetsDict.add(new Preset(`锻炼时间4`, 5, 8, 5, 10, 3, 30, 30))
+		this.presetsDict.add(new Preset(`锻炼时间5`, 5, 10, 5, 5, 3, 30, 30))
+		this.presetsDict.add(new Preset(`锻炼时间6`, 5, 10, 5, 10, 3, 30, 30))
+		this.presetsDict.add(new Preset(`锻炼时间7`, 5, 15, 5, 10, 3, 30, 30))
+		this.presetsDict.add(new Preset(`锻炼时间8`, 5, 20, 5, 10, 3, 30, 30))
+		this.currentPresetId = this.presetsDict.keys()[0]
 	}
 
 	/** 获取程序版本 */
@@ -167,11 +179,12 @@ class GlobalConfig {
 
 	/** 保存本地存储 */
 	saveStorage(): void {
+		Taro.setStorageSync('firstTimeRun', this.firstTimeRun)
 		Taro.setStorageSync('audioState', this.ref.audioState)
 		Taro.setStorageSync('vibrateState', this.ref.vibrateState)
-		Taro.setStorageSync('firstTime', this.firstTime)
 		Taro.setStorageSync('presetsDict', JSON.stringify(this.presetsDict))
 		Taro.setStorageSync('currentPresetId', this.presetPlayer.preset.id)
+		Taro.removeStorageSync('firstTime')
 	}
 }
 

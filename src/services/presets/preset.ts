@@ -45,6 +45,9 @@ class Preset {
 class PresetsDict {
 	private dict: { [key: string]: Preset } = {}
 
+	/** 当前数据版本 */
+	version: number = 1
+
 	constructor() { }
 
 	add(preset: Preset): void {
