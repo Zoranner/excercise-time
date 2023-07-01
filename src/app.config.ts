@@ -13,4 +13,5 @@ export default defineAppConfig({
 		backgroundColorTop: '#686868',
 		backgroundColorBottom: '#686868',
 	},
+	lazyCodeLoading: 'requiredComponents',
 })
