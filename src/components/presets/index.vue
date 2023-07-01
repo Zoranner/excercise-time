@@ -12,10 +12,6 @@ const switchPreset = (id: string) => {
 	if (Glbc.presetPlayer.preset.id === id) {
 		return
 	}
-	if (Glbc.presetPlayer.status !== PresetPlayerStatus.Stopped) {
-		toastLayer.value.showInfomation('请停止计时器后再切换预设')
-		return
-	}
 	Taro.vibrateShort({ type: 'heavy' })
 	selectPresetId.value = id
 	Glbc.presetPlayer.load(Glbc.presetsDict.get(id))

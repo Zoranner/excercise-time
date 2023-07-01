@@ -48,9 +48,6 @@ class PresetPlayer {
     constructor() { }
 
     load(preset: Preset): void {
-        if (this.status !== PresetPlayerStatus.Stopped) {
-            return
-        }
         this.preset = preset
         this.status = PresetPlayerStatus.Stopped
     }
