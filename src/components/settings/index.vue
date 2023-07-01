@@ -32,6 +32,7 @@ const copyGithubUrl = () => {
 			toastLayer.value.showInfomation('链接已复制')
 		}
 	})
+	Vibrate.short('light' )
 }
 
 const aboutCardClicked = () => {
@@ -91,14 +92,17 @@ const surpriseStoped = () => {
 		height: 100%;
 
 		.settingCopyAble {
-			position: absolute;
-			height: auto;
+			position: relative;
+			//height: auto;
 			text-align: right;
-			right: 0;
-			top: 50%;
+			//right: 0;
 			font-size: 1.1em;
 			text-decoration: underline;
-			transform: translate(0%, -50%);
+		}
+
+		.settingCopyAble:active {
+			font-size: 1.05em;
+			color: var(--color-light-gray);
 		}
 
 		.settingsPlaceholder {

@@ -71,8 +71,8 @@ const slotDefault = !!useSlots().default
 		}
 	}
 
-	.settingItemValueArea:active {
-		filter: var(--shadow-drop-heavy-white);
-	}
+	// .settingItemValueArea:active {
+	// 	filter: var(--shadow-drop-heavy-white);
+	// }
 }
 </style>

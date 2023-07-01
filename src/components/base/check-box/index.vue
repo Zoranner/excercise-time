@@ -9,7 +9,8 @@ const props = defineProps({
 })
 const checked = ref(props.checked)
 const background = ref('var(--color-white)')
-const transform = ref('translate(-100%, -50%)')
+// const transform = ref('translate(-100%, -50%)')
+
 // const customBackground = computed(() => {
 // 	console.log(props.checked)
 // 	return props.checked ? 'var(--color-green)' : 'var(--color-white)'
@@ -17,7 +18,7 @@ const transform = ref('translate(-100%, -50%)')
 
 const updateState = (checked: Boolean) => {
 	background.value = checked ? 'var(--color-green)' : 'var(--color-white)'
-	transform.value = checked ? 'translate(-10%, -50%)' : 'translate(-90%, -50%)'
+	// transform.value = checked ? 'translate(-10%, -50%)' : 'translate(-90%, -50%)'
 }
 
 const switchState = () => {
@@ -33,7 +34,9 @@ updateState(checked.value)
 <template>
 	<view class="checkBoxPanel">
 		<view class="checkBoxBackground" :style="{ '--checkBoxBackground': background }" @click="switchState">
-			<view class="checkBoxSwitcher" :style="{ '--switcherTransform': transform }"></view>
+			<!-- <view class="checkBoxSwitcher" :style="{ '--switcherTransform': transform }"></view> -->
+			<view class="checkBoxFalse" v-show="!checked"></view>
+			<view class="checkBoxTrue" v-show="checked"></view>
 		</view>
 	</view>
 </template>
@@ -53,21 +56,47 @@ updateState(checked.value)
 		transform: translate(-50%, -50%);
 		border-radius: 20px;
 		background: var(--checkBoxBackground);
-		transition: all .3s ease-in-out;
+		//transition: all .3s ease-in-out;
 	}
 
-	.checkBoxSwitcher {
+	// .checkBoxSwitcher {
+	// 	position: absolute;
+	// 	width: 50px;
+	// 	height: 63px;
+	// 	top: 50%;
+	// 	left: 50%;
+	// 	transform: var(--switcherTransform);
+	// 	border-radius: 20px;
+	// 	border: 1px solid #bababa;
+	// 	background: var(--color-white);
+	// 	filter: var(--shadow-drop-black);
+	// 	//transition: all .3s ease-in-out;
+	// }
+
+	.checkBoxFalse {
 		position: absolute;
 		width: 50px;
 		height: 63px;
 		top: 50%;
 		left: 50%;
-		transform: var(--switcherTransform);
+		transform: translate(-90%, -50%);
 		border-radius: 20px;
 		border: 1px solid #bababa;
 		background: var(--color-white);
 		filter: var(--shadow-drop-black);
-		transition: all .3s ease-in-out;
+	}
+
+	.checkBoxTrue {
+		position: absolute;
+		width: 50px;
+		height: 63px;
+		top: 50%;
+		left: 50%;
+		transform: translate(-10%, -50%);
+		border-radius: 20px;
+		border: 1px solid #bababa;
+		background: var(--color-white);
+		filter: var(--shadow-drop-black);
 	}
 }
 </style>
