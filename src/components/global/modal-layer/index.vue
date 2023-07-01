@@ -1,11 +1,23 @@
 <script lang="ts" setup>
 const messageRef = ref('')
 
-const show = (message: string) => {
+let resultCallback: (result: boolean) => void
+
+const show = (message: string, callback: (result: boolean) => void) => {
     messageRef.value = message
-    setTimeout(() => {
-        messageRef.value = ''
-    }, 2000)
+    resultCallback = callback
+}
+
+const modalConfirmed = () => {
+    messageRef.value = ''
+	Vibrate.short('light')
+    resultCallback(true)
+}
+
+const modalCanceled = () => {
+    messageRef.value = ''
+	Vibrate.short('light')
+    resultCallback(false)
 }
 
 defineExpose({
@@ -14,29 +26,95 @@ defineExpose({
 </script>
 
 <template>
-    <view class="modalLayerView" v-show="messageRef !== ''">
-        <view class="modalBoxBack">
-            {{ messageRef }}
+    <view class="modalLayerView z-99999 fixed top-0 bottom-0 left-0 right-0" v-show="messageRef !== ''">
+        <view class="modalBoxBack fixed bottom-0 left-0 right-0">
+            <view class="modalMessageBack">
+                {{ messageRef }}
+            </view>
+            <view class="modalOperatingArea">
+                <view class="modalConfirmButton w-100% items-center justify-center" @click="modalConfirmed">
+                    <view class="modalConfirmCaption">确认</view>
+                </view>
+                <view class="modalCancelButton w-100% items-center justify-center" @click="modalCanceled">
+                    <view class="modalCancelCaption">取消</view>
+                </view>
+            </view>
         </view>
     </view>
 </template>
 
 <style lang="scss">
 .modalLayerView {
-    position: fixed;
-    z-index: 999999;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    // transform: translate(-50%, -50%);
+    background: var(--color-ts-black-deep);
 
     .modalBoxBack {
-        padding: 35px;
-        font-size: 1.35em;
-        text-align: center;
-        border-radius: 25px;
-        color: var(--color-white);
-        background: var(--color-black);
+        height: auto;
+        border-radius: 45px 45px 0 0;
+        padding-top: 90px;
+        padding-bottom: 80px;
+        padding-bottom: calc(constant(safe-area-inset-bottom) + 80px);
+        padding-bottom: calc(env(safe-area-inset-bottom) + 80px);
+        padding-left: 90px;
+        padding-right: 90px;
+        background-color: var(--color-black);
         filter: var(--shadow-drop-heavy-black);
+
+        .modalMessageBack {
+            margin-bottom: 60px;
+            font-size: 1.35em;
+            text-align: left;
+            border-radius: 25px;
+            color: var(--color-white);
+            filter: var(--shadow-drop-white);
+        }
+
+        .modalOperatingArea {
+            font-size: 1.25em;
+            text-align: center;
+            color: var(--color-white);
+            filter: var(--shadow-drop-black);
+
+            .modalConfirmButton {
+                height: 100px;
+                margin-bottom: 30px;
+                border-radius: 25px;
+                background: var(--color-ts-red);
+
+                .modalConfirmCaption {
+                    position: relative;
+                    width: 100%;
+                    height: auto;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    filter: var(--shadow-drop-white);
+                }
+            }
+
+            .modalConfirmButton:active {
+                background: var(--color-ts-red-deep);
+            }
+
+            .modalCancelButton {
+                height: 100px;
+                border-radius: 25px;
+                background: var(--color-ts-dark-gray);
+
+                .modalCancelCaption {
+                    position: relative;
+                    width: 100%;
+                    height: auto;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    filter: var(--shadow-drop-white);
+                }
+            }
+
+            .modalCancelButton:active {
+                background: var(--color-ts-dark-gray-deep);
+            }
+        }
     }
+
 }
 </style>
