@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import GroupItem from './group-item.vue';
-import SettingItem from './setting-item.vue';
+import GroupItem from './group-item.vue'
+import SettingItem from './setting-item.vue'
+import ButtonItem from './button-item.vue'
 import CheckBox from '@/components/base/check-box/index.vue'
 import AboutCard from '@/components/about/index.vue'
 import SurpriseLayer from '@/components/base/surprise/index.vue'
@@ -32,7 +33,11 @@ const copyGithubUrl = () => {
 			toastLayer.value.showInfomation('链接已复制')
 		}
 	})
-	Vibrate.short('light' )
+	Vibrate.short('light')
+}
+
+const resetPresetsData = () => {
+	Glbc.resetPresetsData()
 }
 
 const aboutCardClicked = () => {
@@ -74,6 +79,8 @@ const surpriseStoped = () => {
 			<SettingItem caption="开发人员" :value="Glbc.programAuthor" />
 			<SettingItem caption="美术设计" :value="Glbc.programDesign" />
 			<SettingItem caption="专业顾问" :value="Glbc.programCounselor" />
+			<GroupItem caption="数据" />
+			<ButtonItem caption="重置数据" @click="resetPresetsData"/>
 			<AboutCard @click="aboutCardClicked" />
 			<view class="settingsPlaceholder"></view>
 		</scroll-view>
