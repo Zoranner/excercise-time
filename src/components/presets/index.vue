@@ -1,12 +1,8 @@
 <script lang="ts" setup>
 import { PresetPlayerStatus } from '@/services/presets/presetPlayer'
 import PresetItem from './preset-item.vue'
-import ToastLayer from '@/components/base/toast-layer/index.vue'
-
-//const emits = defineEmits(['change'])
 
 const selectPresetId = ref('')
-const toastLayer = ref()
 
 const switchPreset = (id: string) => {
 	if (Glbc.presetPlayer.preset.id === id) {
@@ -19,7 +15,7 @@ const switchPreset = (id: string) => {
 }
 
 const itemEditClicked = (_id: string) => {
-	toastLayer.value.showInfomation('正在开发中...')
+	Dialog.showToast('正在开发中...')
 	// Taro.navigateTo({
 	// 	url: `/pages/presets/editor/index?id=${id}`,
 	// })
@@ -37,7 +33,6 @@ selectPresetId.value = Glbc.presetPlayer.preset.id
 			</view>
 			<view class="presetsPlaceholder"></view>
 		</scroll-view>
-		<ToastLayer ref="toastLayer" />
 	</view>
 </template>
 

@@ -5,12 +5,14 @@ import Settings from '@/components/settings/index.vue'
 import Fighting from '@/components/fighting/index.vue'
 import Presets from '@/components/presets/index.vue'
 import TabBar from '@/components/base/tab-bar/index.vue'
+import ToastLayer from '@/components/global/toast-layer/index.vue'
 
 definePageConfig({
 	navigationStyle: 'custom',
 	disableScroll: true // 禁止页面滚动
 })
 
+const toastLayer = ref()
 const titleCaption = ref('锻炼时间')
 const titleBarColor = ref('var(--color-transparent)')
 
@@ -59,6 +61,7 @@ onMounted(() => {
 	}
 	Taro.setKeepScreenOn({ keepScreenOn: true })
 	switchTitleBar(Glbc.ref.tabBarSelected)
+    Dialog.setToast(toastLayer.value)
 })
 
 onUnmounted(() => {
@@ -81,6 +84,7 @@ onUnmounted(() => {
 		<Presets class="pageContentItem" v-if="Glbc.ref.tabBarSelected === 2" />
 	</view>
 	<TabBar @change="tabBarChange" />
+		<ToastLayer ref="toastLayer" />
 </template>
 
 <style lang="scss">

@@ -5,12 +5,10 @@ import ButtonItem from './button-item.vue'
 import CheckBox from '@/components/base/check-box/index.vue'
 import AboutCard from '@/components/about/index.vue'
 import SurpriseLayer from '@/components/base/surprise/index.vue'
-import ToastLayer from '@/components/base/toast-layer/index.vue'
 
 let aboutTouchTime = 0;
 const surpriseActive = ref(false)
 const surpriseLayer = ref()
-const toastLayer = ref()
 
 const audioStateChecked = (checked: boolean) => {
 	Glbc.ref.audioState = checked
@@ -30,8 +28,8 @@ const copyGithubUrl = () => {
 				duration: 10
 			});
 			Taro.hideToast();
-			toastLayer.value.showInfomation('链接已复制')
-		}
+			Dialog.showToast('链接已复制')
+		},
 	})
 	Vibrate.short('light')
 }
@@ -85,7 +83,6 @@ const surpriseStoped = () => {
 			<view class="settingsPlaceholder"></view>
 		</scroll-view>
 		<SurpriseLayer class="surpriseLayer" ref="surpriseLayer" v-show="surpriseActive" @stoped="surpriseStoped" />
-		<ToastLayer ref="toastLayer" />
 	</view>
 </template>
 

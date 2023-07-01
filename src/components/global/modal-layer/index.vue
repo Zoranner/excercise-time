@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const messageRef = ref('')
 
-const showInfomation = (message: string) => {
+const show = (message: string) => {
     messageRef.value = message
     setTimeout(() => {
         messageRef.value = ''
@@ -9,27 +9,27 @@ const showInfomation = (message: string) => {
 }
 
 defineExpose({
-    showInfomation
+    show
 })
 </script>
 
 <template>
-    <view class="toastLayerView" v-show="messageRef !== ''">
-        <view class="toastBoxBack">
+    <view class="modalLayerView" v-show="messageRef !== ''">
+        <view class="modalBoxBack">
             {{ messageRef }}
         </view>
     </view>
 </template>
 
 <style lang="scss">
-.toastLayerView {
+.modalLayerView {
     position: fixed;
     z-index: 999999;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 
-    .toastBoxBack {
+    .modalBoxBack {
         padding: 35px;
         font-size: 1.35em;
         text-align: center;
