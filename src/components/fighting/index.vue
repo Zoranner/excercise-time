@@ -57,7 +57,7 @@ const playTextAudio = (text: string) => {
 
 const initPageElements = () => {
 	currentPreset = Config.presetPlayer.preset
-	currentTimer.value = toHumanTime(currentPreset.prepareTime)
+	currentTimer.value = Convert.toHumanTime(currentPreset.prepareTime)
 	initCircleProgress()
 	backgroundColor.value = 'var(--color-lg-yellow)'
 	timerTypeCaption.value = '准备'
@@ -103,7 +103,7 @@ onMounted(() => {
 		}
 	})
 	Config.presetPlayer.timerTimeUpdatedEvent.on((seconds) => {
-		currentTimer.value = toHumanTime(seconds)
+		currentTimer.value = Convert.toHumanTime(seconds)
 		if (seconds <= 3) {
 			playTextAudio(seconds.toString())
 		}

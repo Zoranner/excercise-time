@@ -98,7 +98,7 @@ class GlobalConfig {
 
 	/** 加载本地存储 */
 	loadStorage(): void {
-		this.firstTimeRun = toBoolean(Taro.getStorageSync('firstTimeRun'))
+		this.firstTimeRun =Convert.toBoolean(Taro.getStorageSync('firstTimeRun'))
 
 		if (this.firstTimeRun) {
 			this.ref.audioState = true
@@ -107,8 +107,8 @@ class GlobalConfig {
 			this.firstTimeRun = false
 		}
 		else {
-			this.ref.audioState = toBoolean(Taro.getStorageSync('audioState'))
-			this.ref.vibrateState = toBoolean(Taro.getStorageSync('vibrateState'))
+			this.ref.audioState = Convert.toBoolean(Taro.getStorageSync('audioState'))
+			this.ref.vibrateState = Convert.toBoolean(Taro.getStorageSync('vibrateState'))
 			this.presetsDict = this.toPresetsDict(Taro.getStorageSync('presetsDict'))
 			if (this.presetsDict.version === undefined || this.presetsDict.version < 1) {
 				this.resetPresetsData()
