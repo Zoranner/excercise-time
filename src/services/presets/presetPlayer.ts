@@ -98,7 +98,7 @@ class PresetPlayer {
             for (let cycle = this.preset.cycle; cycle > 0; cycle--) {
                 this.leftCycleUpdatedEvent.emit(cycle)
                 if (this.status === PresetPlayerStatus.Stopped) {
-                    return
+                    continue
                 }
                 await this.updateTimer(PresetTimerType.Exercise, this.preset.exerciseTime)
                 if (cycle === 1) {
