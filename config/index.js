@@ -21,7 +21,7 @@ const webpackChain = (chain) => {
 			imports: [
 				'vue',
 				{
-					'@/config/globalConfig': ['Glbc'],
+					'@/config/globalConfig': ['Config'],
 					'@/components/global/index': ['Dialog'],
 					'@/utils/typeConvert': ['toBoolean', 'toNumber', 'toHumanTime'],
 					'@/utils/asyncHelper': ['delayTime'],

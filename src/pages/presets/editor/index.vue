@@ -16,7 +16,7 @@ let navigationBack = () => {
 	<TitleBar caption="编辑预设" color="var(--color-black)" :action="navigationBack">
 		<image src="@/assets/images/title-bar/back.svg"></image>
 	</TitleBar>
-	<view class="timerContainer" :style="{ '--appHeaderHeight': Glbc.appHeaderHeight + 'px' }">
+	<view class="timerContainer" :style="{ '--appHeaderHeight': Config.appHeaderHeight + 'px' }">
 		<PresetEditor />
 	</view>
 </template>

@@ -23,7 +23,7 @@ const switchTitleBar = (index: number) => {
 			titleBarColor.value = 'var(--color-black)'
 			break
 		case 1:
-			let currentPreset = Glbc.presetPlayer.preset
+			let currentPreset = Config.presetPlayer.preset
 			titleCaption.value = currentPreset.caption
 			titleBarColor.value = 'var(--color-transparent)'
 			break
@@ -35,10 +35,10 @@ const switchTitleBar = (index: number) => {
 }
 
 const titleBarAction = () => {
-	if (Glbc.ref.tabBarSelected !== 2) {
+	if (Config.ref.tabBarSelected !== 2) {
 		return
 	}
-	switch (Glbc.ref.tabBarSelected) {
+	switch (Config.ref.tabBarSelected) {
 		case 2:
 			// Taro.navigateTo({ url: '/pages/presets/editor/index' })
 			break
@@ -53,14 +53,14 @@ onMounted(() => {
 	let router = getCurrentInstance().router
 	if (router !== null) {
 		eventCenter.on(router.onHide, () => {
-			Glbc.saveStorage()
+			Config.saveStorage()
 		})
 		eventCenter.on(router.onShow, () => {
-			Glbc.loadStorage()
+			Config.loadStorage()
 		})
 	}
 	Taro.setKeepScreenOn({ keepScreenOn: true })
-	switchTitleBar(Glbc.ref.tabBarSelected)
+	switchTitleBar(Config.ref.tabBarSelected)
     Dialog.setToast(toastLayer.value)
 })
 
@@ -75,13 +75,13 @@ onUnmounted(() => {
 
 <template>
 	<TitleBar :caption="titleCaption" :color="titleBarColor" :action="titleBarAction">
-		<image src="@/assets/images/title-bar/alarm_add.svg" v-if="Glbc.ref.tabBarSelected === 2"></image>
+		<image src="@/assets/images/title-bar/alarm_add.svg" v-if="Config.ref.tabBarSelected === 2"></image>
 	</TitleBar>
-	<view :class="Glbc.ref.tabBarSelected === 1 ? 'mainContainer' : 'viceContainer'"
-		:style="{ '--appHeaderHeight': Glbc.appHeaderHeight + 'px' }">
-		<Settings class="pageContentItem" v-if="Glbc.ref.tabBarSelected === 0" />
-		<Fighting class="pageContentItem" v-show="Glbc.ref.tabBarSelected === 1" />
-		<Presets class="pageContentItem" v-if="Glbc.ref.tabBarSelected === 2" />
+	<view :class="Config.ref.tabBarSelected === 1 ? 'mainContainer' : 'viceContainer'"
+		:style="{ '--appHeaderHeight': Config.appHeaderHeight + 'px' }">
+		<Settings class="pageContentItem" v-if="Config.ref.tabBarSelected === 0" />
+		<Fighting class="pageContentItem" v-show="Config.ref.tabBarSelected === 1" />
+		<Presets class="pageContentItem" v-if="Config.ref.tabBarSelected === 2" />
 	</view>
 	<TabBar @change="tabBarChange" />
 		<ToastLayer ref="toastLayer" />

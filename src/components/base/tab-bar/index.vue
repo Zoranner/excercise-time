@@ -20,8 +20,8 @@ const tabList = [
 ]
 
 const switchTab = (index: number) => {
-	Vibrate.short('light' )
-	Glbc.ref.tabBarSelected = index
+	Vibrate.short('light')
+	Config.ref.tabBarSelected = index
 	emits('change', index)
 }
 </script>
@@ -32,15 +32,15 @@ const switchTab = (index: number) => {
 		<view class="w-100% h-100% fixed">
 			<view class="tabBarViewer flex flex-1">
 				<view class="tabItemIcon flex flex-1 flex-col items-center justify-center"
-					:style="{ filter: Glbc.ref.tabBarSelected === index ? 'var(--shadow-drop-white)' : '' }"
+					:style="{ filter: Config.ref.tabBarSelected === index ? 'var(--shadow-drop-white)' : '' }"
 					v-for="(item, index) in tabList" :key="item.caption" @click="switchTab(index)">
 					<image :class="index === 1 ? 'h-40px w-40px' : 'h-25px w-25px'"
-						v-show="Glbc.ref.tabBarSelected === index" :src="item.selectedIcon"></image>
+						v-show="Config.ref.tabBarSelected === index" :src="item.selectedIcon"></image>
 					<image :class="index === 1 ? 'h-40px w-40px' : 'h-25px w-25px'"
-						v-show="Glbc.ref.tabBarSelected !== index" :src="item.defaultIcon"></image>
+						v-show="Config.ref.tabBarSelected !== index" :src="item.defaultIcon"></image>
 					<view :style="{
-						color: Glbc.ref.tabBarSelected === index ? 'var(--color-white)' : 'var(--color-light-gray)',
-						fontWeight: Glbc.ref.tabBarSelected === index ? 'bold' : 'normal',
+						color: Config.ref.tabBarSelected === index ? 'var(--color-white)' : 'var(--color-light-gray)',
+						fontWeight: Config.ref.tabBarSelected === index ? 'bold' : 'normal',
 						fontSize: '16px'
 					}">
 						{{ item.caption }}

@@ -14,8 +14,8 @@ interface Particle {
 
 const emits = defineEmits(['stoped'])
 
-const width = Glbc.screenWidth
-const height = Glbc.screenHeight
+const width = Config.screenWidth
+const height = Config.screenHeight
 const colors = [
     "#f44336",
     "#e91e63",

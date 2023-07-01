@@ -7,10 +7,10 @@
 			<image class="aboutLogoImage" src="@/assets/images/fist.svg"></image>
 		</view>
 		<view class="aboutTitle">间歇锻炼计时器</view>
-		<!-- <view class="aboutInformation">当前版本：{{ Glbc.programVersion }}</view>
-		<view class="aboutInformation">程序设计：{{ Glbc.programAuthor }}</view>
-		<view class="aboutInformation">美术设计：{{ Glbc.programDesign }}</view>
-		<view class="aboutInformation">专业顾问：{{ Glbc.programCounselor }}</view> -->
+		<!-- <view class="aboutInformation">当前版本：{{ Config.programVersion }}</view>
+		<view class="aboutInformation">程序设计：{{ Config.programAuthor }}</view>
+		<view class="aboutInformation">美术设计：{{ Config.programDesign }}</view>
+		<view class="aboutInformation">专业顾问：{{ Config.programCounselor }}</view> -->
 	</view>
 </template>
 

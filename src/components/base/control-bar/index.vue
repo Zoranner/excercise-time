@@ -5,28 +5,28 @@ const playerStatus = ref(PresetPlayerStatus.Stopped)
 
 const resetPlayerState = () => {
 	Vibrate.short('light' )
-	playerStatus.value = Glbc.presetPlayer.stop()
+	playerStatus.value = Config.presetPlayer.stop()
 }
 
 const switchPlayerState = () => {
 	Vibrate.short('light' )
-	switch (Glbc.presetPlayer.status) {
+	switch (Config.presetPlayer.status) {
 		case PresetPlayerStatus.Playing:
-			playerStatus.value = Glbc.presetPlayer.pause()
+			playerStatus.value = Config.presetPlayer.pause()
 			break
 		case PresetPlayerStatus.Paused:
 		case PresetPlayerStatus.Stopped:
-			playerStatus.value = Glbc.presetPlayer.play()
+			playerStatus.value = Config.presetPlayer.play()
 			break
 	}
 }
 
 const forwardNextCycle = () => {
 	Vibrate.short('light' )
-	Glbc.presetPlayer.jump()
+	Config.presetPlayer.jump()
 }
 
-Glbc.presetPlayer.statusUpdatedEvent.on((status) => {
+Config.presetPlayer.statusUpdatedEvent.on((status) => {
 	playerStatus.value = status
 })
 </script>

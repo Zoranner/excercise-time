@@ -13,7 +13,7 @@ class GlobalConfig {
 
 	ref = reactive({
 		/** 标签栏选中的Index */
-		tabBarSelected: 0,
+		tabBarSelected: 1,
 		/** 音频状态 */
 		audioState: true,
 		/** 震动状态 */
@@ -200,4 +200,4 @@ class GlobalConfig {
 	}
 }
 
-export const Glbc = GlobalConfig.Instance()
+export const Config = GlobalConfig.Instance()

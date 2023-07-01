@@ -1,16 +1,15 @@
 <script lang="ts" setup>
-import { PresetPlayerStatus } from '@/services/presets/presetPlayer'
 import PresetItem from './preset-item.vue'
 
 const selectPresetId = ref('')
 
 const switchPreset = (id: string) => {
-	if (Glbc.presetPlayer.preset.id === id) {
+	if (Config.presetPlayer.preset.id === id) {
 		return
 	}
 	Vibrate.short('heavy')
 	selectPresetId.value = id
-	Glbc.presetPlayer.load(Glbc.presetsDict.get(id))
+	Config.presetPlayer.load(Config.presetsDict.get(id))
 	//emits('change', preset)
 }
 
@@ -21,14 +20,14 @@ const itemEditClicked = (_id: string) => {
 	// })
 }
 
-selectPresetId.value = Glbc.presetPlayer.preset.id
+selectPresetId.value = Config.presetPlayer.preset.id
 </script>
 
 <template>
 	<view class="presetsPage">
 		<scroll-view class="presetsScrollView" :scroll-y="true">
-			<view v-for="(id, index) in Glbc.presetsDict.keys()" :key="index">
-				<PresetItem :preset="Glbc.presetsDict.get(id)" :checked="selectPresetId === id"
+			<view v-for="(id, index) in Config.presetsDict.keys()" :key="index">
+				<PresetItem :preset="Config.presetsDict.get(id)" :checked="selectPresetId === id"
 					@click:select="switchPreset(id)" @click:edit="itemEditClicked(id)" />
 			</view>
 			<view class="presetsPlaceholder"></view>

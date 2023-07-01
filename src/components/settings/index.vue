@@ -11,11 +11,11 @@ const surpriseActive = ref(false)
 const surpriseLayer = ref()
 
 const audioStateChecked = (checked: boolean) => {
-	Glbc.ref.audioState = checked
+	Config.ref.audioState = checked
 }
 
 const vibrateStateChecked = (checked: boolean) => {
-	Glbc.ref.vibrateState = checked
+	Config.ref.vibrateState = checked
 }
 
 const copyGithubUrl = () => {
@@ -35,7 +35,7 @@ const copyGithubUrl = () => {
 }
 
 const resetPresetsData = () => {
-	Glbc.resetPresetsData()
+	Config.resetPresetsData()
 }
 
 const aboutCardClicked = () => {
@@ -62,10 +62,10 @@ const surpriseStoped = () => {
 		<scroll-view class="settingsScrollView" :scroll-y="true">
 			<GroupItem caption="辅助" />
 			<SettingItem caption="语音辅助">
-				<CheckBox :checked="Glbc.ref.audioState" @update:checked="audioStateChecked" />
+				<CheckBox :checked="Config.ref.audioState" @update:checked="audioStateChecked" />
 			</SettingItem>
 			<SettingItem caption="震动辅助">
-				<CheckBox :checked="Glbc.ref.vibrateState" @update:checked="vibrateStateChecked" />
+				<CheckBox :checked="Config.ref.vibrateState" @update:checked="vibrateStateChecked" />
 			</SettingItem>
 			<GroupItem caption="贡献" />
 			<SettingItem caption="开源地址">
@@ -73,12 +73,12 @@ const surpriseStoped = () => {
 			</SettingItem>
 			<SettingItem caption="开源协议" value="GPL-3.0" />
 			<GroupItem caption="关于" />
-			<SettingItem caption="当前版本" :value="Glbc.programVersion" />
-			<SettingItem caption="开发人员" :value="Glbc.programAuthor" />
-			<SettingItem caption="美术设计" :value="Glbc.programDesign" />
-			<SettingItem caption="专业顾问" :value="Glbc.programCounselor" />
+			<SettingItem caption="当前版本" :value="Config.programVersion" />
+			<SettingItem caption="开发人员" :value="Config.programAuthor" />
+			<SettingItem caption="美术设计" :value="Config.programDesign" />
+			<SettingItem caption="专业顾问" :value="Config.programCounselor" />
 			<GroupItem caption="数据" />
-			<ButtonItem caption="重置数据" type="warning" @click="resetPresetsData"/>
+			<ButtonItem caption="重置数据" type="warning" @click="resetPresetsData" />
 			<AboutCard @click="aboutCardClicked" />
 			<view class="settingsPlaceholder"></view>
 		</scroll-view>
