@@ -80,7 +80,7 @@ const surpriseStoped = () => {
 			<SettingItem caption="美术设计" :value="Glbc.programDesign" />
 			<SettingItem caption="专业顾问" :value="Glbc.programCounselor" />
 			<GroupItem caption="数据" />
-			<ButtonItem caption="重置数据" @click="resetPresetsData"/>
+			<ButtonItem caption="重置数据" type="warning" @click="resetPresetsData"/>
 			<AboutCard @click="aboutCardClicked" />
 			<view class="settingsPlaceholder"></view>
 		</scroll-view>

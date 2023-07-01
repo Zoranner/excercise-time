@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-type ButtonType = 'primary' | 'success' | 'info' | 'warning' | 'error'
+type ButtonType = 'normal' | 'success' | 'warning'
 
 const props = defineProps({
 	caption: {
@@ -8,36 +8,28 @@ const props = defineProps({
 	},
 	type: {
 		type: String as PropType<ButtonType>,
-		default: 'error'
+		default: 'normal'
 	}
 })
 
 const defaultBackground = computed(() => {
 	switch (props.type) {
-		case 'primary':
+		case 'normal':
 			return 'var(--color-ts-black)'
-		case 'info':
-			return 'var(--color-ts-blue)'
 		case 'success':
 			return 'var(--color-ts-green)'
 		case 'warning':
-			return 'var(--color-ts-yellow)'
-		case 'error':
 			return 'var(--color-ts-red)'
 	}
 })
 
 const activeBackground = computed(() => {
 	switch (props.type) {
-		case 'primary':
+		case 'normal':
 			return 'var(--color-ts-black-deep)'
-		case 'info':
-			return 'var(--color-ts-blue-deep)'
 		case 'success':
 			return 'var(--color-ts-green-deep)'
 		case 'warning':
-			return 'var(--color-ts-yellow-deep)'
-		case 'error':
 			return 'var(--color-ts-red-deep)'
 	}
 })
