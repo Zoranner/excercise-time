@@ -15,11 +15,11 @@ const props = defineProps({
 })
 
 const defaultBackground = computed(() => {
-	return props.checked ? 'var(--color-trans-green)' : 'var(--color-trans-black)'
+	return props.checked ? 'var(--color-ts-green)' : 'var(--color-ts-black)'
 })
 
 const activeBackground = computed(() => {
-	return props.checked ? 'var(--color-trans-green-deep)' : 'var(--color-trans-black-deep)'
+	return props.checked ? 'var(--color-ts-green-deep)' : 'var(--color-ts-black-deep)'
 })
 
 const presetCaption = computed(() => {
@@ -111,7 +111,7 @@ const selectAreaClicked = () => {
 				top: 50%;
 				transform: translate(-50%, -50%);
 				border-radius: 50%;
-				background: var(--color-trans-green-deep);
+				background: var(--color-ts-green-deep);
 			}
 		}
 	}

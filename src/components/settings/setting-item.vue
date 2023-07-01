@@ -35,7 +35,7 @@ const slotDefault = !!useSlots().default
 	padding: 10px 0px;
 	border-radius: 30px;
 	color: var(--color-white);
-	background: var(--color-trans-black);
+	background: var(--color-ts-black);
 	filter: var(--shadow-drop-black);
 
 	.settingItemCaption {
