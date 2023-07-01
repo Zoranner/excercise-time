@@ -47,7 +47,6 @@ const presetCycles = computed(() => {
 })
 
 const editAreaClicked = () => {
-	console.log('editAreaClicked')
 	emits('click:edit')
 }
 
@@ -78,9 +77,9 @@ const selectAreaClicked = () => {
 
 <style lang="scss">
 .presetItemPanel {
-	width: calc(100% - 40px);
-	height: 190px;
-	margin: 30px 20px;
+	// width: calc(100% - 40px);
+	// height: 190px;
+	// margin: 30px 20px;
 	padding: 10px 0px;
 	border-radius: 30px;
 	transform: translate3d(0, 0, 0);
@@ -126,13 +125,12 @@ const selectAreaClicked = () => {
 	}
 
 	.presetItemArea {
-		width: calc(100% - 300px);
 		padding: 20px 0;
 		filter: var(--shadow-drop-white);
 
 		.presetItemCaption {
 			margin: 15px 0;
-			font-size: 1.35em;
+			font-size: 1.35rem;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
@@ -141,7 +139,7 @@ const selectAreaClicked = () => {
 
 		.presetItemContent {
 			margin: 15px 0;
-			font-size: 1.2em;
+			font-size: 1.2rem;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
@@ -177,7 +175,7 @@ const selectAreaClicked = () => {
 	.presetCycleBack {
 		position: absolute;
 		width: 100%;
-		font-size: 6.35em;
+		font-size: 6.35rem;
 		text-align: right;
 		font-weight: bold;
 		color: var(--color-light-gray);

@@ -27,10 +27,10 @@ selectPresetId.value = Config.presetPlayer.preset.id
 	<view class="presetsPage">
 		<scroll-view class="presetsScrollView" :scroll-y="true">
 			<view v-for="(id, index) in Config.presetsDict.keys()" :key="index">
-				<PresetItem :preset="Config.presetsDict.get(id)" :checked="selectPresetId === id"
+				<PresetItem class="presetItem" :preset="Config.presetsDict.get(id)" :checked="selectPresetId === id"
 					@click:select="switchPreset(id)" @click:edit="itemEditClicked(id)" />
 			</view>
-			<view class="presetsPlaceholder"></view>
+			<view class="presetPlaceholder"></view>
 		</scroll-view>
 	</view>
 </template>
@@ -41,10 +41,16 @@ selectPresetId.value = Config.presetPlayer.preset.id
 	background: var(--color-dark-gray);
 
 	.presetsScrollView {
-		width: 100%;
+		width: calc(100% - 40px);
 		height: 100%;
+		padding: 0 20px;
 
-		.presetsPlaceholder {
+		.presetItem {
+			height: 190px;
+			margin: 30px 0;
+		}
+
+		.presetPlaceholder {
 			width: 100%;
 			height: 70px;
 		}

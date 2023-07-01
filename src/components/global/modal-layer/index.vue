@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import ButtonCustom from '@/components/base/button/index.vue'
+
 const messageRef = ref('')
 
 let resultCallback: (result: boolean) => void
@@ -10,13 +12,13 @@ const show = (message: string, callback: (result: boolean) => void) => {
 
 const modalConfirmed = () => {
     messageRef.value = ''
-	Vibrate.short('light')
+    Vibrate.short('light')
     resultCallback(true)
 }
 
 const modalCanceled = () => {
     messageRef.value = ''
-	Vibrate.short('light')
+    Vibrate.short('light')
     resultCallback(false)
 }
 
@@ -32,12 +34,8 @@ defineExpose({
                 {{ messageRef }}
             </view>
             <view class="modalOperatingArea">
-                <view class="modalConfirmButton w-100% items-center justify-center" @click="modalConfirmed">
-                    <view class="modalConfirmCaption">确认</view>
-                </view>
-                <view class="modalCancelButton w-100% items-center justify-center" @click="modalCanceled">
-                    <view class="modalCancelCaption">取消</view>
-                </view>
+                <ButtonCustom class="modalConfirmButton w-100%" caption="确认" type="warning" @click="modalConfirmed" />
+                <ButtonCustom class="modalCancelButton w-100%" caption="取消" type="normal" @click="modalCanceled" />
             </view>
         </view>
     </view>
@@ -62,7 +60,7 @@ defineExpose({
 
         .modalMessageBack {
             margin-bottom: 60px;
-            font-size: 1.35em;
+            font-size: 1.35rem;
             text-align: left;
             border-radius: 25px;
             color: var(--color-white);
@@ -70,48 +68,16 @@ defineExpose({
         }
 
         .modalOperatingArea {
-            font-size: 1.25em;
-            text-align: center;
             color: var(--color-white);
             filter: var(--shadow-drop-black);
 
             .modalConfirmButton {
                 height: 100px;
                 margin-bottom: 30px;
-                border-radius: 25px;
-                background: var(--color-ts-red);
-
-                .modalConfirmCaption {
-                    position: relative;
-                    width: 100%;
-                    height: auto;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    filter: var(--shadow-drop-white);
-                }
-            }
-
-            .modalConfirmButton:active {
-                background: var(--color-ts-red-deep);
             }
 
             .modalCancelButton {
                 height: 100px;
-                border-radius: 25px;
-                background: var(--color-ts-dark-gray);
-
-                .modalCancelCaption {
-                    position: relative;
-                    width: 100%;
-                    height: auto;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    filter: var(--shadow-drop-white);
-                }
-            }
-
-            .modalCancelButton:active {
-                background: var(--color-ts-dark-gray-deep);
             }
         }
     }

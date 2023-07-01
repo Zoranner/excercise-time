@@ -29,9 +29,6 @@ const slotDefault = !!useSlots().default
 
 <style lang="scss">
 .settingItemPanel {
-	width: calc(100% - 40px);
-	height: 150px;
-	margin: 30px 20px;
 	padding: 10px 0px;
 	border-radius: 30px;
 	color: var(--color-white);
@@ -39,17 +36,14 @@ const slotDefault = !!useSlots().default
 	filter: var(--shadow-drop-black);
 
 	.settingItemCaption {
-		//width: calc(100% - 45px);
-		font-size: 1.35em;
+		font-size: 1.35rem;
 		margin-left: 50px;
 		filter: var(--shadow-drop-white);
 	}
 
 	.settingItemValueArea {
-		position: relative;
 		width: 300px;
 		height: 100%;
-		// margin-right: 50px;
 		filter: var(--shadow-drop-white);
 
 		.settingItemCustom {
@@ -66,13 +60,9 @@ const slotDefault = !!useSlots().default
 			text-align: right;
 			right: 50px;
 			top: 50%;
-			font-size: 1.1em;
+			font-size: 1.1rem;
 			transform: translate(0%, -50%);
 		}
 	}
-
-	// .settingItemValueArea:active {
-	// 	filter: var(--shadow-drop-heavy-white);
-	// }
 }
 </style>

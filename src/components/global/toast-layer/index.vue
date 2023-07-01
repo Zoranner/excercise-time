@@ -31,7 +31,7 @@ defineExpose({
 
     .toastBoxBack {
         padding: 35px;
-        font-size: 1.35em;
+        font-size: 1.35rem;
         text-align: center;
         filter: var(--shadow-drop-white);
     }

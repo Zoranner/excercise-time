@@ -131,7 +131,7 @@ watch(
 	transform: translate(-50%, -50%);
 }
 .circleProgressCaption {
-	font-size: 4em;
+	font-size: 4rem;
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);

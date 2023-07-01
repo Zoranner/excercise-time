@@ -7,10 +7,6 @@
 			<image class="aboutLogoImage" src="@/assets/images/fist.svg"></image>
 		</view>
 		<view class="aboutTitle">间歇锻炼计时器</view>
-		<!-- <view class="aboutInformation">当前版本：{{ Config.programVersion }}</view>
-		<view class="aboutInformation">程序设计：{{ Config.programAuthor }}</view>
-		<view class="aboutInformation">美术设计：{{ Config.programDesign }}</view>
-		<view class="aboutInformation">专业顾问：{{ Config.programCounselor }}</view> -->
 	</view>
 </template>
 
@@ -20,7 +16,6 @@
 	width: 100%;
 	height: auto;
 	text-align: center;
-	line-height: 1.8em;
 	opacity: 0.4;
 	color: var(--color-light-gray);
 	// filter: var(--shadow-drop-white);
@@ -43,11 +38,7 @@
 	}
 
 	.aboutTitle {
-		font-size: 1em;
-	}
-
-	.aboutInformation {
-		font-size: 0.8em;
+		font-size: 1rem;
 	}
 }
 </style>

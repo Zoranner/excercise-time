@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import GroupItem from './group-item.vue'
 import SettingItem from './setting-item.vue'
-import ButtonItem from './button-item.vue'
 import CheckBox from '@/components/base/check-box/index.vue'
+import CustomButton from '@/components/base/button/index.vue'
 import AboutCard from '@/components/about/index.vue'
 import SurpriseLayer from '@/components/base/surprise/index.vue'
 
@@ -35,7 +35,6 @@ const copyGithubUrl = () => {
 }
 
 const resetPresetsData = () => {
-	Vibrate.short('light')
 	Dialog.showModal('所有数据将被重置为默认状态，该操作不可恢复。', (result) => {
 		if (result) {
 			Config.resetPresetsData()
@@ -66,27 +65,27 @@ const surpriseStoped = () => {
 <template>
 	<view class="settingsPage">
 		<scroll-view class="settingsScrollView" :scroll-y="true">
-			<GroupItem caption="辅助" />
-			<SettingItem caption="语音辅助">
+			<GroupItem class="settingGroup" caption="辅助" />
+			<SettingItem class="settingItem" caption="语音辅助">
 				<CheckBox :checked="Config.ref.audioState" @update:checked="audioStateChecked" />
 			</SettingItem>
-			<SettingItem caption="震动辅助">
+			<SettingItem class="settingItem" caption="震动辅助">
 				<CheckBox :checked="Config.ref.vibrateState" @update:checked="vibrateStateChecked" />
 			</SettingItem>
-			<GroupItem caption="贡献" />
-			<SettingItem caption="开源地址">
+			<GroupItem class="settingGroup" caption="贡献" />
+			<SettingItem class="settingItem" caption="开源地址">
 				<view class="settingCopyAble" @click="copyGithubUrl">Github</view>
 			</SettingItem>
-			<SettingItem caption="开源协议" value="GPL-3.0" />
-			<GroupItem caption="关于" />
-			<SettingItem caption="当前版本" :value="Config.programVersion" />
-			<SettingItem caption="开发人员" :value="Config.programAuthor" />
-			<SettingItem caption="美术设计" :value="Config.programDesign" />
-			<SettingItem caption="专业顾问" :value="Config.programCounselor" />
-			<GroupItem caption="数据" />
-			<ButtonItem caption="重置数据" type="warning" @click="resetPresetsData" />
+			<SettingItem class="settingItem" caption="开源协议" value="GPL-3.0" />
+			<GroupItem class="settingGroup" caption="关于" />
+			<SettingItem class="settingItem" caption="当前版本" :value="Config.programVersion" />
+			<SettingItem class="settingItem" caption="开发人员" :value="Config.programAuthor" />
+			<SettingItem class="settingItem" caption="美术设计" :value="Config.programDesign" />
+			<SettingItem class="settingItem" caption="专业顾问" :value="Config.programCounselor" />
+			<GroupItem class="settingGroup" caption="数据" />
+			<CustomButton class="settingButton" caption="重置数据" type="warning" @click="resetPresetsData" />
 			<AboutCard @click="aboutCardClicked" />
-			<view class="settingsPlaceholder"></view>
+			<view class="settingPlaceholder"></view>
 		</scroll-view>
 		<SurpriseLayer class="surpriseLayer" ref="surpriseLayer" v-show="surpriseActive" @stoped="surpriseStoped" />
 	</view>
@@ -98,24 +97,40 @@ const surpriseStoped = () => {
 	background: var(--color-dark-gray);
 
 	.settingsScrollView {
-		width: 100%;
+		width: calc(100% - 40px);
 		height: 100%;
+		padding: 0 20px;
 
-		.settingCopyAble {
-			position: relative;
-			//height: auto;
-			text-align: right;
-			//right: 0;
-			font-size: 1.1em;
-			text-decoration: underline;
+		.settingGroup {
+			height: 60px;
+			margin: 30px 0;
 		}
 
-		.settingCopyAble:active {
-			font-size: 1.05em;
-			color: var(--color-light-gray);
+		.settingItem {
+			height: 120px;
+			margin: 30px 0;
+
+			.settingCopyAble {
+				position: relative;
+				//height: auto;
+				text-align: right;
+				//right: 0;
+				font-size: 1.1rem;
+				text-decoration: underline;
+			}
+
+			.settingCopyAble:active {
+				font-size: 1.05rem;
+				color: var(--color-light-gray);
+			}
 		}
 
-		.settingsPlaceholder {
+		.settingButton {
+			height: 120px;
+			margin: 30px 0;
+		}
+
+		.settingPlaceholder {
 			width: 100%;
 			height: 70px;
 		}
