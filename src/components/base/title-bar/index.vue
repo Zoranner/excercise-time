@@ -6,7 +6,7 @@ const props = defineProps({
 	},
 	color: {
 		type: [String, Object],
-		default: 'var(--color-transparent)'
+		default: 'transparent'
 	},
 	action: {
 		type: Function,
