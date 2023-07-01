@@ -22,8 +22,6 @@ const backgroundColors = ['var(--color-lg-yellow)', 'var(--color-lg-green)', 'va
 const stateCaptions = ['准备', '锻炼', '休息', '组间休息', '冷却时间']
 const audioContents = ['3', '2', '1', '准备', '锻炼', '休息', '组间休息', '冷却时间', '锻炼结束']
 
-const delayTime = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
 const initCircleProgress = async () => {
 	for (let i = 10; i > 0; i--) {
 		await delayTime(30)

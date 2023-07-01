@@ -23,6 +23,7 @@ const webpackChain = (chain) => {
 				{
 					'@/config/globalConfig': ['Glbc'],
 					'@/utils/typeConvert': ['toBoolean', 'toNumber', 'toHumanTime'],
+					'@/utils/asyncHelper': ['delayTime'],
 					'@tarojs/taro': [['default', 'Taro']]
 				}
 			],
