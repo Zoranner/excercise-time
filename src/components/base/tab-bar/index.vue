@@ -20,7 +20,7 @@ const tabList = [
 ]
 
 const switchTab = (index: number) => {
-	Taro.vibrateShort({ type: 'light' })
+	Vibrate.short('light' )
 	Glbc.ref.tabBarSelected = index
 	emits('change', index)
 }

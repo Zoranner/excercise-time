@@ -33,20 +33,14 @@ const vibrateLongOnce = async () => {
 	if (Glbc.ref.vibrateState !== true) {
 		return
 	}
-	Taro.vibrateLong()
+	Vibrate.long()
 }
 
 const vibrateShortTwice = async () => {
 	if (Glbc.ref.vibrateState !== true) {
 		return
 	}
-	Taro.vibrateShort({
-		type: 'heavy',
-		success: async () => {
-			await delayTime(200)
-			Taro.vibrateShort({ type: 'heavy' })
-		}
-	})
+	Vibrate.shortTwice('heavy', 200)
 }
 
 const playTextAudio = (text: string) => {

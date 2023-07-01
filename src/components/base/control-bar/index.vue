@@ -4,12 +4,12 @@ import { PresetPlayerStatus } from '@/services/presets/presetPlayer'
 const playerStatus = ref(PresetPlayerStatus.Stopped)
 
 const resetPlayerState = () => {
-	Taro.vibrateShort({ type: 'light' })
+	Vibrate.short('light' )
 	playerStatus.value = Glbc.presetPlayer.stop()
 }
 
 const switchPlayerState = () => {
-	Taro.vibrateShort({ type: 'light' })
+	Vibrate.short('light' )
 	switch (Glbc.presetPlayer.status) {
 		case PresetPlayerStatus.Playing:
 			playerStatus.value = Glbc.presetPlayer.pause()
@@ -22,7 +22,7 @@ const switchPlayerState = () => {
 }
 
 const forwardNextCycle = () => {
-	Taro.vibrateShort({ type: 'light' })
+	Vibrate.short('light' )
 	Glbc.presetPlayer.jump()
 }
 

@@ -24,6 +24,7 @@ const webpackChain = (chain) => {
 					'@/config/globalConfig': ['Glbc'],
 					'@/utils/typeConvert': ['toBoolean', 'toNumber', 'toHumanTime'],
 					'@/utils/asyncHelper': ['delayTime'],
+					'@/utils/vibrateHelper': ['Vibrate'],
 					'@tarojs/taro': [['default', 'Taro']]
 				}
 			],

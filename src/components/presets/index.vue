@@ -12,7 +12,7 @@ const switchPreset = (id: string) => {
 	if (Glbc.presetPlayer.preset.id === id) {
 		return
 	}
-	Taro.vibrateShort({ type: 'heavy' })
+	Vibrate.short('heavy')
 	selectPresetId.value = id
 	Glbc.presetPlayer.load(Glbc.presetsDict.get(id))
 	//emits('change', preset)

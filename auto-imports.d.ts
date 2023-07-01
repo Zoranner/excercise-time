@@ -10,6 +10,7 @@ declare global {
   const GlobalConfig: typeof import('@/config/globalConfig')['GlobalConfig']
   const Taro: typeof import('@tarojs/taro')['default']
   const TypeConvert: typeof import('@/utils/typeConvert')['TypeConvert']
+  const Vibrate: typeof import('@/utils/vibrateHelper')['Vibrate']
   const computed: typeof import('vue')['computed']
   const createApp: typeof import('vue')['createApp']
   const customRef: typeof import('vue')['customRef']
@@ -81,6 +82,7 @@ declare module 'vue' {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly Glbc: UnwrapRef<typeof import('@/config/globalConfig')['Glbc']>
     readonly Taro: UnwrapRef<typeof import('@tarojs/taro')['default']>
+    readonly Vibrate: UnwrapRef<typeof import('@/utils/vibrateHelper')['Vibrate']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
@@ -143,6 +145,7 @@ declare module '@vue/runtime-core' {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly Glbc: UnwrapRef<typeof import('@/config/globalConfig')['Glbc']>
     readonly Taro: UnwrapRef<typeof import('@tarojs/taro')['default']>
+    readonly Vibrate: UnwrapRef<typeof import('@/utils/vibrateHelper')['Vibrate']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>

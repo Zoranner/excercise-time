@@ -123,7 +123,7 @@ const surpriseClicked = () => {
             dead: false,
         })
     }
-    Taro.vibrateLong()
+	Vibrate.longTwice(0)
     updateCanvas()
 }
 
