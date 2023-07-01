@@ -22,6 +22,7 @@ const webpackChain = (chain) => {
 				'vue',
 				{
 					'@/config/globalConfig': ['Glbc'],
+					'@/components/global/index': ['Dialog'],
 					'@/utils/typeConvert': ['toBoolean', 'toNumber', 'toHumanTime'],
 					'@/utils/asyncHelper': ['delayTime'],
 					'@/utils/vibrateHelper': ['Vibrate'],
