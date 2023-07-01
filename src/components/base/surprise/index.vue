@@ -123,7 +123,7 @@ const surpriseClicked = () => {
             dead: false,
         })
     }
-	Vibrate.longTwice(0)
+    Vibrate.shortLong('heavy', 200)
     updateCanvas()
 }
 

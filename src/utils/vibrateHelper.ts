@@ -19,8 +19,9 @@ export class Vibrate {
         Taro.vibrateLong()
     }
 
-    static longTwice(interval: number) {
-        Taro.vibrateLong({
+    static shortLong(type: 'heavy' | 'medium' | 'light', interval: number) {
+        Taro.vibrateShort({
+            type: type,
             success: async () => {
                 await delayTime(interval)
                 Taro.vibrateLong()
