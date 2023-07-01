@@ -50,6 +50,7 @@ const editAreaClicked = () => {
 	console.log('editAreaClicked')
 	emits('click:edit')
 }
+
 const selectAreaClicked = () => {
 	emits('click:select')
 }
@@ -70,7 +71,7 @@ const selectAreaClicked = () => {
 			<view class="presetItemContent">{{ presetContent }}</view>
 		</view>
 		<view class="presetEditArea" @click="editAreaClicked()">
-			<image class="presetEditButton" src="@/assets/images/presets-item/tune.svg"></image>
+			<image class="presetEditButton" src="@/assets/images/preset-item/tune.svg"></image>
 		</view>
 	</view>
 </template>
