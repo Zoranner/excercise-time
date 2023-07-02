@@ -23,7 +23,7 @@ const webpackChain = (chain) => {
 				{
 					'@/config/globalConfig': ['Config'],
 					'@/components/global/index': ['Dialog'],
-					'@/utils/typeConvert': ['toBoolean', 'toNumber', 'toHumanTime'],
+					'@/utils/typeConvert': ['Convert'],
 					'@/utils/asyncHelper': ['delayTime'],
 					'@/utils/vibrateHelper': ['Vibrate'],
 					'@tarojs/taro': [['default', 'Taro']]
