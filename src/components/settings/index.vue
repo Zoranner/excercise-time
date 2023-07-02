@@ -100,15 +100,18 @@ const surpriseStoped = () => {
 		width: calc(100% - 40px);
 		height: 100%;
 		padding: 0 20px;
+		filter: var(--shadow-drop-black);
 
 		.settingGroup {
 			height: 60px;
 			margin: 30px 0;
+			box-sizing: border-box;
 		}
 
 		.settingItem {
 			height: 120px;
 			margin: 30px 0;
+			box-sizing: border-box;
 
 			.settingCopyAble {
 				position: relative;
@@ -128,11 +131,13 @@ const surpriseStoped = () => {
 		.settingButton {
 			height: 120px;
 			margin: 30px 0;
+			box-sizing: border-box;
 		}
 
 		.settingPlaceholder {
 			width: 100%;
 			height: 70px;
+			box-sizing: border-box;
 		}
 	}
 

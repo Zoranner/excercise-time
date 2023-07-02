@@ -1,64 +1,102 @@
 <script lang="ts" setup>
-interface Props {
-	modelValue: boolean
-	height?: number
-	footer?: boolean
-}
-const props = withDefaults(defineProps<Props>(), {
-	modelValue: false,
-	height: 50,
-	footer: true
+const emits = defineEmits(['confirm', 'cancel'])
+
+const props = defineProps({
+    show: {
+        type: Boolean,
+        default: false
+    }
 })
-const emits = defineEmits(['update:modelValue', 'confirm', 'cancel', 'beforeClose'])
 
-const disabled = ref(props.modelValue)
-watch(
-	() => props.modelValue,
-	() => {
-		disabled.value = props.modelValue
-	}
-)
-
-const close = () => {
-	emits('beforeClose')
-	disabled.value = false
-}
-defineExpose({ close })
-
-const ok = () => {
-	emits('confirm')
+const popupConfirmed = () => {
+    Vibrate.short('light')
+    emits('confirm')
 }
 
-const cancel = () => {
-	close()
-	emits('cancel')
-}
-
-const height = computed(() => props.height + 'vh')
-
-const handleAnimationEnd = () => {
-	if (!disabled.value) {
-		emits('update:modelValue', false)
-	}
+const popupCanceled = () => {
+    Vibrate.short('light')
+    emits('cancel')
 }
 </script>
 
 <template>
-	<view v-if="props.modelValue">
-		<view class="w-100vw h-100vh z-999998 fixed top-0 left-0 bottom-0 right-0 bg-[#25252556]" @click.self="close" v-if="disabled"></view>
-		<view
-			class="w-100% animated p-5px p-t-25px z-999999 fixed bottom-0 box-border rounded-t-xl bg-white"
-			@animationend="handleAnimationEnd"
-			:class="disabled ? 'animated-fade-in-up-big' : 'animated-fade-out-down-big'"
-			:style="{ height }">
-			<view class="center w100% h-25px absolute top-0 box-border" @click="close">
-				<view class="w-100px h-5px bg-#636363 active:bg-#fafafa rounded-full"></view>
-			</view>
-			<slot></slot>
-			<view class="center w-100% bottom-20px absolute" v-if="footer">
-				<view class="btn-info mr-20px w-150px h-40px center" @click="cancel">取消</view>
-				<view class="btn-success w-150px h-40px center" @click="ok">确定</view>
-			</view>
-		</view>
-	</view>
+    <view class="popupLayerView fixed top-0 bottom-0 left-0 right-0" v-show="props.show">
+        <view class="popupBoxBack fixed bottom-0 left-0 right-0">
+            <view class="popupOperateArea flex">
+                <view class="popupCancelButton w-25% items-center justify-center" @click="popupCanceled">
+                    <view class="popupCancelCaption">取消</view>
+                </view>
+                <view class="flex-1"></view>
+                <view class="popupConfirmButton w-25% items-center justify-center" @click="popupConfirmed">
+                    <view class="popupConfirmCaption">确认</view>
+                </view>
+            </view>
+            <slot></slot>
+        </view>
+    </view>
 </template>
+
+<style lang="scss">
+.popupLayerView {
+    background: var(--color-ts-black-deep);
+
+    .popupBoxBack {
+        height: auto;
+        border-radius: 45px 45px 0 0;
+        padding-top: 60px;
+        padding-bottom: 80px;
+        padding-bottom: calc(constant(safe-area-inset-bottom) + 80px);
+        padding-bottom: calc(env(safe-area-inset-bottom) + 80px);
+        padding-left: 60px;
+        padding-right: 60px;
+        background-color: var(--color-black);
+        filter: var(--shadow-drop-heavy-black);
+
+        .popupOperateArea {
+            font-size: 1.35rem;
+            margin-bottom: 50px;
+            text-align: center;
+            color: var(--color-white);
+            filter: var(--shadow-drop-black);
+
+            .popupConfirmButton {
+                height: 100px;
+                border-radius: 25px;
+                background: var(--color-ts-green);
+
+                .popupConfirmCaption {
+                    position: relative;
+                    width: 100%;
+                    height: auto;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    filter: var(--shadow-drop-white);
+                }
+            }
+
+            .popupConfirmButton:active {
+                background: var(--color-ts-green-deep);
+            }
+
+            .popupCancelButton {
+                height: 100px;
+                border-radius: 25px;
+                background: var(--color-ts-dark-gray);
+
+                .popupCancelCaption {
+                    position: relative;
+                    width: 100%;
+                    height: auto;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    filter: var(--shadow-drop-white);
+                }
+            }
+
+            .popupCancelButton:active {
+                background: var(--color-ts-dark-gray-deep);
+            }
+        }
+    }
+}
+</style>

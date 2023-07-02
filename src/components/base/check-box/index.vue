@@ -46,6 +46,8 @@ updateState(checked.value)
 	position: relative;
 	width: 100px;
 	height: 68px;
+	transform: translate3d(0, 0, 0);
+	overflow: hidden;
 
 	.checkBoxBackground {
 		position: absolute;

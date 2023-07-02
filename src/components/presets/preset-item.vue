@@ -32,7 +32,7 @@ const presetCaption = computed(() => {
 
 const presetContent = computed(() => {
 	if (props.preset) {
-		return `锻炼 ${toHumanTime(props.preset.exerciseTime)} 休息 ${toHumanTime(props.preset.cycleRestTime)}`
+		return `锻炼 ${Convert.toHumanTime(props.preset.exerciseTime)} 休息 ${Convert.toHumanTime(props.preset.cycleRestTime)}`
 	} else {
 		return '错误'
 	}
@@ -77,15 +77,11 @@ const selectAreaClicked = () => {
 
 <style lang="scss">
 .presetItemPanel {
-	// width: calc(100% - 40px);
-	// height: 190px;
-	// margin: 30px 20px;
-	padding: 10px 0px;
+	padding: 10px;
 	border-radius: 30px;
 	transform: translate3d(0, 0, 0);
 	overflow: hidden;
 	background: var(--defaultBackground);
-	filter: var(--shadow-drop-black);
 
 	.presetSelectArea {
 		width: 130px;

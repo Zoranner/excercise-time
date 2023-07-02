@@ -28,7 +28,7 @@ defineExpose({
 </script>
 
 <template>
-    <view class="modalLayerView z-99999 fixed top-0 bottom-0 left-0 right-0" v-show="messageRef !== ''">
+    <view class="modalLayerView z-999998 fixed top-0 bottom-0 left-0 right-0" v-show="messageRef !== ''">
         <view class="modalBoxBack fixed bottom-0 left-0 right-0">
             <view class="modalMessageBack">
                 {{ messageRef }}

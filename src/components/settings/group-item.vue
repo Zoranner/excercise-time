@@ -16,14 +16,12 @@ const props = defineProps({
 
 <style lang="scss">
 .groupItemPanel {
-	padding: 10px 0px;
+	padding: 10px;
 	color: var(--color-light-gray);
 
 	.groupItemCaption {
-		//width: calc(100% - 45px);
 		font-size: 1.15rem;
 		margin-left: 50px;
-		filter: var(--shadow-drop-white);
 	}
 }
 </style>

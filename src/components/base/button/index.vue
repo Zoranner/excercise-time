@@ -17,7 +17,7 @@ const props = defineProps({
 const defaultBackground = computed(() => {
     switch (props.type) {
         case 'normal':
-            return 'var(--color-ts-black)'
+            return 'var(--color-ts-dark-gray)'
         case 'success':
             return 'var(--color-ts-green)'
         case 'warning':
@@ -28,7 +28,7 @@ const defaultBackground = computed(() => {
 const activeBackground = computed(() => {
     switch (props.type) {
         case 'normal':
-            return 'var(--color-ts-black-deep)'
+            return 'var(--color-ts-dark-gray-deep)'
         case 'success':
             return 'var(--color-ts-green-deep)'
         case 'warning':
@@ -52,11 +52,10 @@ const buttonClicked = () => {
 
 <style lang="scss">
 .buttonItemArea {
-	padding: 10px 0px;
+	padding: 10px;
 	border-radius: 30px;
 	color: var(--color-white);
 	background: var(--defaultBackground);
-	filter: var(--shadow-drop-black);
 
     .buttonItemCaption {
 		font-size: 1.35rem;
