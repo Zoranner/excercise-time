@@ -70,10 +70,10 @@ class GlobalConfig {
 	}
 
 	/** 选中预设的Index */
-	private get currentPresetId(): string {
+	get currentPresetId(): string {
 		return this.presetPlayer.preset.id
 	}
-	private set currentPresetId(id: string) {
+	set currentPresetId(id: string) {
 		let preset = this.presetsDict.get(id)
 		if (preset === undefined) {
 			return
