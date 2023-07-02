@@ -5,16 +5,20 @@ import Settings from '@/components/settings/index.vue'
 import Fighting from '@/components/fighting/index.vue'
 import Presets from '@/components/presets/index.vue'
 import TabBar from '@/components/base/tab-bar/index.vue'
-import ToastLayer from '@/components/global/toast-layer/index.vue'
+import EditorLayer from '@/components/global/editor-layer/index.vue'
+import PickerLayer from '@/components/global/picker-layer/index.vue'
 import ModalLayer from '@/components/global/modal-layer/index.vue'
+import ToastLayer from '@/components/global/toast-layer/index.vue'
 
 definePageConfig({
 	navigationStyle: 'custom',
 	disableScroll: true // 禁止页面滚动
 })
 
-const toastLayer = ref()
-const modalLayer = ref()
+const toastLayerRef = ref()
+const modalLayerRef = ref()
+const pickerLayerRef = ref()
+const editorLayerRef = ref()
 const titleCaption = ref('锻炼时间')
 const titleBarColor = ref('var(--color-transparent)')
 
@@ -64,8 +68,10 @@ onMounted(() => {
 		})
 	}
 	switchTitleBar(Config.ref.tabBarSelected)
-	Dialog.setToast(toastLayer)
-	Dialog.setModal(modalLayer)
+	Dialog.setToast(toastLayerRef)
+	Dialog.setModal(modalLayerRef)
+	Dialog.setPicker(pickerLayerRef)
+	Dialog.setEditor(editorLayerRef)
 })
 
 onUnmounted(() => {
@@ -88,8 +94,10 @@ onUnmounted(() => {
 		<Presets class="pageContentItem" v-if="Config.ref.tabBarSelected === 2" />
 	</view>
 	<TabBar @change="tabBarChange" />
-	<ToastLayer ref="toastLayer" />
-	<ModalLayer ref="modalLayer" />
+	<EditorLayer ref="editorLayerRef" />
+	<PickerLayer ref="pickerLayerRef" />
+	<ModalLayer ref="modalLayerRef" />
+	<ToastLayer ref="toastLayerRef" />
 </template>
 
 <style lang="scss">

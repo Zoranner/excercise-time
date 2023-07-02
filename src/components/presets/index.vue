@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { Preset } from '@/services/presets/preset';
+import { PresetPlayerStatus } from '@/services/presets/presetPlayer';
 import PresetItem from './preset-item.vue'
 
 const selectPresetId = ref('')
@@ -7,17 +9,34 @@ const switchPreset = (id: string) => {
 	if (Config.presetPlayer.preset.id === id) {
 		return
 	}
-	Vibrate.short('heavy')
-	selectPresetId.value = id
-	Config.presetPlayer.load(Config.presetsDict.get(id))
-	//emits('change', preset)
+	if (Config.presetPlayer.status !== PresetPlayerStatus.Stopped) {
+		Dialog.showModal('已有锻炼正在进行中，切换预设将会结束当前正在进行的锻炼，是否继续？',
+			(result: boolean) => {
+				if (!result) {
+					return
+				}
+				Vibrate.short('heavy')
+				selectPresetId.value = id
+				Config.currentPresetId = id
+			})
+	}
+	else {
+		Vibrate.short('heavy')
+		selectPresetId.value = id
+		Config.currentPresetId = id
+	}
 }
 
-const itemEditClicked = (_id: string) => {
-	Dialog.showToast('正在开发中...')
+const itemEditClicked = (id: string) => {
+	Vibrate.short('light')
 	// Taro.navigateTo({
 	// 	url: `/pages/presets/editor/index?id=${id}`,
 	// })
+	Dialog.showEditor(id, (result: boolean, preset: Preset | undefined) => {
+		if (result && preset) {
+			console.log(JSON.stringify(preset))
+		}
+	})
 }
 
 selectPresetId.value = Config.presetPlayer.preset.id
@@ -33,6 +52,7 @@ selectPresetId.value = Config.presetPlayer.preset.id
 			<view class="presetPlaceholder"></view>
 		</scroll-view>
 	</view>
+	
 </template>
 
 <style lang="scss">
@@ -44,10 +64,12 @@ selectPresetId.value = Config.presetPlayer.preset.id
 		width: calc(100% - 40px);
 		height: 100%;
 		padding: 0 20px;
+		filter: var(--shadow-drop-black);
 
 		.presetItem {
 			height: 190px;
 			margin: 30px 0;
+			box-sizing: border-box;
 		}
 
 		.presetPlaceholder {
