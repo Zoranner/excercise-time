@@ -2,7 +2,6 @@ export default defineAppConfig({
 	pages: [
 		// 小程序入口 主页
 		'pages/index/index',
-		'pages/presets/editor/index',
 	],
 	window: {
 		navigationBarBackgroundColor: '#000',
