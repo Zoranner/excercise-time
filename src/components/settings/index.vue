@@ -72,16 +72,15 @@ const surpriseStoped = () => {
 			<SettingItem class="settingItem" caption="震动辅助">
 				<CheckBox :checked="Config.ref.vibrateState" @update:checked="vibrateStateChecked" />
 			</SettingItem>
-			<GroupItem class="settingGroup" caption="贡献" />
+			<GroupItem class="settingGroup" caption="关于" />
+			<SettingItem class="settingItem" caption="当前版本" :value="Config.programVersion" />
 			<SettingItem class="settingItem" caption="开源地址">
 				<view class="settingCopyAble" @click="copyGithubUrl">Github</view>
 			</SettingItem>
 			<SettingItem class="settingItem" caption="开源协议" value="GPL-3.0" />
-			<GroupItem class="settingGroup" caption="关于" />
-			<SettingItem class="settingItem" caption="当前版本" :value="Config.programVersion" />
-			<SettingItem class="settingItem" caption="开发人员" :value="Config.programAuthor" />
+			<!-- <SettingItem class="settingItem" caption="开发人员" :value="Config.programAuthor" />
 			<SettingItem class="settingItem" caption="美术设计" :value="Config.programDesign" />
-			<SettingItem class="settingItem" caption="专业顾问" :value="Config.programCounselor" />
+			<SettingItem class="settingItem" caption="专业顾问" :value="Config.programCounselor" /> -->
 			<GroupItem class="settingGroup" caption="数据" />
 			<CustomButton class="settingButton" caption="重置数据" type="warning" @click="resetPresetsData" />
 			<AboutCard @click="aboutCardClicked" />
