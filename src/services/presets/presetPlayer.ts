@@ -16,7 +16,7 @@ enum PresetTimerType {
 }
 
 class PresetPlayer {
-    private INTERVAL = 50
+    private INTERVAL = 100
     private intervalId: number
     private jumpCycleMark: boolean = false
 
@@ -68,7 +68,7 @@ class PresetPlayer {
     }
 
     pause(): PresetPlayerStatus {
-        if (this.status !== PresetPlayerStatus.Paused) {
+        if (this.status === PresetPlayerStatus.Playing) {
             this.status = PresetPlayerStatus.Paused
         }
         return this.status
@@ -117,8 +117,10 @@ class PresetPlayer {
         if (this.status === PresetPlayerStatus.Stopped) {
             return
         }
-        let milliseconds = seconds * 1000
-        let leftMilliseconds = milliseconds
+        let totalTimeLength = seconds * 1000
+        let leftTimeLength = 0
+        // let leftMilliseconds = totalTimeLength
+        let startTime = new Date().getTime()
         this.timerTypeUpdatedEvent.emit(type)
         return new Promise((resolve) => {
             this.intervalId = setInterval(() => {
@@ -136,16 +138,18 @@ class PresetPlayer {
                 if (this.status === PresetPlayerStatus.Paused) {
                     return
                 }
-                if (leftMilliseconds % 1000 === 0) {
-                    this.timerTimeUpdatedEvent.emit(leftMilliseconds / 1000)
-                }
-                leftMilliseconds -= this.INTERVAL
-                if (leftMilliseconds <= 0) {
+                // if (leftMilliseconds % 1000 === 0) {
+                //     this.timerTimeUpdatedEvent.emit(leftMilliseconds / 1000)
+                // }
+                this.timerTimeUpdatedEvent.emit(Math.floor(leftTimeLength / 1000))
+                // leftMilliseconds -= this.INTERVAL
+                leftTimeLength = totalTimeLength - (new Date().getTime() - startTime)
+                if (leftTimeLength <= 0) {
                     clearInterval(this.intervalId)
                     resolve()
                     return
                 }
-                this.timerProgressUpdatedEvent.emit(leftMilliseconds / milliseconds)
+                this.timerProgressUpdatedEvent.emit(leftTimeLength / totalTimeLength)
             }, this.INTERVAL)
         })
     }

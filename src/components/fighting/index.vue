@@ -11,6 +11,7 @@ const cycleTitleFontSize = circleRadius * 0.012
 const cycleValueFontSize = circleRadius * 0.014
 
 let currentPreset = Config.presetPlayer.preset
+const currentSeconds = ref(0)
 const currentTimer = ref('00:00')
 const currentProgress = ref(0)
 const backgroundColor = ref('var(--color-lg-yellow)')
@@ -23,7 +24,7 @@ const stateCaptions = ['准备', '锻炼', '休息', '组间休息', '冷却时�
 const audioContents = ['3', '2', '1', '准备', '锻炼', '休息', '组间休息', '冷却时间', '锻炼结束']
 
 const initCircleProgress = async () => {
-	for (let i = 10; i > 0; i--) {
+	for (let i = 3; i > 0; i--) {
 		await delayTime(30)
 		currentProgress.value = i / 10
 	}
@@ -103,8 +104,12 @@ onMounted(() => {
 		}
 	})
 	Config.presetPlayer.timerTimeUpdatedEvent.on((seconds) => {
+		if (seconds === currentSeconds.value) {
+			return
+		}
+		currentSeconds.value = seconds
 		currentTimer.value = Convert.toHumanTime(seconds)
-		if (seconds <= 3) {
+		if (currentSeconds.value <= 3) {
 			playTextAudio(seconds.toString())
 		}
 	})
@@ -143,21 +148,21 @@ onUnmounted(() => {
 	<view class="fightingPage">
 		<view class="fightingBase flex flex-col items-center" :style="{ background: backgroundColor }">
 			<CircleProgress class="timeProgress fixed" :progress="currentProgress" :radius="circleRadius">
-				<text class="timeContent" :style="{ fontSize: leftTimeFontSize + 'em' }">
+				<text class="timeContent" :style="{ fontSize: leftTimeFontSize + 'rem' }">
 					{{ currentTimer }}
 				</text>
 			</CircleProgress>
-			<text class="stateCaption fixed" :style="{ fontSize: stateCaptionFontSize + 'em' }">
+			<text class="stateCaption fixed" :style="{ fontSize: stateCaptionFontSize + 'rem' }">
 				{{ timerTypeCaption }}
 			</text>
 			<ControlBar class="controlBar fixed"></ControlBar>
-			<view class="cycleValueArea w-70% fixed flex" :style="{ '--cycleValueFontSize': cycleValueFontSize + 'em' }">
+			<view class="cycleValueArea w-70% fixed flex" :style="{ '--cycleValueFontSize': cycleValueFontSize + 'rem' }">
 				<text class="w-50%">{{ cycleProgress }}</text>
 				<text class="w-50%">{{ loopProgress }}</text>
 			</view>
-			<view class="cycleTitleArea w-70% fixed flex" :style="{ '--cycleTitleFontSize': cycleTitleFontSize + 'em' }">
-				<text class="w-50%">周期</text>
-				<text class="w-50%">循环</text>
+			<view class="cycleTitleArea w-70% fixed flex" :style="{ '--cycleTitleFontSize': cycleTitleFontSize + 'rem' }">
+				<text class="w-50%">个数</text>
+				<text class="w-50%">组数</text>
 			</view>
 		</view>
 	</view>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eventCenter, getCurrentInstance } from '@tarojs/taro'
+import { Preset, PresetOptions } from '@/services/presets/preset'
 import TitleBar from '@/components/base/title-bar/index.vue'
 import Settings from '@/components/settings/index.vue'
 import Fighting from '@/components/fighting/index.vue'
@@ -41,13 +41,24 @@ const switchTitleBar = (index: number) => {
 }
 
 const titleBarAction = () => {
-	if (Config.ref.tabBarSelected !== 2) {
-		return
-	}
+	Vibrate.short('light')
 	switch (Config.ref.tabBarSelected) {
 		case 2:
-			Dialog.showToast('正在开发中...')
-			// Taro.navigateTo({ url: '/pages/presets/editor/index' })
+			Dialog.showEditor(null, (result: EditorResult, options: PresetOptions | undefined) => {
+				if (result === EditorResult.Save && options) {
+					const preset = new Preset(
+						options.caption,
+						options.prepareTime,
+						options.exerciseTime,
+						options.cycleRestTime,
+						options.cycle,
+						options.loop,
+						options.loopRestTime,
+						options.coolingTime,
+					)
+					Config.presetsDict.add(preset)
+				}
+			})
 			break
 	}
 }
@@ -57,13 +68,12 @@ const tabBarChange = (index: number) => {
 }
 
 onMounted(() => {
-	let router = getCurrentInstance().router
+	let router = Taro.getCurrentInstance().router
 	if (router !== null) {
-		eventCenter.on(router.onHide, () => {
+		Taro.eventCenter.on(router.onHide, () => {
 			Config.saveStorage()
 		})
-		eventCenter.on(router.onShow, () => {
-			// Config.loadStorage()
+		Taro.eventCenter.on(router.onShow, () => {
 			Taro.setKeepScreenOn({ keepScreenOn: true })
 		})
 	}
@@ -75,10 +85,10 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-	let router = getCurrentInstance().router
+	let router = Taro.getCurrentInstance().router
 	if (router !== null) {
-		eventCenter.off(router.onHide)
-		eventCenter.off(router.onShow)
+		Taro.eventCenter.off(router.onHide)
+		Taro.eventCenter.off(router.onShow)
 	}
 })
 </script>
@@ -101,10 +111,6 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss">
-// .appContainer {
-// 	width: 100vw;
-// 	height: 100vh;
-// 	background: var(--color-dark-gray);
 .mainContainer {
 	height: 100vh;
 	background: var(--color-dark-gray);
@@ -128,6 +134,4 @@ onUnmounted(() => {
 		transform: all 1s ease-in-out;
 	}
 }
-
-// }
 </style>

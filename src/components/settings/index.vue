@@ -64,7 +64,7 @@ const surpriseStoped = () => {
 
 <template>
 	<view class="settingsPage">
-		<scroll-view class="settingsScrollView" :scroll-y="true">
+		<scroll-view class="settingsScrollView" :scrollY="true">
 			<GroupItem class="settingGroup" caption="辅助" />
 			<SettingItem class="settingItem" caption="语音辅助">
 				<CheckBox :checked="Config.ref.audioState" @update:checked="audioStateChecked" />
@@ -118,12 +118,12 @@ const surpriseStoped = () => {
 				//height: auto;
 				text-align: right;
 				//right: 0;
-				font-size: 1.1rem;
+				font-size: 1.35rem;
 				text-decoration: underline;
 			}
 
 			.settingCopyAble:active {
-				font-size: 1.05rem;
+				font-size: 1.25rem;
 				color: var(--color-light-gray);
 			}
 		}

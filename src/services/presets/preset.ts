@@ -1,8 +1,6 @@
 import { nanoid } from 'nanoid/non-secure'
 
-class Preset {
-	/** 唯一标识 */
-	readonly id: string
+class PresetOptions {
 	/** 标题 */
 	caption: string
 	/** 准备时间 */
@@ -11,9 +9,9 @@ class Preset {
 	exerciseTime: number
 	/** 休息时间 */
 	cycleRestTime: number
-	/** 周期 */
+	/** 个数 */
 	cycle: number
-	/** 循环 */
+	/** 组数 */
 	loop: number
 	/** 组间休息时间 */
 	loopRestTime: number
@@ -30,7 +28,6 @@ class Preset {
 		loopRestTime: number = 30,
 		coolingTime: number = 30
 	) {
-		this.id = nanoid(10)
 		this.caption = caption
 		this.prepareTime = prepareTime
 		this.exerciseTime = exerciseTime
@@ -42,53 +39,36 @@ class Preset {
 	}
 }
 
-class PresetsDict {
-	private dict: { [key: string]: Preset } = {}
+class Preset extends PresetOptions {
+	/** 唯一标识 */
+	readonly id: string
+	/** 创建时间 */
+	readonly createTime: number
 
-	/** 当前数据版本 */
-	version: number = 1
-
-	constructor() { }
-
-	add(preset: Preset): void {
-		if (this.dict[preset.id] !== undefined) {
-			return
-		}
-		this.dict[preset.id] = preset
-	}
-
-	get(id: string): Preset {
-		return this.dict[id]
-	}
-
-	keys(): string[] {
-		return Object.keys(this.dict)
-	}
-
-	values(): Preset[] {
-		return Object.values(this.dict)
-	}
-
-	contains(id: string): boolean {
-		return this.dict[id] !== undefined
-	}
-
-	length(): number {
-		return Object.keys(this.dict).length
-	}
-
-	remove(id: string): void {
-		if (this.dict[id] === undefined) {
-			return
-		}
-		delete this.dict[id]
-	}
-
-	clear(): void {
-		while (this.length() > 0) {
-			this.remove(this.keys()[0])
-		}
+	constructor(
+		caption: string = '锻炼时间',
+		prepareTime: number = 5,
+		exerciseTime: number = 10,
+		cycleRestTime: number = 5,
+		cycle: number = 10,
+		loop: number = 3,
+		loopRestTime: number = 30,
+		coolingTime: number = 30,
+		createTime: number = Date.now()
+	) {
+		super(
+			caption,
+			prepareTime,
+			exerciseTime,
+			cycleRestTime,
+			cycle,
+			loop,
+			loopRestTime,
+			coolingTime
+		)
+		this.id = nanoid(10)
+		this.createTime = createTime
 	}
 }
 
-export { Preset, PresetsDict }
+export { PresetOptions, Preset }

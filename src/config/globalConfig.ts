@@ -1,8 +1,10 @@
 import { PresetPlayer } from '@/services/presets/presetPlayer'
-import { Preset, PresetsDict } from '@/services/presets/preset'
+import { Preset } from '@/services/presets/preset'
+import { TypedEvent } from '@/utils/typedEvent'
+import { PresetsDict, PresetsDictUpdateType } from '@/services/presets/presetsDict'
 
 class GlobalConfig {
-	private static instance: GlobalConfig 
+	private static instance: GlobalConfig
 
 	static Instance(): GlobalConfig {
 		if (!GlobalConfig.instance) {
@@ -44,8 +46,6 @@ class GlobalConfig {
 	titleBarHeight: number
 	/** 应用头部高度 */
 	appHeaderHeight: number
-	/** 标题栏文字大小 */
-	titleBarFontSize: number
 
 	/** 预设字典 */
 	private localPresetsDict: PresetsDict
@@ -100,7 +100,7 @@ class GlobalConfig {
 
 	/** 加载本地存储 */
 	loadStorage(): void {
-		this.firstTimeRun =Convert.toBoolean(Taro.getStorageSync('firstTimeRun'))
+		this.firstTimeRun = Convert.toBoolean(Taro.getStorageSync('firstTimeRun'))
 
 		if (this.firstTimeRun) {
 			this.ref.audioState = true
@@ -112,7 +112,9 @@ class GlobalConfig {
 			this.ref.audioState = Convert.toBoolean(Taro.getStorageSync('audioState'))
 			this.ref.vibrateState = Convert.toBoolean(Taro.getStorageSync('vibrateState'))
 			this.presetsDict = this.toPresetsDict(Taro.getStorageSync('presetsDict'))
-			if (this.presetsDict.version === undefined || this.presetsDict.version < 1) {
+			if (this.presetsDict.version === undefined ||
+				this.presetsDict.version < 3 ||
+				this.presetsDict.length() === 0) {
 				this.resetPresetsData()
 			}
 			else {
@@ -127,14 +129,15 @@ class GlobalConfig {
 	/** 重置数据 */
 	resetPresetsData(): void {
 		this.presetsDict.clear()
-		this.presetsDict.add(new Preset(`锻炼时间1`, 5, 8, 10, 5, 3, 30, 30))
-		this.presetsDict.add(new Preset(`锻炼时间2`, 5, 8, 10, 10, 3, 30, 30))
-		this.presetsDict.add(new Preset(`锻炼时间3`, 5, 8, 5, 5, 3, 30, 30))
-		this.presetsDict.add(new Preset(`锻炼时间4`, 5, 8, 5, 10, 3, 30, 30))
-		this.presetsDict.add(new Preset(`锻炼时间5`, 5, 10, 5, 5, 3, 30, 30))
-		this.presetsDict.add(new Preset(`锻炼时间6`, 5, 10, 5, 10, 3, 30, 30))
-		this.presetsDict.add(new Preset(`锻炼时间7`, 5, 15, 5, 10, 3, 30, 30))
-		this.presetsDict.add(new Preset(`锻炼时间8`, 5, 20, 5, 10, 3, 30, 30))
+		this.presetsDict = new PresetsDict()
+		this.presetsDict.add(new Preset(`锻炼时间1`, 5, 8, 10, 5, 3, 30, 30, 1))
+		this.presetsDict.add(new Preset(`锻炼时间2`, 5, 8, 10, 10, 3, 30, 30, 2))
+		this.presetsDict.add(new Preset(`锻炼时间3`, 5, 8, 5, 5, 3, 30, 30, 3))
+		this.presetsDict.add(new Preset(`锻炼时间4`, 5, 8, 5, 10, 3, 30, 30, 4))
+		this.presetsDict.add(new Preset(`锻炼时间5`, 5, 10, 5, 5, 3, 30, 30, 5))
+		this.presetsDict.add(new Preset(`锻炼时间6`, 5, 10, 5, 10, 3, 30, 30, 6))
+		this.presetsDict.add(new Preset(`锻炼时间7`, 5, 15, 5, 10, 3, 30, 30, 7))
+		this.presetsDict.add(new Preset(`锻炼时间8`, 5, 20, 5, 10, 3, 30, 30, 8))
 		this.currentPresetId = this.presetsDict.keys()[0]
 	}
 
@@ -178,14 +181,15 @@ class GlobalConfig {
 		this.statusBarHeight = statusBarHeight ?? 0
 		this.titleBarHeight = height + (top - statusBarHeight!) * 2
 		this.appHeaderHeight = this.statusBarHeight + this.titleBarHeight
-		this.titleBarFontSize = screenHeight * 0.0015
 	}
 
 	/** 字符串转预设字典 */
 	toPresetsDict(str: string): PresetsDict {
 		try {
 			let result = JSON.parse(str)
-			return result === null || result === undefined ? new PresetsDict() : Object.assign(new PresetsDict(), result)
+			const presetDict: PresetsDict = result === null || result === undefined ? new PresetsDict() : Object.assign(new PresetsDict(), result)
+			presetDict.updated = new TypedEvent<PresetsDictUpdateType>()
+			return presetDict
 		}
 		catch (e) {
 			return new PresetsDict()
