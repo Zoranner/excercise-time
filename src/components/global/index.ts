@@ -1,4 +1,13 @@
-import { Preset } from "@/services/presets/preset"
+import { Preset, PresetOptions } from "@/services/presets/preset"
+
+export enum EditorResult {
+	/** 保存 */
+	Save,
+	/** 取消 */
+	Cancel,
+	/** 删除 */
+	Delete,
+}
 
 class GlobalDialog {
 	private static instance: GlobalDialog
@@ -52,11 +61,11 @@ class GlobalDialog {
 		this.editorLayer = component
 	}
 
-	showEditor(id: string, callback: (result: boolean, preset: Preset | undefined) => void) {
+	showEditor(preset: Preset | null, callback: (result: EditorResult, options: PresetOptions | undefined) => void) {
 		if (!this.editorLayer) {
 			return
 		}
-		this.editorLayer.value.show(id, callback)
+		this.editorLayer.value.show(preset, callback)
 	}
 }
 

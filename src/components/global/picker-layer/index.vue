@@ -8,6 +8,20 @@ const pickerItemsRef = ref<number[][]>([])
 const pickerValueRef = ref<number[]>([])
 const zerofillRef = ref()
 
+const pickerConfirmed = () => {
+    showStateRef.value = false
+    resultCallback(true, pickerValueRef.value)
+}
+
+const pickerCanceled = () => {
+    showStateRef.value = false
+    resultCallback(false, undefined)
+}
+
+const pickerChanged = (e: any) => {
+    pickerValueRef.value = e.detail.value
+}
+
 const show = (type: 'number' | 'time', value: number[], callback: (result: boolean, value: number[] | undefined) => void) => {
     pickerItemsRef.value = []
     switch (type) {
@@ -35,20 +49,6 @@ const show = (type: 'number' | 'time', value: number[], callback: (result: boole
     resultCallback = callback
 }
 
-const pickerConfirmed = () => {
-    showStateRef.value = false
-    resultCallback(true, pickerValueRef.value)
-}
-
-const pickerCanceled = () => {
-    showStateRef.value = false
-    resultCallback(false, undefined)
-}
-
-const pickerChanged = (e: any) => {
-    pickerValueRef.value = e.detail.value
-}
-
 defineExpose({
     show
 })
@@ -57,7 +57,7 @@ defineExpose({
 <template>
     <Popup class="z-999997" :show="showStateRef" @confirm="pickerConfirmed" @cancel="pickerCanceled">
         <picker-view class="pickerViewArea" indicatorClass="pickerIndicator" maskClass="pickerMask" :value="pickerValueRef"
-            @change="pickerChanged">
+            :immediateChange="true" @change="pickerChanged">
             <view class="pickerIndicatorCustom"></view>
             <picker-view-column class="pickerViewColumn" v-for="(array, index) in pickerItemsRef" :key="index">
                 <view class="pickerViewColumnItem" v-for="(item, index2) in array" :key="index2">

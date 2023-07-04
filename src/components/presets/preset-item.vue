@@ -175,7 +175,7 @@ const selectAreaClicked = () => {
 		text-align: right;
 		font-weight: bold;
 		color: var(--color-light-gray);
-		mask: linear-gradient(135deg, transparent 30%, white 200%);
+		mask: linear-gradient(135deg, transparent 28%, white 200%);
 		transform: translateY(25%);
 	}
 }
