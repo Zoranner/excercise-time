@@ -141,7 +141,7 @@ class PresetPlayer {
                 // if (leftMilliseconds % 1000 === 0) {
                 //     this.timerTimeUpdatedEvent.emit(leftMilliseconds / 1000)
                 // }
-                this.timerTimeUpdatedEvent.emit(Math.floor(leftTimeLength / 1000))
+                this.timerTimeUpdatedEvent.emit(Math.ceil(leftTimeLength / 1000))
                 // leftMilliseconds -= this.INTERVAL
                 leftTimeLength = totalTimeLength - (new Date().getTime() - startTime)
                 if (leftTimeLength <= 0) {
