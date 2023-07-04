@@ -25,6 +25,8 @@ class GlobalConfig {
 
 	/** 程序版本 */
 	programVersion: string
+	/** 开源地址 */
+	openSourceUrl: string
 	/** 程序设计 */
 	programAuthor: string
 	/** 美术设计 */
@@ -157,6 +159,7 @@ class GlobalConfig {
 
 	/** 设置关于信息 */
 	private setAboutInfo(): void {
+		this.openSourceUrl = 'https://github.com/Zoranner/excercise-time'
 		this.programAuthor = '杨新冉'
 		/** 美术设计 */
 		this.programDesign = '冯智毅, 杨新冉'

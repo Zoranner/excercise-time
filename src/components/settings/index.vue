@@ -20,7 +20,7 @@ const vibrateStateChecked = (checked: boolean) => {
 
 const copyGithubUrl = () => {
 	Taro.setClipboardData({
-		data: 'data',
+		data: Config.openSourceUrl,
 		success: () => {
 			Taro.showToast({
 				title: '链接已复制',
