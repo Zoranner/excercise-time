@@ -9,10 +9,12 @@ import EditorLayer from '@/components/global/editor-layer/index.vue'
 import PickerLayer from '@/components/global/picker-layer/index.vue'
 import ModalLayer from '@/components/global/modal-layer/index.vue'
 import ToastLayer from '@/components/global/toast-layer/index.vue'
+import { EditorResult } from '@/components/global'
 
 definePageConfig({
 	navigationStyle: 'custom',
-	disableScroll: true // 禁止页面滚动
+	disableScroll: true, // 禁止页面滚动
+	enableShareAppMessage: true,
 })
 
 const toastLayerRef = ref()
@@ -82,6 +84,30 @@ onMounted(() => {
 	Dialog.setModal(modalLayerRef)
 	Dialog.setPicker(pickerLayerRef)
 	Dialog.setEditor(editorLayerRef)
+	Taro.useShareAppMessage(result => {
+		if (result.from === 'button') {
+			console.log(result.target)
+		}
+		if (result.from === 'menu') {
+			console.log(result.target)
+		}
+		return {
+			title: '开始锻炼吧',
+			path: '/pages/index/index'
+		}
+	})
+	const updateManager = Taro.getUpdateManager()
+	updateManager.onCheckForUpdate((result) => {
+		// 请求完新版本信息的回调
+		console.log(result.hasUpdate)
+	})
+	updateManager.onUpdateReady(() => {
+		Dialog.showModal('新版本已经准备好，是否重启应用？', (result) => {
+			if (result) {
+				updateManager.applyUpdate()
+			}
+		})
+	})
 })
 
 onUnmounted(() => {
