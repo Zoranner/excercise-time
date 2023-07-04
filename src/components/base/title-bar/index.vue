@@ -10,9 +10,7 @@ const props = defineProps({
 	},
 	action: {
 		type: Function,
-		default: () => {
-			console.log('titleBar action')
-		}
+		default: () => {}
 	}
 })
 
@@ -27,7 +25,7 @@ const slotDefault = !!useSlots().default
 			<view class="titleBarCorner fixed flex items-center" v-if="slotDefault" @click="props.action">
 				<slot class="titleBarCornerImage"></slot>
 			</view>
-			<text class="titleBarCaption fixed" :style="{ fontSize: Config.titleBarFontSize + 'em' }">
+			<text class="titleBarCaption fixed">
 				{{ props.caption }}
 			</text>
 		</view>
@@ -60,6 +58,7 @@ const slotDefault = !!useSlots().default
 
 		.titleBarCaption {
 			position: absolute;
+			font-size: 1.25rem;
 			top: 50%;
 			transform: translateY(-50%);
 			color: var(--color-white);
