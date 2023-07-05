@@ -122,6 +122,7 @@ class GlobalConfig {
 				if (!this.presetsDict.contains(this.currentPresetId)) {
 					this.currentPresetId = this.presetsDict.keys()[0]
 				}
+				Taro.setStorageSync('currentPresetId', this.presetPlayer.preset.id)
 			}
 		}
 	}
@@ -139,6 +140,8 @@ class GlobalConfig {
 		this.presetsDict.add(new Preset(`锻炼时间7`, 5, 15, 5, 10, 3, 30, 30, 7))
 		this.presetsDict.add(new Preset(`锻炼时间8`, 5, 20, 5, 10, 3, 30, 30, 8))
 		this.currentPresetId = this.presetsDict.keys()[0]
+		Taro.setStorageSync('presetsDict', JSON.stringify(this.presetsDict))
+		Taro.setStorageSync('currentPresetId', this.presetPlayer.preset.id)
 	}
 
 	/** 获取程序版本 */
