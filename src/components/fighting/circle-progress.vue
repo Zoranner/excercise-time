@@ -8,15 +8,15 @@ interface Item {
 
 const props = defineProps({
 	progress: {
-		type: [Number, String],
+		type: Number,
 		required: true
 	},
 	strokeWidth: {
-		type: [Number, String],
+		type: Number,
 		default: 5
 	},
 	radius: {
-		type: [Number, String],
+		type: Number,
 		default: 100
 	},
 	strokeLinecap: {
@@ -30,27 +30,29 @@ const props = defineProps({
 	pathColor: {
 		type: String,
 		default: '#FFFFFF00'
-	},
-	clockwise: {
-		type: Boolean,
-		default: true
 	}
 })
 
+const currentRate = ref(props.progress)
+const refRandomId = Math.random().toString(36).slice(-8)
+const tempForeStyle = ref({})
+
 const slotDefault = !!useSlots().default
-const classes = computed(() => {
+const circleClasses = computed(() => {
 	const prefixClass = 'circle-progress'
 	return {
 		[prefixClass]: true
 	}
 })
-const currentRate = ref(props.progress)
-const refRandomId = Math.random().toString(36).slice(-8)
+
 const isObject = (val: unknown): val is Record<any, any> => val !== null && typeof val === 'object'
+
+const format100 = (progress: number) => Math.min(Math.max(progress, 0), 100)
 
 const transColor = (color: string | undefined) => {
 	return color && color.replace('#', '%23')
 }
+
 const stop = () => {
 	if (!isObject(props.color)) {
 		return []
@@ -70,7 +72,7 @@ const stop = () => {
 	})
 	return stopArray
 }
-const tempForeStyle = ref({})
+
 const foreStyle = () => {
 	let { strokeWidth } = props
 
@@ -84,11 +86,10 @@ const foreStyle = () => {
 		})
 	}
 	let perimeter = 283
-	let progress = +currentRate.value
-	let offset = (perimeter * Number(format(parseFloat(progress.toFixed(1))))) / 100
-	const isWise = props.clockwise ? 1 : 0
+	let progress = currentRate.value
+	let offset = (perimeter * format100(progress)) / 100
 	const color = isObject(props.color) ? `url(%23${refRandomId})` : transColor(props.color)
-	let d = `M 50 50 m 0 -45 a 45 45 0 1 ${isWise} 0 90 a 45 45 0 1, ${isWise} 0 -90`
+	let d = `M 50 50 m 0 -45 a 45 45 0 1 1 0 90 a 45 45 0 1, 1 0 -90`
 	const pa = `%3Cdefs%3E%3ClinearGradient id='${refRandomId}' x1='100%25' y1='0%25' x2='0%25' y2='0%25'%3E${stopDom}%3C/linearGradient%3E%3C/defs%3E`
 	const path = `%3Cpath d='${d}' stroke-width='${strokeWidth}' stroke='${transColor(props.pathColor)}' fill='none'/%3E`
 	const path1 = `%3Cpath d='${d}' stroke-width='${strokeWidth}' stroke-dasharray='${offset},${perimeter}' stroke-linecap='round' stroke='${color}' fill='none'/%3E`
@@ -99,23 +100,22 @@ const foreStyle = () => {
 		height: '100%'
 	}
 }
-const format = (progress: string | number) => Math.min(Math.max(+progress, 0), 100)
 
 watch(
 	() => props.progress,
 	(value) => {
 		tempForeStyle.value = foreStyle()
-		currentRate.value = Math.min(Math.max(+value, 0), 100)
-		emits('update:progress', format(parseFloat(Number(value).toFixed(1))))
+		currentRate.value = format100(value)
+		emits('update:progress', format100(parseFloat(Number(value).toFixed(1))))
 	}
 )
 </script>
 
 <template>
-	<view :class="classes" :style="{ height: Number(radius) * 2 + 'px', width: Number(radius) * 2 + 'px' }">
+	<view :class="circleClasses" :style="{ height: radius * 2 + 'px', width: radius * 2 + 'px' }">
 		<view class="absolute" :style="tempForeStyle"></view>
 		<view class="absolute" :style="foreStyle()"></view>
-		<view class="absolute" :style="{ height: Number(radius) * 2 + 'px', width: Number(radius) * 2 + 'px' }">
+		<view class="absolute" :style="{ height: radius * 2 + 'px', width: radius * 2 + 'px' }">
 			<view class="circleProgressSlot absolute">
 				<slot></slot>
 			</view>
@@ -130,6 +130,7 @@ watch(
 	top: 50%;
 	transform: translate(-50%, -50%);
 }
+
 .circleProgressCaption {
 	font-size: 4rem;
 	left: 50%;
