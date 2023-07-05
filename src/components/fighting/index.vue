@@ -51,9 +51,12 @@ const playTextAudio = (text: string) => {
 	if (audioContents.indexOf(text) === -1) {
 		return
 	}
-	let innerAudioContext = Taro.createInnerAudioContext()
+	const innerAudioContext = Taro.createInnerAudioContext()
 	innerAudioContext.autoplay = true
 	innerAudioContext.src = `assets/audios/${text}.wav`
+	innerAudioContext.onEnded(() => {
+		innerAudioContext.destroy()
+	})
 }
 
 const initPageElements = () => {
