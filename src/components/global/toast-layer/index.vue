@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 const messageRef = ref('')
 
-const show = (message: string) => {
+const show = async (message: string) => {
     messageRef.value = message
-    setTimeout(() => {
-        messageRef.value = ''
-    }, 2000)
+    await delayTime(2000)
+    messageRef.value = ''
 }
 
 defineExpose({
