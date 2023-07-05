@@ -4,7 +4,7 @@
 <template>
 	<view class="aboutComponent">
 		<view class="aboutLogo">
-			<image class="aboutLogoImage" src="@/assets/images/fist.svg"></image>
+			<image class="aboutLogoImage" src="@/assets/images/icon.svg"></image>
 		</view>
 		<view class="aboutTitle">间歇锻炼计时器</view>
 	</view>
