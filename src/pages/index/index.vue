@@ -10,6 +10,7 @@ import PickerLayer from '@/components/global/picker-layer/index.vue'
 import ModalLayer from '@/components/global/modal-layer/index.vue'
 import ToastLayer from '@/components/global/toast-layer/index.vue'
 import { EditorResult } from '@/components/global'
+import { useAddToFavorites, useReady, useShareAppMessage } from '@tarojs/taro'
 
 definePageConfig({
 	navigationStyle: 'custom',
@@ -69,52 +70,26 @@ const tabBarChange = (index: number) => {
 	switchTitleBar(index)
 }
 
-onMounted(() => {
-	let router = Taro.getCurrentInstance().router
-	if (router !== null) {
-		Taro.eventCenter.on(router.onHide, () => {
-			Config.saveStorage()
-		})
-		Taro.eventCenter.on(router.onShow, () => {
-			Taro.setKeepScreenOn({ keepScreenOn: true })
-		})
-	}
+useReady(() => {
 	switchTitleBar(Config.ref.tabBarSelected)
 	Dialog.setToast(toastLayerRef)
 	Dialog.setModal(modalLayerRef)
 	Dialog.setPicker(pickerLayerRef)
 	Dialog.setEditor(editorLayerRef)
-	Taro.useShareAppMessage(result => {
-		if (result.from === 'button') {
-			console.log(result.target)
-		}
-		if (result.from === 'menu') {
-			console.log(result.target)
-		}
-		return {
-			title: '开始锻炼吧',
-			path: '/pages/index/index'
-		}
-	})
-	const updateManager = Taro.getUpdateManager()
-	updateManager.onCheckForUpdate((result) => {
-		// 请求完新版本信息的回调
-		console.log(result.hasUpdate)
-	})
-	updateManager.onUpdateReady(() => {
-		Dialog.showModal('新版本已经准备好，是否重启应用？', (result) => {
-			if (result) {
-				updateManager.applyUpdate()
-			}
-		})
-	})
 })
 
-onUnmounted(() => {
-	let router = Taro.getCurrentInstance().router
-	if (router !== null) {
-		Taro.eventCenter.off(router.onHide)
-		Taro.eventCenter.off(router.onShow)
+useShareAppMessage((_result: any) => {
+	return {
+		title: '开始锻炼吧',
+		path: '/pages/index/index',
+		imageUrl: require('@/assets/images/share.png'),
+	}
+})
+
+useAddToFavorites((_result: any) => {
+	return {
+		title: '开始锻炼吧',
+		imageUrl: require('@/assets/images/share.png'),
 	}
 })
 </script>
