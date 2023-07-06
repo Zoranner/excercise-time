@@ -4,6 +4,7 @@ import { PresetPlayerStatus } from '@/services/presets/presetPlayer';
 import PresetItem from './preset-item.vue'
 import { EditorResult } from '../global';
 import { PresetsDictUpdateType } from '@/services/presets/presetsDict';
+import { useLoad, useUnload } from '@tarojs/taro';
 
 const scrollIntoViewRef = ref('')
 const selectPresetId = ref('')
@@ -84,7 +85,7 @@ const itemEditClicked = (preset: Preset) => {
 	}
 }
 
-onMounted(() => {
+useLoad(() => {
 	selectPresetId.value = Config.currentPresetId
 	Config.presetsDict.updated.on((type: PresetsDictUpdateType) => {
 		switch (type) {
@@ -105,14 +106,15 @@ onMounted(() => {
 	})
 })
 
-onUnmounted(() => {
+useUnload(() => {
 	Config.presetsDict.updated.off()
 })
 </script>
 
 <template>
 	<view class="presetsPageArea">
-		<scroll-view class="presetsScrollView" :scrollY="true" :scrollWithAnimation="true" :scrollIntoView="scrollIntoViewRef">
+		<scroll-view class="presetsScrollView" :scrollY="true" :scrollWithAnimation="true"
+			:scrollIntoView="scrollIntoViewRef">
 			<view v-for="(preset, index) in presetsDictValues" :key="index">
 				<PresetItem class="presetViewItem" :preset="preset" :checked="selectPresetId === preset.id"
 					@click:select="itemSelectClicked(preset.id)" @click:edit="itemEditClicked(preset)" />

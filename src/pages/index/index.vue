@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useLoad, useAddToFavorites, useShareAppMessage, useDidHide } from '@tarojs/taro'
 import { Preset, PresetOptions } from '@/services/presets/preset'
 import TitleBar from '@/components/base/title-bar/index.vue'
 import Settings from '@/components/settings/index.vue'
@@ -10,7 +11,6 @@ import PickerLayer from '@/components/global/picker-layer/index.vue'
 import ModalLayer from '@/components/global/modal-layer/index.vue'
 import ToastLayer from '@/components/global/toast-layer/index.vue'
 import { EditorResult } from '@/components/global'
-import { useAddToFavorites, useReady, useShareAppMessage } from '@tarojs/taro'
 
 definePageConfig({
 	navigationStyle: 'custom',
@@ -70,7 +70,7 @@ const tabBarChange = (index: number) => {
 	switchTitleBar(index)
 }
 
-useReady(() => {
+useLoad(() => {
 	switchTitleBar(Config.ref.tabBarSelected)
 	Dialog.setToast(toastLayerRef)
 	Dialog.setModal(modalLayerRef)
@@ -92,6 +92,10 @@ useAddToFavorites((_result: any) => {
 		imageUrl: require('@/assets/images/share.png'),
 	}
 })
+
+useDidHide(() => {
+	Config.presetPlayer.pause()
+})
 </script>
 
 <template>
@@ -100,9 +104,9 @@ useAddToFavorites((_result: any) => {
 	</TitleBar>
 	<view :class="Config.ref.tabBarSelected === 1 ? 'mainContainer' : 'viceContainer'"
 		:style="{ '--appHeaderHeight': Config.appHeaderHeight + 'px' }">
-		<Settings class="pageContentItem" v-if="Config.ref.tabBarSelected === 0" />
+		<Settings class="pageContentItem" v-show="Config.ref.tabBarSelected === 0" />
 		<Fighting class="pageContentItem" v-show="Config.ref.tabBarSelected === 1" />
-		<Presets class="pageContentItem" v-if="Config.ref.tabBarSelected === 2" />
+		<Presets class="pageContentItem" v-show="Config.ref.tabBarSelected === 2" />
 	</view>
 	<TabBar @change="tabBarChange" />
 	<EditorLayer ref="editorLayerRef" />

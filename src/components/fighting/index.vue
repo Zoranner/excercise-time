@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { eventCenter, getCurrentInstance } from '@tarojs/taro'
+import { useLoad, useUnload } from '@tarojs/taro'
 import { PresetPlayerStatus, PresetTimerType } from '@/services/presets/presetPlayer'
 import CircleProgress from '@/components/fighting/circle-progress.vue'
 import ControlBar from '@/components/base/control-bar/index.vue'
@@ -75,14 +75,7 @@ const initPageElements = () => {
 	}
 }
 
-onMounted(() => {
-	let router = getCurrentInstance().router
-	if (router !== null) {
-		eventCenter.on(router.onHide, () => {
-			Config.presetPlayer.pause()
-		})
-	}
-
+useLoad(() => {
 	initPageElements()
 
 	Config.presetPlayer.statusUpdatedEvent.on((status) => {
@@ -131,11 +124,7 @@ onMounted(() => {
 	})
 })
 
-onUnmounted(() => {
-	let router = getCurrentInstance().router
-	if (router !== null) {
-		eventCenter.off(router.onHide)
-	}
+useUnload(() => {
 	Config.presetPlayer.stop()
 	Config.presetPlayer.statusUpdatedEvent.off()
 	Config.presetPlayer.timerTypeUpdatedEvent.off()
